@@ -1,0 +1,8 @@
+model ArtTranslations {
+  id          Int     @id @default(autoincrement())
+  artId       Int
+  art         Art     @relation(fields: [artId], references: [id])
+  locale      Locales
+  title       String
+  description String  @db.Text
+}

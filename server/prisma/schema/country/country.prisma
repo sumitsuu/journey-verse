@@ -1,0 +1,5 @@
+model Country {
+  id                  Int                   @id @default(autoincrement())
+  countryTranslations CountryTranslations[]
+  Art                 Art[]
+}

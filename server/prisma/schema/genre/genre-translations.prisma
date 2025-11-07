@@ -1,0 +1,7 @@
+model GenreTranslations {
+  id      Int     @id @default(autoincrement())
+  locale  Locales
+  name    String
+  genreId Int
+  genre   Genre   @relation(fields: [genreId], references: [id])
+}

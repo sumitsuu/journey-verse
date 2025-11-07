@@ -1,0 +1,15 @@
+model Art {
+  id              Int               @id @default(autoincrement())
+  artTranslations ArtTranslations[]
+  releaseDate     DateTime
+  previewPath     String
+  episodes        Int?
+  countryId       Int
+  country         Country           @relation(fields: [countryId], references: [id])
+  typeId          Int
+  type            Type              @relation(fields: [typeId], references: [id])
+  statusId        Int
+  status          Status            @relation(fields: [statusId], references: [id])
+  rating          Decimal?
+  genres          Genre[]
+}

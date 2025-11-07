@@ -1,0 +1,7 @@
+model CountryTranslations {
+  id        Int     @id @default(autoincrement())
+  countryId Int
+  country   Country @relation(fields: [countryId], references: [id])
+  locale    Locales
+  name      String
+}

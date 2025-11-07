@@ -1,0 +1,7 @@
+model Type {
+  id               Int                @id @default(autoincrement())
+  users            User[]
+  typeTranslations TypeTranslations[]
+  genres           Genre[]
+  arts             Art[]
+}
