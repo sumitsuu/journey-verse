@@ -1,13 +1,13 @@
 "use client";
 
-import { ArtsQueries } from "@/lib/queries/arts.queries";
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Arts from "./arts";
 import FeaturedArts from "./featured-arts";
+import { useHomeContext } from "./home-context-wrapper";
 
 function HomeView() {
-  const { data: arts } = useQuery(ArtsQueries.getArts(1, {}));
+  const { arts } = useHomeContext();
+
   return (
     <>
       <div className={"relative max-w-full max-h-[420px]"}>
