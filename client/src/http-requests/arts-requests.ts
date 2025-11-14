@@ -5,7 +5,7 @@ import { GET, POST } from "./api";
 const artsRequests = {
   async getArts(typeId: number, sortOptions: Record<string, string>) {
     try {
-      const { data } = await GET(`arts/get/${typeId}`, {
+      const { data } = await GET(`arts/${typeId}`, {
         params: sortOptions,
       });
       return data;
