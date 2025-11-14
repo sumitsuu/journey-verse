@@ -67,7 +67,7 @@ const DetailedView = ({}: DetailedViewProps) => {
           {/*  alt=""*/}
           {/*  className={`absolute left-0 top-0 opacity-25 h-full w-full object-cover`}*/}
           {/*/>*/}
-          <Container extraClasses={"isolate z-[10000]"}>
+          <Container className={"isolate z-[10000]"}>
             <>
               <div className={`flex lg:pt-10 flex-col md:flex-row pt-5`}>
                 <div className={"flex flex-col items-center md:block md:mr-5 mr-0"}>
