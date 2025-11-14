@@ -35,7 +35,17 @@ export class ArtController {
   }
 
   @Get("/:typeId")
-  findAll(@Param("locale") locale: Locales, @Param("typeId") typeId: string, @Query() query: Record<string, string>) {
+  findAll(
+    @Param("locale") locale: Locales,
+    @Param("typeId") typeId: string,
+    @Query()
+    query: {
+      genres: string[];
+      rating: number;
+      yearStart: string;
+      yearEnd: string;
+    }
+  ) {
     return this.artService.findAll(locale, typeId, query);
   }
 
