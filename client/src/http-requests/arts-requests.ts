@@ -1,9 +1,10 @@
+import { Art } from '../types/models/art.types'
 import { Genre } from "../types/models/genre.types";
 import { Type } from "../types/models/type.types";
 import { GET, POST } from "./api";
 
 const artsRequests = {
-  async getArts(typeId: number, sortOptions: Record<string, string>) {
+  async getArts(typeId: number, sortOptions: Record<string, string>): Promise<Art[]> {
     try {
       const { data } = await GET(`arts/${typeId}`, {
         params: sortOptions,
@@ -11,6 +12,7 @@ const artsRequests = {
       return data;
     } catch (e) {
       console.log(e);
+      return [];
     }
   },
   async checkIsInLibrary(itemId: number, userId: number, type: string) {

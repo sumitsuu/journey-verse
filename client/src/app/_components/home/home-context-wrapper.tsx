@@ -1,16 +1,17 @@
 "use client";
 
+import { Art } from "@/src/types/models/art.types";
 import { createContext, ReactNode, useContext } from "react";
 
 interface HomePageContextType {
-  arts: any;
+  arts: Art[];
 }
 
 const HomePageContext = createContext<HomePageContextType | undefined>(undefined);
 
 interface HomePageProviderProps {
   children: ReactNode;
-  arts: any;
+  arts: Art[];
 }
 
 export function HomeContextWrapper({ children, arts }: Readonly<HomePageProviderProps>) {
