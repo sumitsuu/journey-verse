@@ -17,7 +17,7 @@ import { UserModule } from "./user/user.module";
     ServeStaticModule.forRoot(
       {
         rootPath: join(__dirname, "..", "client"),
-        serveRoot: "/",
+        serveRoot: "/static",
       },
       {
         rootPath: join(__dirname, "..", "client", "images", "users"),

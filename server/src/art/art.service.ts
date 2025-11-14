@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Locales, Prisma, PrismaClient } from "@prisma/client";
 import * as fs from "fs";
 import * as path from "path";
+import { ClientGenreDto } from "src/dto/genre/client-genre.dto";
 import { mapGenre } from "src/genre/map-genre";
 import { mapStatus } from "src/status/map-status";
 import { CreateArtDto } from "../dto/art/create-art.dto";
@@ -62,24 +63,31 @@ export class ArtService {
     return transaction;
   }
 
-  async findAll(locale: Locales, typeId: string, query: Record<string, string>) {
+  async findAll(
+    locale: Locales,
+    typeId: string,
+    query: {
+      genres: string[];
+      rating: number;
+      yearStart: string;
+      yearEnd: string;
+    }
+  ) {
     const processFilters = () => {
       const result: Prisma.ArtWhereInput = {};
 
       result.typeId = Number(typeId);
 
-      result.genres = {
-        some: {
-          id: (() => {
-            const genres = query["genres[]"] ?? query.genres;
+      const genres = query["genres"] ?? query.genres;
 
-            if (!genres) return undefined;
-
-            const genreArray = Array.isArray(genres) ? genres : [genres];
-            return { in: genreArray.map(Number) };
-          })(),
-        },
-      };
+      if (genres) {
+        const genreArray = Array.isArray(genres) ? genres : [genres];
+        result.genres = {
+          some: {
+            id: { in: genreArray.map(Number) },
+          },
+        };
+      }
 
       result.rating = {
         gte: query.rating ? Number(query.rating) : undefined,
@@ -150,7 +158,7 @@ export class ArtService {
   }
 
   async getSortOptions(locale: Locales, typeId: string) {
-    let genres;
+    let genres: ClientGenreDto[] | undefined;
     const genresFromType = await this.prisma.type.findUnique({
       where: {
         id: Number(typeId),
@@ -186,7 +194,7 @@ export class ArtService {
     });
 
     return {
-      genres: genres,
+      genres,
       statuses: statuses.map(mapStatus),
       years: [...new Set(uniqueYears.map((art) => new Date(art.releaseDate).getFullYear()))],
     };

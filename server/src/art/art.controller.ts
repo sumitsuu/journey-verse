@@ -34,7 +34,7 @@ export class ArtController {
     return this.artService.create(locale, previewPath, createArtDto);
   }
 
-  @Get("/get/:typeId")
+  @Get("/:typeId")
   findAll(@Param("locale") locale: Locales, @Param("typeId") typeId: string, @Query() query: Record<string, string>) {
     return this.artService.findAll(locale, typeId, query);
   }
