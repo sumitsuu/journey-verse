@@ -1,5 +1,0 @@
-model Status {
-  id                 Int                  @id @default(autoincrement())
-  statusTranslations StatusTranslations[]
-  Art                Art[]
-}

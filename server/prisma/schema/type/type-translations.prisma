@@ -1,8 +1,0 @@
-model TypeTranslations {
-  id          Int     @id @default(autoincrement())
-  locale      Locales
-  name        String
-  catalogName String
-  typeId      Int
-  type        Type    @relation(fields: [typeId], references: [id])
-}

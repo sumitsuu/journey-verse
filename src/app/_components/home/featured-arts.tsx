@@ -1,0 +1,36 @@
+"use client";
+
+import { Art } from "@/src/lib/types/art";
+import Link from "next/link";
+
+type FeaturedArtsProps = {
+  arts: Art[];
+};
+
+const FeaturedCard = ({ item }: { item: Art }) => {
+  return (
+    <Link href={`/arts/${item.typeId}/${item.id}`} className={"opacity-80 hover:opacity-100 duration-300"}>
+      <img
+        src={`${process.env.NEXT_PUBLIC_ARTS_FILES_URL}/${item.previewPath}`}
+        className={"max-w-[240px] max-h-[134px] object-cover rounded-[12px]"}
+        alt=""
+      />
+      <p className={"mt-4 font-medium"}>{item.title}</p>
+      <p className={"mt-1 text-light-purple-1"}>{item?.genres?.[0]?.name}</p>
+    </Link>
+  );
+};
+
+function FeaturedArts({ arts }: Readonly<FeaturedArtsProps>) {
+  const tmpArts = new Array(5).fill(arts?.[0]);
+  return (
+    <div>
+      <h3 className={"font-bold text-[22px] my-[28px]"}>Featured</h3>
+      <div className={"flex gap-5"}>
+        {arts?.length > 0 && tmpArts?.map((art, index) => <FeaturedCard key={index} item={art} />)}
+      </div>
+    </div>
+  );
+}
+
+export default FeaturedArts;

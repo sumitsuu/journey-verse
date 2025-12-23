@@ -1,6 +1,0 @@
-model Genre {
-  id                Int                 @id @default(autoincrement())
-  genreTranslations GenreTranslations[]
-  arts              Art[]
-  types             Type[]
-}
