@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import AddToLibraryForm from "@/src/app/arts/[typeId]/[artId]/_components/add-to-library-form";
-import { Art } from "@/src/lib/types";
+import type { Art } from "@/src/lib/types/art";
 import { Dispatch, SetStateAction } from "react";
 
 type AddToLibraryModalProps = {

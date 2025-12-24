@@ -9,8 +9,11 @@ import { MultiSelect } from "@/components/ui/multi-select";
 import { SelectComponent } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { createArtAction } from "@/src/lib/actions";
-import { Country, Genre, Status, Type } from "@/src/lib/types";
+import { createArtAction } from "@/src/lib/actions/art/create-art";
+import type { Country } from "@/src/lib/types/country";
+import type { Genre } from "@/src/lib/types/genre";
+import type { Status } from "@/src/lib/types/status";
+import type { Type } from "@/src/lib/types/type";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useMutation } from "@tanstack/react-query";

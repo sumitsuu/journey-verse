@@ -9,7 +9,7 @@ import Image from "next/image";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 
 import { Input, PasswordInput } from "@/components/ui/input";
 import { Loader } from "@/components/ui/loader";
-import { createUserAction } from "@/src/lib/actions";
+import { createUserAction, CreateUserActionOutputSuccess } from "@/src/lib/actions/user/create-user";
 import { useMutation } from "@tanstack/react-query";
 import { AlertCircle } from "lucide-react";
 
@@ -39,7 +39,6 @@ export type SignUpErrorType = "email" | "password" | "passwordRepeat";
 const SignUpView = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const [isPending, setIsPending] = useState(false);
 
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
@@ -51,6 +50,8 @@ const SignUpView = () => {
     },
     mode: "onChange",
   });
+
+  const password = form.watch("password");
 
   useEffect(() => {
     if (session?.expires) {
@@ -73,17 +74,22 @@ const SignUpView = () => {
     }
   });
 
-  const createUserMutation = useMutation({
-    mutationFn: async (data: z.infer<typeof SignUpSchema>) => {
-      await createUserAction(data);
+  const createUserMutation = useMutation<CreateUserActionOutputSuccess, unknown, z.infer<typeof SignUpSchema>>({
+    mutationFn: async (data) => {
+      return await createUserAction(data);
     },
-    onSuccess: () => {
+    onSuccess: ({ data }: CreateUserActionOutputSuccess) => {
       toast({
         title: "User created successfully",
         variant: "success",
       });
+      signIn("credentials", {
+        redirect: false,
+        username: data.email,
+        password,
+      });
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         title: "An error occurred while creating the user",
         variant: "destructive",
@@ -93,11 +99,6 @@ const SignUpView = () => {
 
   const onSubmit = (data: z.infer<typeof SignUpSchema>) => {
     createUserMutation.mutate(data);
-    signIn("credentials", {
-      redirect: false,
-      username: data.email,
-      password: data.password,
-    });
   };
 
   return (
@@ -152,11 +153,11 @@ const SignUpView = () => {
             <Link href="/sign-in" className={"hover:text-light-purple-1 duration-300"}>
               Already have an account?
             </Link>
-            <Button variant={"secondary"} type="submit" disabled={isPending}>
-              {isPending ? <Loader /> : "Sign Up"}
+            <Button variant={"secondary"} type="submit" disabled={createUserMutation.isPending}>
+              {createUserMutation.isPending ? <Loader /> : "Sign Up"}
             </Button>
             <p className="text-gray-400 text-center md:inline hidden">
-              "The journey of a thousand miles begins with a single step."
+              &quot;The journey of a thousand miles begins with a single step.&quot;
             </p>
             {/* {form.formState?.errors && (
                     <div className={"flex flex-col gap-2"}>{renderErrors}</div>

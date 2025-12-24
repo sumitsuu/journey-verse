@@ -3,7 +3,7 @@
 import { z } from "zod";
 
 import { createUsers } from "../../services/user/create-user";
-import type { User } from "../../types";
+import type { User } from "../../types/user";
 
 const createUserSchema = z.object({
   email: z.string().email(),
@@ -11,17 +11,17 @@ const createUserSchema = z.object({
   displayName: z.string().min(1),
 });
 
-export async function createUserAction(
-  data: z.infer<typeof createUserSchema>
-): Promise<{ success: true; data: User } | { success: false; error: string }> {
+export type CreateUserActionOutputSuccess = {
+  success: true;
+  data: User;
+};
+
+export async function createUserAction(data: z.infer<typeof createUserSchema>): Promise<CreateUserActionOutputSuccess> {
   try {
     const validated = createUserSchema.parse(data);
     const result = await createUsers(validated);
     return { success: true, data: result };
   } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Failed to create user",
-    };
+    throw new Error(error instanceof Error ? error.message : "Failed to create user");
   }
 }

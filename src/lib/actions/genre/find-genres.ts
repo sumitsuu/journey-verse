@@ -5,7 +5,7 @@ import { z } from "zod";
 import type { Locale } from "../../i18n/locales";
 import { DEFAULT_LOCALE } from "../../i18n/locales";
 import { findGenres } from "../../services/genre/find-genres";
-import type { Genre } from "../../types";
+import type { Genre } from "../../types/genre";
 
 const findGenresSchema = z.object({
   locale: z.enum(["en", "ru"]).optional(),

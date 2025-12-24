@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Art } from "@/src/lib/types";
+import type { Art } from "@/src/lib/types/art";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { type Dispatch, type SetStateAction } from "react";

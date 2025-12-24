@@ -3,7 +3,8 @@
 import { Button } from "@/components/ui/button";
 import Container from "@/src/components/UI/Container";
 import parseDates from "@/src/helpers/parse-dates";
-import { Art, Genre } from "@/src/lib/types";
+import type { Art } from "@/src/lib/types/art";
+import type { Genre } from "@/src/lib/types/genre";
 
 import "moment/locale/ru";
 import { useSession } from "next-auth/react";
@@ -81,12 +82,12 @@ const DetailedView = ({}: DetailedViewProps) => {
                       <p>
                         <span>Rating:</span>
                       </p>
-                      {item?.statusName && (
+                      {item?.status.name && (
                         <p>
                           <span>Status:</span>
                         </p>
                       )}
-                      {item?.countryName && (
+                      {item?.country.name && (
                         <p>
                           <span>Country:</span>
                         </p>
@@ -107,8 +108,8 @@ const DetailedView = ({}: DetailedViewProps) => {
                       {!!item?.genres?.length && <p>{item.genres.map((item: Genre) => item.name).join(", ")}</p>}
                       {item.episodes && item.episodes >= 1 && <p>{item.episodes}</p>}
                       <p>{item.rating !== null ? `${item.rating} ` : RATING_NOT_RATED}</p>
-                      {item?.statusName && <p>{item.statusName}</p>}
-                      {item?.countryName && <p>{item.countryName}</p>}
+                      {item?.status.name && <p>{item.status.name}</p>}
+                      {item?.country.name && <p>{item.country.name}</p>}
                       <p>Lorem ipsum dolor</p>
 
                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>

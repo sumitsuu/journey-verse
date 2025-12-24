@@ -1,15 +1,10 @@
-import { findArtsAction } from "../lib/actions";
+import { DEFAULT_LOCALE } from "../lib/i18n/locales";
+import { findArts } from "../lib/services/art/find-arts/find-arts";
 import { HomeContextWrapper } from "./_components/home/home-context-wrapper";
 import HomeView from "./_components/home/home-view";
 
 async function HomePage() {
-  const result = await findArtsAction({
-    locale: "en",
-    typeId: 1,
-    query: {},
-  });
-
-  const arts = result.success ? result.data : [];
+  const arts = await findArts({ locale: DEFAULT_LOCALE, filters: {} });
 
   return (
     <HomeContextWrapper arts={arts}>

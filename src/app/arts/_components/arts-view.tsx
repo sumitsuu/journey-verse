@@ -3,37 +3,34 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useUrlSearchParams from "@/hooks/use-url-search-params";
-import { Art, Type } from "@/src/lib/types";
+import type { Art } from "@/src/lib/types/art";
 import { RotateCcw, SlidersHorizontal } from "lucide-react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { useArtsContext } from "../[typeId]/_components/arts-context-wrapper";
 import Card from "./card";
 import FiltersDialog from "./filters-dialog";
 
-type ArtsViewProps = {
-  types: Type[];
-};
-
-export default function ArtsView({ types }: Readonly<ArtsViewProps>) {
-  const params = useParams();
-  const [typeId, setTypeId] = useState<number>(params.typeId ? Number(params.typeId) : types[0].id);
-  const { searchParams, processUrlSearchParams, clearUrlSearchParams } = useUrlSearchParams();
-  const arts: Art[] = []; // TODO: add arts from ssr
+export default function ArtsView() {
+  const { clearUrlSearchParams } = useUrlSearchParams();
+  const { types, arts } = useArtsContext();
+  const { typeId } = useParams<{ typeId: string }>();
 
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState<boolean>(false);
 
   return (
     <>
-      <FiltersDialog isOpen={isFiltersDialogOpen} setIsOpen={setIsFiltersDialogOpen} typeId={typeId} />
+      <FiltersDialog isOpen={isFiltersDialogOpen} setIsOpen={setIsFiltersDialogOpen} />
       <div className={"mt-9"}>
-        <Tabs defaultValue={typeId.toString()}>
+        <Tabs value={typeId ?? types[0].id.toString()}>
           <TabsList
             className={"border-b-[1px] border-b-light-purple-1 w-full justify-between items-start px-0 pb-6 h-full"}
           >
             <div className={"grid md:grid-cols-5 grid-cols-2 gap-4"}>
               {types.map((type) => (
-                <TabsTrigger key={type.id} value={type.id.toString()} onClick={() => setTypeId(type.id)}>
-                  {type.catalogName}
+                <TabsTrigger key={type.id} value={type.id.toString()} asChild>
+                  <Link href={`/arts/${type.id}`}>{type.catalogName}</Link>
                 </TabsTrigger>
               ))}
             </div>

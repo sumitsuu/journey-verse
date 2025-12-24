@@ -1,4 +1,4 @@
-import { Art } from "@/src/lib/types";
+import type { Art } from "@/src/lib/types/art";
 
 interface ISearchCard {
   item: Art;
@@ -16,9 +16,9 @@ const SearchCard = ({ item }: ISearchCard) => {
       </div>
       <div className={"flex flex-col text-white"}>
         <span>{item.title}</span>
-        <span>Type: {item?.typeName}</span>
+        <span>Type: {item?.type.name}</span>
         <span>Genre: {item?.genres?.map((genre) => genre.name)}</span>
-        <span>Country: {item.countryName}</span>
+        <span>Country: {item.country.name}</span>
       </div>
     </div>
   );

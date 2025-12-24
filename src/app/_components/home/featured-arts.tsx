@@ -1,6 +1,7 @@
 "use client";
 
-import { Art } from "@/src/lib/types/art";
+import { PICTURE_PLACEHOLDER } from "@/lib/constants";
+import type { Art } from "@/src/lib/types/art";
 import Link from "next/link";
 
 type FeaturedArtsProps = {
@@ -9,12 +10,8 @@ type FeaturedArtsProps = {
 
 const FeaturedCard = ({ item }: { item: Art }) => {
   return (
-    <Link href={`/arts/${item.typeId}/${item.id}`} className={"opacity-80 hover:opacity-100 duration-300"}>
-      <img
-        src={`${process.env.NEXT_PUBLIC_ARTS_FILES_URL}/${item.previewPath}`}
-        className={"max-w-[240px] max-h-[134px] object-cover rounded-[12px]"}
-        alt=""
-      />
+    <Link href={`/arts/${item.type.id}/${item.id}`} className={"opacity-80 hover:opacity-100 duration-300"}>
+      <img src={PICTURE_PLACEHOLDER} className={"max-w-[240px] max-h-[134px] object-cover rounded-[12px]"} alt="" />
       <p className={"mt-4 font-medium"}>{item.title}</p>
       <p className={"mt-1 text-light-purple-1"}>{item?.genres?.[0]?.name}</p>
     </Link>

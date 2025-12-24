@@ -3,7 +3,7 @@
 import { z } from "zod";
 
 import { loginUsers } from "../../services/auth/login-user";
-import type { User } from "../../types";
+import type { User } from "../../types/user";
 
 const loginUserSchema = z.object({
   email: z.string().email(),

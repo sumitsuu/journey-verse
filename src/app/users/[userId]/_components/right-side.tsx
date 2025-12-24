@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { Type } from "@/src/lib/types";
+import type { Type } from "@/src/lib/types/type";
 import { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
 
 import RatedCard from "./rated-card";

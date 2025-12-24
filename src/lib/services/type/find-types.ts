@@ -6,7 +6,7 @@ import { db } from "../../db";
 import * as schema from "../../db/schema";
 import type { Locale } from "../../i18n/locales";
 import { DEFAULT_LOCALE } from "../../i18n/locales";
-import type { Type } from "../../types";
+import type { Type } from "../../types/type";
 
 export async function findTypes(locale: Locale = DEFAULT_LOCALE): Promise<Type[]> {
   const rows = await db

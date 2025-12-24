@@ -1,4 +1,4 @@
-import { loginUserAction } from "@/src/lib/actions";
+import { loginUserAction } from "@/src/lib/actions/auth/login-user";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 

@@ -74,3 +74,15 @@ export const artTranslations = pgTable("art_translations", {
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description").notNull(),
 });
+
+export const artGenres = pgTable("art_genres", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  artId: integer("art_id").notNull(),
+  genreId: integer("genre_id").notNull(),
+});
+
+export const genreTypes = pgTable("genre_types", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  typeId: integer("type_id").notNull(),
+  genreId: integer("genre_id").notNull(),
+});

@@ -5,7 +5,7 @@ import { z } from "zod";
 import type { Locale } from "../../i18n/locales";
 import { DEFAULT_LOCALE } from "../../i18n/locales";
 import { findTypes } from "../../services/type/find-types";
-import type { Type } from "../../types";
+import type { Type } from "../../types/type";
 
 const findTypesSchema = z.object({
   locale: z.enum(["en", "ru"]).optional(),

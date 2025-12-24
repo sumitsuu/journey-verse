@@ -4,7 +4,7 @@ import * as argon2 from "argon2";
 
 import { db } from "../../db";
 import * as schema from "../../db/schema";
-import type { User } from "../../types";
+import type { User } from "../../types/user";
 
 export async function createUsers(data: { email: string; password: string; displayName: string }): Promise<User> {
   const passwordHash = await argon2.hash(data.password);

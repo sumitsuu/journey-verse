@@ -1,6 +1,6 @@
 "use client";
 
-import { Art } from "@/src/lib/types";
+import type { Art } from "@/src/lib/types/art";
 import { createContext, useContext, type ReactNode } from "react";
 
 interface HomePageContextType {

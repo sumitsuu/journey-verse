@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 
-import { Art } from "@/src/lib/types";
 import Card from "./card";
+
+import type { Art } from "@/src/lib/types/art";
 
 type ArtsProps = {
   arts: Art[];

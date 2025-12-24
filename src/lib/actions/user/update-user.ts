@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { findUsersById } from "../../services/user/find-user";
 import { updateUsers } from "../../services/user/update-user";
-import type { User } from "../../types";
+import type { User } from "../../types/user";
 
 const updateUserSchema = z.object({
   id: z.number().int().positive(),

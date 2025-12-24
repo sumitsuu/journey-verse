@@ -12,17 +12,17 @@ import { MultiSelect } from "@/components/ui/multi-select";
 import { SelectComponent } from "@/components/ui/select";
 import useUrlSearchParams from "@/hooks/use-url-search-params";
 import { RATINGS } from "@/lib/constants";
-import { Genre } from "@/src/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Dispatch, SetStateAction } from "react";
+import type { Genre } from "@/src/lib/types/art";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { useArtsContext } from "../[typeId]/_components/arts-context-wrapper";
 
 type FiltersDialogProps = {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  typeId: number;
 };
 
 const FilteringSchema = z.object({
@@ -32,7 +32,7 @@ const FilteringSchema = z.object({
   yearEnd: z.string().optional(),
 });
 
-export default function FiltersDialog({ isOpen, setIsOpen, typeId }: Readonly<FiltersDialogProps>) {
+export default function FiltersDialog({ isOpen, setIsOpen }: Readonly<FiltersDialogProps>) {
   const { updateMultipleUrlSearchParams, searchParams } = useUrlSearchParams();
   const form = useForm({
     resolver: zodResolver(FilteringSchema),
@@ -43,7 +43,19 @@ export default function FiltersDialog({ isOpen, setIsOpen, typeId }: Readonly<Fi
       yearEnd: searchParams.get("yearEnd") ?? undefined,
     },
   });
-  const sortOptions: any = []; // TODO: add sort options from ssr
+
+  const { sortOptions } = useArtsContext();
+
+  useEffect(() => {
+    const newValues = {
+      genres: searchParams.getAll("genres").length > 0 ? searchParams.getAll("genres") : undefined,
+      rating: searchParams.get("rating") ?? undefined,
+      yearStart: searchParams.get("yearStart") ?? undefined,
+      yearEnd: searchParams.get("yearEnd") ?? undefined,
+    };
+    form.reset(newValues);
+  }, [searchParams.toString()]);
+
   const yearsStart = sortOptions?.years.filter((year: number) => {
     return form.getValues("yearEnd") ? year <= Number(form.getValues("yearEnd")) : year;
   });

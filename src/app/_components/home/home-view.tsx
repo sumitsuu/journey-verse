@@ -31,7 +31,10 @@ function HomeView() {
         <>
           <FeaturedArts arts={arts} />
           <Arts arts={arts} title={"Trending"} />
-          <Arts arts={arts} title={"Recenty rated by friends"} />
+          <div className={"h-[100px] mt-10"}>
+            <p className={"text-2xl font-bold"}>Recenty rated by friends</p>
+            <p className={"text-xl"}>Coming soon...</p>
+          </div>
         </>
       )}
     </>

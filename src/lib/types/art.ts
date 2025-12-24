@@ -1,40 +1,42 @@
-import type { InferSelectModel } from "drizzle-orm";
-
 import {
   arts,
   artTranslations,
   countries,
   countryTranslations,
+  genres,
+  genreTranslations,
   statuses,
   statusTranslations,
   types,
   typeTranslations,
 } from "../db/schema";
-import type { Genre } from "./genre";
 
-type ArtRow = InferSelectModel<typeof arts>;
-type ArtTranslationRow = InferSelectModel<typeof artTranslations>;
-type CountryRow = InferSelectModel<typeof countries>;
-type CountryTranslationRow = InferSelectModel<typeof countryTranslations>;
-type StatusRow = InferSelectModel<typeof statuses>;
-type StatusTranslationRow = InferSelectModel<typeof statusTranslations>;
-type TypeRow = InferSelectModel<typeof types>;
-type TypeTranslationRow = InferSelectModel<typeof typeTranslations>;
+type Country = {
+  id: (typeof countries.$inferSelect)["id"];
+  name: (typeof countryTranslations.$inferSelect)["name"];
+};
 
-export type Art = {
-  id: ArtRow["id"];
-  title: ArtTranslationRow["title"];
-  description: ArtTranslationRow["description"];
-  releaseDate: ArtRow["releaseDate"];
-  episodes: ArtRow["episodes"];
-  countryId: CountryRow["id"];
-  countryName: CountryTranslationRow["name"];
-  typeId: TypeRow["id"];
-  typeName: TypeTranslationRow["name"];
-  typeCatalogName: TypeTranslationRow["catalogName"];
-  genres?: Genre[];
-  statusId: StatusRow["id"];
-  statusName: StatusTranslationRow["name"];
-  rating: ArtRow["rating"] | null;
-  previewPath: ArtRow["previewPath"] | null;
+type ArtType = {
+  id: (typeof types.$inferSelect)["id"];
+  name: (typeof typeTranslations.$inferSelect)["name"];
+  catalogName: (typeof typeTranslations.$inferSelect)["catalogName"];
+};
+
+type Status = {
+  id: (typeof statuses.$inferSelect)["id"];
+  name: (typeof statusTranslations.$inferSelect)["name"];
+};
+
+export type Genre = {
+  id: (typeof genres.$inferSelect)["id"];
+  name: (typeof genreTranslations.$inferSelect)["name"];
+};
+
+export type Art = Pick<typeof arts.$inferSelect, "id" | "releaseDate" | "episodes" | "rating" | "previewPath"> & {
+  title: (typeof artTranslations.$inferSelect)["title"];
+  description: (typeof artTranslations.$inferSelect)["description"];
+  country: Country;
+  type: ArtType;
+  status: Status;
+  genres: Genre[];
 };

@@ -2,24 +2,23 @@
 
 import { and, eq, sql } from "drizzle-orm";
 
-import { db } from "../../db";
-import * as schema from "../../db/schema";
-import type { Locale } from "../../i18n/locales";
-import type { Status } from "../../types";
+import { db } from "../../../db";
+import * as schema from "../../../db/schema";
+import { type FindSortOptionsInput, type FindSortOptionsOutput } from "./schemas";
 
-export async function getSortOptions(locale: Locale, typeId: string) {
-  const genreRows = await db
+export async function findSortOptions({ locale, typeId }: FindSortOptionsInput): Promise<FindSortOptionsOutput> {
+  const genres = await db
     .select({
       id: schema.genres.id,
       name: schema.genreTranslations.name,
     })
-    .from(schema.types)
-    .leftJoin(schema.genres, eq(schema.genres.id, schema.types.id))
-    .leftJoin(
+    .from(schema.genres)
+    .innerJoin(schema.genreTypes, eq(schema.genreTypes.genreId, schema.genres.id))
+    .innerJoin(
       schema.genreTranslations,
       and(eq(schema.genreTranslations.genreId, schema.genres.id), eq(schema.genreTranslations.locale, locale))
     )
-    .where(eq(schema.types.id, Number(typeId)));
+    .where(eq(schema.genreTypes.typeId, typeId));
 
   const yearRows = await db
     .select({
@@ -27,27 +26,22 @@ export async function getSortOptions(locale: Locale, typeId: string) {
     })
     .from(schema.arts)
     .groupBy(sql`EXTRACT(YEAR FROM ${schema.arts.releaseDate})`)
-    .orderBy(sql`year ASC`);
+    .orderBy(sql`EXTRACT(YEAR FROM ${schema.arts.releaseDate}) ASC`);
 
-  const statusRows = await db
+  const statuses = await db
     .select({
       id: schema.statuses.id,
       name: schema.statusTranslations.name,
     })
     .from(schema.statuses)
-    .leftJoin(
+    .innerJoin(
       schema.statusTranslations,
       and(eq(schema.statusTranslations.statusId, schema.statuses.id), eq(schema.statusTranslations.locale, locale))
     );
 
-  const statuses: Status[] = statusRows.map((s) => ({
-    id: s.id,
-    name: s.name,
-  }));
-
   return {
-    genres: genreRows,
+    genres,
     statuses,
-    years: yearRows.map((y) => y.year),
+    years: yearRows.map((row) => row.year),
   };
 }

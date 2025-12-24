@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { Form, FormField, FormLabel } from "@/components/ui/form";
 import { FileInput } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
-import { updateUserAction } from "@/src/lib/actions";
+import { updateUserAction } from "@/src/lib/actions/user/update-user";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
