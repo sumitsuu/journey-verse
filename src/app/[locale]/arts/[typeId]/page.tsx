@@ -4,8 +4,8 @@ import { findArts } from "@/src/lib/services/art/find-arts/find-arts";
 import { FindArtsFiltersSchema } from "@/src/lib/services/art/find-arts/schemas";
 import { findSortOptions } from "@/src/lib/services/art/find-sort-options/find-sort-options";
 import { findTypes } from "@/src/lib/services/type/find-types";
+import ArtsView from "../_components/arts-view";
 import { ArtsContextWrapper } from "./_components/arts-context-wrapper";
-import ArtsView from "./_components/view";
 
 export default async function ArtsPage({
   params,

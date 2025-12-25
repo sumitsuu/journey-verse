@@ -33,7 +33,7 @@ export default function ArtsView() {
             <div className={"grid md:grid-cols-5 grid-cols-2 gap-4"}>
               {types.map((type) => (
                 <TabsTrigger key={type.id} value={type.id.toString()} asChild>
-                  <Link href={`/arts/${type.id}`}>{type.catalogName}</Link>
+                  <Link href={`/arts/${type.id}`}>{type.name}</Link>
                 </TabsTrigger>
               ))}
             </div>
