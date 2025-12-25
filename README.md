@@ -30,6 +30,7 @@ JourneyVerse is a modern web application for discovering, rating, and reviewing 
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **Framework**: [Next.js 16](https://nextjs.org/) with App Router
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [Stylus](https://stylus-lang.com/)
@@ -40,6 +41,7 @@ JourneyVerse is a modern web application for discovering, rating, and reviewing 
 - **Internationalization**: [next-intl](https://next-intl-docs.vercel.app/)
 
 ### Backend
+
 - **Database**: [PostgreSQL](https://www.postgresql.org/)
 - **ORM**: [Drizzle ORM](https://orm.drizzle.team/)
 - **Authentication**: [NextAuth.js](https://next-auth.js.org/)
@@ -47,17 +49,9 @@ JourneyVerse is a modern web application for discovering, rating, and reviewing 
 - **Password Hashing**: [Argon2](https://github.com/ranisalt/node-argon2)
 
 ### DevOps
+
 - **Containerization**: Docker & Docker Compose
 - **Package Manager**: [pnpm](https://pnpm.io/)
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) 18+ (or use [nvm](https://github.com/nvm-sh/nvm))
-- [pnpm](https://pnpm.io/) 9.12+
-- [Docker](https://www.docker.com/) and Docker Compose
-- [PostgreSQL](https://www.postgresql.org/) 18+ (or use Docker)
 
 ## 📁 Project Structure
 
@@ -116,4 +110,3 @@ Authentication is handled by NextAuth.js with credentials provider. User session
 Made with ❤️ for media enthusiasts
 
 </div>
-
