@@ -138,7 +138,7 @@ const SignInView = () => {
         </Form>
 
         <Image
-          src="/images/logo-1.png"
+          src="/images/logo-1.png?v=2"
           width={500}
           height={364}
           className={

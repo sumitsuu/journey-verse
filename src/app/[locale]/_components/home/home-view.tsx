@@ -12,19 +12,19 @@ function HomeView() {
   const homeTranslations = useTranslations("HomePage");
 
   return (
-    <>
-      <div className={"relative max-w-full max-h-[420px]"}>
+    <div className="flex flex-col gap-4">
+      <div className={" max-w-full max-h-[420px]"}>
         <Image
-          src="/images/home.jpg"
+          src="/images/home.jpg?v=1"
           width={1280}
           height={420}
           alt="Picture of the author"
           className={"rounded-[12px] h-full max-h-[420px] object-fill"}
+          quality={100}
         />
-        <div className={"absolute bottom-10 left-[100px]"}>
-          <p className={"text-4xl font-bold drop-shadow-md"}>{homeTranslations("heroTitle")}</p>
-          <p className={"text-xl drop-shadow-md"}>{homeTranslations("heroDescription")}</p>
-        </div>
+      </div>
+      <div className="flex flex-col gap-2">
+        <p className={"text-xl drop-shadow-md"}>{homeTranslations("heroDescription")}</p>
       </div>
       {arts && arts?.length > 0 && (
         <>
@@ -36,7 +36,7 @@ function HomeView() {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 }
 

@@ -9,6 +9,19 @@ const nextConfig: NextConfig = {
         hostname: "localhost",
       },
     ],
+    localPatterns: [
+      {
+        pathname: "/images/**",
+        search: "?v=1",
+      },
+      {
+        pathname: "/images/**",
+        search: "?v=2",
+      },
+      {
+        pathname: "/images/**",
+      },
+    ],
   },
 };
 

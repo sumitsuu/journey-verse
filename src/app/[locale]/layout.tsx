@@ -32,7 +32,7 @@ export default async function LocaleLayout({
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <div id="root" className={"flex flex-col items-center mx-auto w-full h-screen"}>
             <Providers>
