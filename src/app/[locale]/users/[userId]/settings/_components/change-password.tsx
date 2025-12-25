@@ -9,17 +9,26 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
-const validationSchema = z.object({
-  oldPassword: z.string().min(3, "Password must be at least 3 characters long"),
-  newPassword: z.string().min(3, "Password must be at least 3 characters long"),
-});
+const createValidationSchema = (passwordMinLengthMessage: string) =>
+  z.object({
+    oldPassword: z.string().min(3, passwordMinLengthMessage),
+    newPassword: z.string().min(3, passwordMinLengthMessage),
+  });
+
+type ChangePasswordFormData = z.infer<ReturnType<typeof createValidationSchema>>;
+
 const ChangePassword = () => {
   const { data: session } = useSession();
   const user = session?.user;
-  const form = useForm({
+  const settingsTranslations = useTranslations("Settings");
+  const authValidationTranslations = useTranslations("Auth.validation");
+
+  const validationSchema = createValidationSchema(authValidationTranslations("passwordMinLength"));
+  const form = useForm<ChangePasswordFormData>({
     defaultValues: {
       oldPassword: "",
       newPassword: "",
@@ -37,9 +46,16 @@ const ChangePassword = () => {
       });
     },
     onSuccess: () => {
+      form.reset();
       toast({
-        title: "Password updated successfully",
+        title: settingsTranslations("passwordUpdatedSuccess"),
         variant: "success",
+      });
+    },
+    onError: () => {
+      toast({
+        title: settingsTranslations("userNotFound"),
+        variant: "destructive",
       });
     },
   });
@@ -55,7 +71,7 @@ const ChangePassword = () => {
   return (
     <Form {...form}>
       <form onSubmit={onSubmit} className={"md:w-[20vw] w-full px-4 flex flex-col gap-3"}>
-        <FormLabel>Change Password</FormLabel>
+        <FormLabel>{settingsTranslations("changePassword")}</FormLabel>
         <FormField
           control={form.control}
           name="oldPassword"
@@ -63,7 +79,7 @@ const ChangePassword = () => {
           render={({ field: { ref, ...rest }, fieldState }) => (
             <Input
               {...rest}
-              placeholder={"Old password"}
+              placeholder={settingsTranslations("oldPassword")}
               type="password"
               variant={fieldState.invalid ? "invalid" : "default"}
             />
@@ -77,14 +93,14 @@ const ChangePassword = () => {
           render={({ field: { ref, ...rest }, fieldState }) => (
             <Input
               {...rest}
-              placeholder={"New password"}
+              placeholder={settingsTranslations("newPassword")}
               type="password"
               variant={fieldState.invalid ? "invalid" : "default"}
             />
           )}
         />
-        <Button variant={"secondary"} type="submit">
-          Update
+        <Button variant={"secondary"} type="submit" disabled={updateUserPasswordMutation.isPending}>
+          {updateUserPasswordMutation.isPending ? settingsTranslations("updating") : settingsTranslations("update")}
         </Button>
       </form>
     </Form>

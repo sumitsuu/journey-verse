@@ -2,6 +2,12 @@ import { z } from "zod";
 
 const envSchema = z.object({
   DATABASE_URL: z.string().min(1).optional(),
+  MINIO_ENDPOINT: z.string().url().optional(),
+  MINIO_ACCESS_KEY: z.string().min(1).optional(),
+  MINIO_SECRET_KEY: z.string().min(1).optional(),
+  MINIO_BUCKET_NAME: z.string().min(1).optional(),
+  MINIO_REGION: z.string().min(1).optional(),
+  MINIO_PUBLIC_URL: z.string().url().optional(),
 });
 
 // Only validate in server-side code

@@ -70,6 +70,7 @@ const handler = NextAuth({
         token.path = customUser.path;
         token.displayName = customUser.displayName;
         token.email = customUser.email;
+        token.image = customUser.image;
       }
       return token;
     },

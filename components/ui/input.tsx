@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -101,8 +102,9 @@ const PasswordInput = React.forwardRef<HTMLInputElement, CustomInputProps>(({ cl
 PasswordInput.displayName = "PasswordInput";
 
 const FileInput = React.forwardRef<HTMLInputElement, CustomInputProps>(
-  ({ className = { wrapper: "", input: "" }, variant, ...props }, ref) => {
+  ({ className = { wrapper: "", input: "" }, variant, onChange, ...props }, ref) => {
     const [fileName, setFileName] = React.useState<string | null>(null);
+    const settingsTranslations = useTranslations("Settings");
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.files && event.target.files.length > 0) {
@@ -110,13 +112,16 @@ const FileInput = React.forwardRef<HTMLInputElement, CustomInputProps>(
       } else {
         setFileName(null);
       }
+      if (onChange) {
+        onChange(event);
+      }
     };
 
     return (
       <div className={`${cn(inputWrapperVariants({ variant, className: className.wrapper }))}`}>
         <input type="file" ref={ref} {...props} className="hidden" onChange={handleFileChange} id="file-upload" />
         <label htmlFor="file-upload" className="cursor-pointer px-4 py-2 text-white">
-          {fileName || "Загрузить файл"}
+          {fileName || settingsTranslations("uploadFile")}
         </label>
       </div>
     );

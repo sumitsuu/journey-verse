@@ -115,6 +115,28 @@
     "followers": "Подписчики",
     "lists": "Списки"
   },
+  "Settings": {
+    "changeAvatar": "Изменить аватар",
+    "avatar": "Аватар",
+    "avatarUpdatedSuccess": "Аватар успешно обновлен.",
+    "changeDisplayName": "Изменить отображаемое имя",
+    "changePassword": "Изменить пароль",
+    "changeDefaultLibraryType": "Изменить тип библиотеки по умолчанию",
+    "oldPassword": "Старый пароль",
+    "newPassword": "Новый пароль",
+    "passwordUpdatedSuccess": "Пароль успешно обновлен",
+    "newName": "Новое имя",
+    "displayNameMinLength": "Отображаемое имя должно содержать не менее 3 символов",
+    "displayNameUpdatedSuccess": "Отображаемое имя успешно обновлено.",
+    "userIdRequired": "Требуется ID пользователя",
+    "userNotFound": "Пользователь не найден",
+    "update": "Обновить",
+    "updating": "Обновление...",
+    "fileRequired": "Файл обязателен",
+    "uploadFile": "Загрузить файл",
+    "typeUpdatedSuccess": "Тип успешно обновлен.",
+    "selectType": "Тип"
+  },
   "Common": {
     "error": "Ошибка",
     "loading": "Загрузка...",

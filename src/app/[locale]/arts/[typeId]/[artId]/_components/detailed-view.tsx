@@ -5,10 +5,12 @@ import Container from "@/src/components/UI/Container";
 import parseDates from "@/src/helpers/parse-dates";
 import type { Art } from "@/src/lib/types/art";
 import type { Genre } from "@/src/lib/types/genre";
+import { getFileUrl } from "@/src/lib/utils/file-url";
 
 import "moment/locale/ru";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
@@ -44,11 +46,13 @@ const DetailedView = ({}: DetailedViewProps) => {
             <>
               <div className={"flex lg:pt-10 flex-col md:flex-row pt-5"}>
                 <div className={"flex flex-col items-center md:block md:mr-5 mr-0"}>
-                  <img
-                    src={`${process.env.NEXT_PUBLIC_ARTS_FILES_URL}/${item?.previewPath}`}
+                  <Image
+                    src={item?.previewPath ? getFileUrl(item.previewPath) : ""}
                     alt=""
-                    srcSet=""
                     className={"w-full max-w-[250px] h-[400px]"}
+                    width={250}
+                    height={400}
+                    unoptimized
                   />
                   <Button onClick={isInLib ? handleDeleteFromLibrary : handleModal} className={"w-full mt-3"}>
                     {isInLib ? artDetailsTranslations("removeFromLibrary") : artDetailsTranslations("addToLibrary")}

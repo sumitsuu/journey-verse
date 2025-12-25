@@ -1,4 +1,6 @@
 import type { Art } from "@/src/lib/types/art";
+import { getFileUrl } from "@/src/lib/utils/file-url";
+import Image from "next/image";
 
 interface ISearchCard {
   item: Art;
@@ -8,10 +10,13 @@ const SearchCard = ({ item }: ISearchCard) => {
   return (
     <div className={"flex items-center my-[15px] px-2 border-b border-1 border-white pb-[15px]"}>
       <div className={"h-[100px]"}>
-        <img
+        <Image
           className={"h-full mr-[20px]"}
-          src={`${process.env.NEXT_PUBLIC_ARTS_FILES_URL}/${item.previewPath}`}
+          src={item.previewPath ? getFileUrl(item.previewPath) : ""}
           alt=""
+          width={100}
+          height={100}
+          unoptimized
         />
       </div>
       <div className={"flex flex-col text-white"}>

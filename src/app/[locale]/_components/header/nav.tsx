@@ -15,9 +15,11 @@ import { DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
 
 import { Link, routing, usePathname } from "@/src/i18n/routing";
 import { Locale } from "@/src/lib/i18n/locales";
+import { getFileUrl } from "@/src/lib/utils/file-url";
 import { Bookmark, Languages } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 const Nav = () => {
   const { data: session } = useSession();
@@ -39,7 +41,9 @@ const Nav = () => {
           <DropdownMenuContent>
             {routing.locales.map((locale: Locale) => (
               <DropdownMenuItem key={locale} asChild>
-                <Link href={`/${locale}${pathname}`}>{locale.toUpperCase()}</Link>
+                <Link href={`/${pathname}`} locale={locale}>
+                  {locale.toUpperCase()}
+                </Link>
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
@@ -91,11 +95,14 @@ const Nav = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <TooltipTrigger>
-                  {sessionUser?.path ? (
-                    <img
-                      className={"size-[40px] object-cover rounded-[20px]"}
-                      src={`${process.env.NEXT_PUBLIC_USERS_FILES_URL}/${sessionUser.path}`}
+                  {sessionUser?.image ? (
+                    <Image
+                      className={"object-cover rounded-[20px]"}
+                      src={getFileUrl(sessionUser.image)}
                       alt=""
+                      width={40}
+                      height={40}
+                      unoptimized
                     />
                   ) : (
                     <div

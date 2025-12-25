@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "@/src/i18n/routing";
+import { getFileUrl } from "@/src/lib/utils/file-url";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
+import Image from "next/image";
 import { useParams } from "next/navigation";
 
 const StatContainer = ({ title, subtitle, className }: { title: string; subtitle: string; className?: string }) => {
@@ -15,7 +18,7 @@ const StatContainer = ({ title, subtitle, className }: { title: string; subtitle
   );
 };
 
-export default function LeftSide() {
+export default function UserInfo() {
   const { data: session } = useSession();
   const { userId } = useParams();
   const isSameUser = Number(session?.user?.id) === Number(userId);
@@ -28,17 +31,23 @@ export default function LeftSide() {
           "lg:min-w-[400px] md:min-w-[70%] min-h-[95%] flex flex-col items-center justify-center gap-8 border border-white/10 shadow-2xl rounded-[15px] md:py-8 py-4 lg:py-8"
         }
       >
-        <div className={"size-40 bg-white rounded-full flex items-center text-black justify-center text-2xl"}>
-          {session?.user.displayName.split(" ")[0].charAt(0)}
-          {session?.user.displayName.split(" ")[1].charAt(0)}
-        </div>
+        <Image
+          className={"object-cover rounded-full"}
+          src={session?.user.image ? getFileUrl(session.user.image) : ""}
+          alt={session?.user.displayName || ""}
+          width={100}
+          height={100}
+          unoptimized
+        />
         <div className={"flex flex-col items-center gap-2"}>
           <p className={"text-4xl"}>{session?.user.displayName}</p>
           <p className={"text-lg"}>{session?.user.email}</p>
         </div>
         {isSameUser && (
           <div className={"w-full max-w-[75%]"}>
-            <Button className={"w-full"}>{profileTranslations("editProfile")}</Button>
+            <Button className={"w-full"} asChild>
+              <Link href={`/users/${userId}/settings`}>{profileTranslations("editProfile")}</Link>
+            </Button>
           </div>
         )}
 

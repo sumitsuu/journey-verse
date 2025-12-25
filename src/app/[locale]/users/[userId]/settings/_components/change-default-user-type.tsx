@@ -4,20 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField, FormLabel } from "@/components/ui/form";
 import { SelectComponent } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
+import { useTranslations } from "next-intl";
 
 const ChangeDefaultUserType = () => {
+  const settingsTranslations = useTranslations("Settings");
+  const commonTranslations = useTranslations("Common");
   const form = useForm();
 
   const onSubmit = form.handleSubmit(async () => {
     const response = { id: 0 };
     if (response?.id) {
+      form.reset();
       return toast({
-        title: "Type updated successfully.",
+        title: settingsTranslations("typeUpdatedSuccess"),
         variant: "success",
       });
     }
     return toast({
-      title: "Something went wrong. Please try again.",
+      title: commonTranslations("error"),
       variant: "destructive",
     });
   });
@@ -25,7 +29,7 @@ const ChangeDefaultUserType = () => {
   return (
     <Form {...form}>
       <form onSubmit={onSubmit} className={"md:w-[20vw] w-full px-4 flex flex-col gap-3"}>
-        <FormLabel>Change Default Library Type</FormLabel>
+        <FormLabel>{settingsTranslations("changeDefaultLibraryType")}</FormLabel>
         <FormField
           control={form.control}
           defaultValue={""}
@@ -38,12 +42,12 @@ const ChangeDefaultUserType = () => {
               }))}
               onValueChange={field.onChange}
               value={field.value}
-              placeholder={"Type"}
+              placeholder={settingsTranslations("selectType")}
             />
           )}
         />
-        <Button variant={"secondary"} type="submit">
-          Update
+        <Button variant={"secondary"} type="submit" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting ? settingsTranslations("updating") : settingsTranslations("update")}
         </Button>
       </form>
     </Form>

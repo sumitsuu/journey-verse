@@ -1,11 +1,9 @@
 "use server";
 
-import { mkdir, writeFile } from "fs/promises";
-import { join } from "path";
-
 import { db } from "../../db";
 import * as schema from "../../db/schema";
 import type { Locale } from "../../i18n/locales";
+import { uploadFile } from "../storage/minio-client";
 
 export async function createArts(
   locale: Locale,
@@ -21,14 +19,12 @@ export async function createArts(
     genres?: number[];
   }
 ) {
-  // Upload file
-  const uploadDir = join(process.cwd(), "public", "arts");
-  await mkdir(uploadDir, { recursive: true });
+  const fileName = `arts/${Date.now()}-${previewFile.originalname}`;
+  const uploadResult = await uploadFile(fileName, previewFile.buffer);
 
-  const fileName = `${Date.now()}-${previewFile.originalname}`;
-  const filePath = join(uploadDir, fileName);
-
-  await writeFile(filePath, previewFile.buffer);
+  if (!uploadResult.success) {
+    throw new Error(uploadResult.error);
+  }
 
   const [art] = await db
     .insert(schema.arts)
@@ -38,7 +34,7 @@ export async function createArts(
       typeId: data.typeId,
       statusId: data.statusId,
       episodes: data.episodes,
-      previewPath: fileName,
+      previewPath: uploadResult.key,
     })
     .returning();
 

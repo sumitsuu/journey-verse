@@ -115,6 +115,28 @@
     "followers": "Followers",
     "lists": "Lists"
   },
+  "Settings": {
+    "changeAvatar": "Change Avatar",
+    "avatar": "Avatar",
+    "avatarUpdatedSuccess": "Avatar updated successfully.",
+    "changeDisplayName": "Change Display Name",
+    "changePassword": "Change Password",
+    "changeDefaultLibraryType": "Change Default Library Type",
+    "oldPassword": "Old password",
+    "newPassword": "New password",
+    "passwordUpdatedSuccess": "Password updated successfully",
+    "newName": "New name",
+    "displayNameMinLength": "Display name must be at least 3 characters long",
+    "displayNameUpdatedSuccess": "Display name updated successfully.",
+    "userIdRequired": "User ID is required",
+    "userNotFound": "User not found",
+    "update": "Update",
+    "updating": "Updating...",
+    "fileRequired": "File is required",
+    "uploadFile": "Upload file",
+    "typeUpdatedSuccess": "Type updated successfully.",
+    "selectType": "Type"
+  },
   "Common": {
     "error": "Error",
     "loading": "Loading...",

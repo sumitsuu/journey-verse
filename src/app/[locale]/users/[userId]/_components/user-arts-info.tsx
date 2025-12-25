@@ -28,7 +28,7 @@ const ChildTabTrigger = ({
   );
 };
 
-export default function RightSide() {
+export default function UserArtsInfo() {
   const types: Type[] = []; // TODO: add types from ssr
   const [activeTab, setActiveTab] = useState<string>(String(types[0]?.id));
 
