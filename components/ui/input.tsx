@@ -122,5 +122,6 @@ const FileInput = React.forwardRef<HTMLInputElement, CustomInputProps>(
     );
   }
 );
+FileInput.displayName = "FileInput";
 
 export { FileInput, Input, PasswordInput };

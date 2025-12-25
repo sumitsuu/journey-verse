@@ -2,7 +2,6 @@
 
 import { z } from "zod";
 
-import type { Locale } from "../../i18n/locales";
 import { DEFAULT_LOCALE } from "../../i18n/locales";
 import { createArts } from "../../services/art/create-art";
 
@@ -28,7 +27,7 @@ export async function createArtAction(
   formData: FormData
 ): Promise<{ success: true; data: { id: number } } | { success: false; error: string }> {
   try {
-    const locale = (formData.get("locale") as Locale) || DEFAULT_LOCALE;
+    const locale = formData.get("locale");
     const releaseDate = formData.get("releaseDate") as string;
     const countryId = formData.get("countryId") as string;
     const typeId = formData.get("typeId") as string;

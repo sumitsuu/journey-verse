@@ -1,0 +1,136 @@
+{
+  "HomePage": {
+    "title": "Hello world!",
+    "brandName": "JourneyVerse",
+    "heroTitle": "JourneyVerse",
+    "heroDescription": "Discover new worlds through movies, games, anime, and books. Rate, review, and share your journey with friends!",
+    "featured": "Featured",
+    "trending": "Trending",
+    "viewAll": "View all",
+    "recentlyRatedByFriends": "Recently rated by friends",
+    "comingSoon": "Coming soon..."
+  },
+  "Header": {
+    "brandName": "JourneyVerse"
+  },
+  "Navigation": {
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "myProfile": "My Profile",
+    "settings": "Settings",
+    "notifications": "Notifications",
+    "bookmarks": "Bookmarks",
+    "more": "More...",
+    "bookmarksTooltip": "Bookmarks",
+    "notificationsTooltip": "Notifications",
+    "signOutTooltip": "Maybe we will meet again",
+    "noBookmarks": "You have no saved bookmarks yet.",
+    "noNotifications": "You have no notifications yet.",
+    "language": "Language",
+    "switchLanguage": "Switch language"
+  },
+  "Auth": {
+    "signIn": {
+      "title": "Sign In",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign In",
+      "noAccount": "Have no account yet?",
+      "welcomeMessage": "Welcome back! The journey continues.",
+      "continueWith": "or continue with",
+      "providers": {
+        "google": "Google",
+        "yandex": "Yandex",
+        "github": "GitHub",
+        "facebook": "Facebook",
+        "twitter": "Twitter",
+        "steam": "Steam"
+      }
+    },
+    "signUp": {
+      "title": "Sign Up",
+      "email": "Email",
+      "name": "Name",
+      "password": "Password",
+      "repeatPassword": "Repeat password",
+      "submit": "Sign Up",
+      "hasAccount": "Already have an account?",
+      "inspirationQuote": "The journey of a thousand miles begins with a single step.",
+      "continueWith": "or continue with",
+      "providers": {
+        "google": "Google",
+        "yandex": "Yandex",
+        "github": "GitHub",
+        "facebook": "Facebook",
+        "twitter": "Twitter",
+        "steam": "Steam"
+      }
+    },
+    "validation": {
+      "passwordMinLength": "Password must be at least 3 characters long",
+      "fieldRequired": "This field is required",
+      "emailInvalid": "Invalid email address. Example: test@gmail.com",
+      "passwordsMustMatch": "Passwords must match"
+    },
+    "messages": {
+      "userCreatedSuccess": "User created successfully",
+      "userCreationError": "An error occurred while creating the user",
+      "error": "Error"
+    }
+  },
+  "Arts": {
+    "filters": "Filters",
+    "noArtsFound": "No arts found",
+    "filtering": {
+      "title": "Filtering",
+      "description": "Choose the filters you want to apply to the search.",
+      "genres": "Genres",
+      "minimumRating": "Minimum Rating",
+      "yearSince": "Year (Since)",
+      "yearUntil": "Year (Until)",
+      "selectRating": "Select a rating",
+      "selectYear": "Select a year",
+      "applyFilters": "Apply filters"
+    }
+  },
+  "ArtDetails": {
+    "addToLibrary": "Add to my library",
+    "removeFromLibrary": "Remove from my library",
+    "releaseYear": "Release Year:",
+    "genres": "Genres:",
+    "episodes": "Episodes:",
+    "rating": "Rating:",
+    "status": "Status:",
+    "country": "Country:",
+    "actors": "Actors:",
+    "directors": "Directors:",
+    "notRated": "Not rated by users",
+    "ratingTooltip": "Rating is calculated based on user ratings."
+  },
+  "UserProfile": {
+    "editProfile": "Edit Profile",
+    "averageRating": "Average Rating",
+    "ratingsCount": "Ratings Count",
+    "following": "Following",
+    "followers": "Followers",
+    "lists": "Lists"
+  },
+  "Common": {
+    "error": "Error",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "apply": "Apply",
+    "reset": "Reset",
+    "clear": "Clear"
+  }
+}

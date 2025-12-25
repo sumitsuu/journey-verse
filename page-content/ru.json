@@ -1,0 +1,136 @@
+{
+  "HomePage": {
+    "title": "Привет, мир!",
+    "brandName": "JourneyVerse",
+    "heroTitle": "JourneyVerse",
+    "heroDescription": "Откройте для себя новые миры через фильмы, игры, аниме и книги. Оценивайте, рецензируйте и делитесь своим путешествием с друзьями!",
+    "featured": "Рекомендуемое",
+    "trending": "Популярное",
+    "viewAll": "Смотреть все",
+    "recentlyRatedByFriends": "Недавно оценено друзьями",
+    "comingSoon": "Скоро..."
+  },
+  "Header": {
+    "brandName": "JourneyVerse"
+  },
+  "Navigation": {
+    "signIn": "Войти",
+    "signOut": "Выйти",
+    "myProfile": "Мой профиль",
+    "settings": "Настройки",
+    "notifications": "Уведомления",
+    "bookmarks": "Закладки",
+    "more": "Еще...",
+    "bookmarksTooltip": "Закладки",
+    "notificationsTooltip": "Уведомления",
+    "signOutTooltip": "Может быть, мы еще встретимся",
+    "noBookmarks": "У вас пока нет сохраненных закладок.",
+    "noNotifications": "У вас пока нет уведомлений.",
+    "language": "Язык",
+    "switchLanguage": "Переключить язык"
+  },
+  "Auth": {
+    "signIn": {
+      "title": "Вход",
+      "email": "Электронная почта",
+      "password": "Пароль",
+      "submit": "Войти",
+      "noAccount": "Еще нет аккаунта?",
+      "welcomeMessage": "Добро пожаловать обратно! Путешествие продолжается.",
+      "continueWith": "или продолжить с",
+      "providers": {
+        "google": "Google",
+        "yandex": "Яндекс",
+        "github": "GitHub",
+        "facebook": "Facebook",
+        "twitter": "Twitter",
+        "steam": "Steam"
+      }
+    },
+    "signUp": {
+      "title": "Регистрация",
+      "email": "Электронная почта",
+      "name": "Имя",
+      "password": "Пароль",
+      "repeatPassword": "Повторите пароль",
+      "submit": "Зарегистрироваться",
+      "hasAccount": "Уже есть аккаунт?",
+      "inspirationQuote": "Путь в тысячу миль начинается с одного шага.",
+      "continueWith": "или продолжить с",
+      "providers": {
+        "google": "Google",
+        "yandex": "Яндекс",
+        "github": "GitHub",
+        "facebook": "Facebook",
+        "twitter": "Twitter",
+        "steam": "Steam"
+      }
+    },
+    "validation": {
+      "passwordMinLength": "Пароль должен содержать не менее 3 символов",
+      "fieldRequired": "Это поле обязательно для заполнения",
+      "emailInvalid": "Неверный адрес электронной почты. Пример: test@gmail.com",
+      "passwordsMustMatch": "Пароли должны совпадать"
+    },
+    "messages": {
+      "userCreatedSuccess": "Пользователь успешно создан",
+      "userCreationError": "Произошла ошибка при создании пользователя",
+      "error": "Ошибка"
+    }
+  },
+  "Arts": {
+    "filters": "Фильтры",
+    "noArtsFound": "Произведения не найдены",
+    "filtering": {
+      "title": "Фильтрация",
+      "description": "Выберите фильтры, которые хотите применить к поиску.",
+      "genres": "Жанры",
+      "minimumRating": "Минимальный рейтинг",
+      "yearSince": "Год (с)",
+      "yearUntil": "Год (по)",
+      "selectRating": "Выберите рейтинг",
+      "selectYear": "Выберите год",
+      "applyFilters": "Применить фильтры"
+    }
+  },
+  "ArtDetails": {
+    "addToLibrary": "Добавить в мою библиотеку",
+    "removeFromLibrary": "Удалить из моей библиотеки",
+    "releaseYear": "Год выпуска:",
+    "genres": "Жанры:",
+    "episodes": "Эпизоды:",
+    "rating": "Рейтинг:",
+    "status": "Статус:",
+    "country": "Страна:",
+    "actors": "Актеры:",
+    "directors": "Режиссеры:",
+    "notRated": "Не оценено пользователями",
+    "ratingTooltip": "Рейтинг рассчитывается на основе оценок пользователей."
+  },
+  "UserProfile": {
+    "editProfile": "Редактировать профиль",
+    "averageRating": "Средний рейтинг",
+    "ratingsCount": "Количество оценок",
+    "following": "Подписки",
+    "followers": "Подписчики",
+    "lists": "Списки"
+  },
+  "Common": {
+    "error": "Ошибка",
+    "loading": "Загрузка...",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "close": "Закрыть",
+    "back": "Назад",
+    "next": "Далее",
+    "previous": "Назад",
+    "search": "Поиск",
+    "filter": "Фильтр",
+    "sort": "Сортировать",
+    "apply": "Применить",
+    "reset": "Сбросить",
+    "clear": "Очистить"
+  }
+}
