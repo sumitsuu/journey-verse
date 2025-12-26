@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 import { useTranslations } from "next-intl";
 import Arts from "./arts";
 import FeaturedArts from "./featured-arts";
@@ -13,17 +11,8 @@ function HomeView() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className={" max-w-full max-h-[420px]"}>
-        <Image
-          src="/images/home.jpg?v=1"
-          width={1280}
-          height={420}
-          alt="Picture of the author"
-          className={"rounded-[12px] h-full max-h-[420px] object-fill"}
-          quality={100}
-        />
-      </div>
       <div className="flex flex-col gap-2">
+        <h1 className="text-4xl font-bold">{homeTranslations("heroTitle")}</h1>
         <p className={"text-xl drop-shadow-md"}>{homeTranslations("heroDescription")}</p>
       </div>
       {arts && arts?.length > 0 && (

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
-import { updateUserAction } from "@/src/lib/actions/user/update-user";
+import { updateUserAction } from "@/src/lib/actions/user/update-user.action";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useMutation } from "@tanstack/react-query";

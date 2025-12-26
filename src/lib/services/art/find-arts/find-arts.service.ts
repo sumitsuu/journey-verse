@@ -1,4 +1,4 @@
-"use server";
+import "server-only";
 
 import { and, between, eq, exists, gte, inArray, SQL, sql } from "drizzle-orm";
 
@@ -73,7 +73,7 @@ export async function findArts({ locale, filters = {} }: FindArtsInput): Promise
 
 const buildFilters = (filters: FindArtsFilters) => {
   const condition: SQL[] = [];
-  const { typeId, genres, rating, yearStart, yearEnd } = filters;
+  const { typeId, genres, rating, yearStart, yearEnd, artId } = filters;
 
   if (typeId) {
     condition.push(eq(schema.arts.typeId, typeId));
@@ -97,6 +97,10 @@ const buildFilters = (filters: FindArtsFilters) => {
 
   if (yearStart || yearEnd) {
     condition.push(between(sql`EXTRACT(YEAR FROM ${schema.arts.releaseDate})`, yearStart ?? 0, yearEnd ?? 9999));
+  }
+
+  if (artId) {
+    condition.push(eq(schema.arts.id, artId));
   }
 
   return condition;

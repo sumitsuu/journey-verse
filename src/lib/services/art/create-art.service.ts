@@ -1,9 +1,9 @@
-"use server";
+import "server-only";
 
 import { db } from "../../db";
 import * as schema from "../../db/schema";
 import type { Locale } from "../../i18n/locales";
-import { uploadFile } from "../storage/minio-client";
+import { uploadFile } from "../storage/minio-client.service";
 
 export async function createArts(
   locale: Locale,

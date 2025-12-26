@@ -18,7 +18,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-[12px] bg-black-2 px-3 py-2 text-sm shadow-sm ring-offset-background focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 text-muted-foreground",
+      "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-[12px] bg-black-2 px-3 py-2 text-sm shadow-sm ring-offset-background focus:outline-none focus:ring-none disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 text-muted-foreground",
       className
     )}
     {...props}
@@ -78,7 +78,6 @@ const SelectContent = React.forwardRef<
       <SelectScrollUpButton />
       <SelectPrimitive.Viewport
         className={cn(
-          "p-1",
           position === "popper" &&
             "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
         )}
@@ -106,7 +105,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-black-2 focus:text-light-purple-1 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-black-2 focus:text-light-purple-1 data-[highlighted]:bg-black-3 duration-300 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
     {...props}
@@ -131,15 +130,27 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 type SelectOption = { label: string; value?: string };
 
-interface SelectComponentProps extends Omit<SelectProps, "value"> {
+interface SelectComponentProps extends Omit<SelectProps, "value" | "onValueChange"> {
   options: SelectOption[];
-  placeholder: string;
-  value: string | number;
+  placeholder?: string;
+  value?: string | number;
+  onValueChange?: (value: string) => void;
+  onChange?: (value: string) => void;
 }
 
-const SelectComponent = ({ options, placeholder, value, ...rest }: SelectComponentProps) => {
+const SelectComponent = ({ options, placeholder, value, onChange, onValueChange, ...rest }: SelectComponentProps) => {
+  const handleValueChange = (newValue: string) => {
+    if (onValueChange) {
+      onValueChange(newValue);
+    } else if (onChange) {
+      onChange(newValue);
+    }
+  };
+
+  const selectValue = value !== undefined && value !== null ? String(value) : "";
+
   return (
-    <Select value={String(value)} {...rest}>
+    <Select {...rest} value={selectValue} onValueChange={handleValueChange}>
       <SelectTrigger>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

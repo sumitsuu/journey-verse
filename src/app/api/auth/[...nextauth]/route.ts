@@ -1,10 +1,10 @@
-import { loginUserAction } from "@/src/lib/actions/auth/login-user";
-import NextAuth from "next-auth";
+import { loginUserAction } from "@/src/lib/actions/auth/login-user.action";
+import NextAuth, { User, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 declare module "next-auth" {
   interface User {
-    id: string;
+    id: number;
     email: string;
     displayName: string;
     path: string;
@@ -18,7 +18,7 @@ declare module "next-auth" {
 
 declare module "next-auth/jwt" {
   interface JWT {
-    id: string;
+    id: number;
     path: string;
     displayName: string;
     email: string;
@@ -26,7 +26,7 @@ declare module "next-auth/jwt" {
   }
 }
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -34,7 +34,7 @@ const handler = NextAuth({
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials): Promise<User | null> {
         try {
           if (!credentials?.username || !credentials?.password) {
             return null;
@@ -45,16 +45,13 @@ const handler = NextAuth({
             password: credentials.password,
           });
 
-          if (result.success) {
-            return {
-              id: String(result.data.id),
-              email: result.data.email,
-              displayName: result.data.displayName,
-              path: `/users/${result.data.id}`,
-              image: result.data.avatarPath || undefined,
-            };
-          }
-          return null;
+          return {
+            id: result.id,
+            email: result.email,
+            displayName: result.displayName,
+            path: `/users/${result.id}`,
+            image: result.avatarPath ?? undefined,
+          };
         } catch {
           throw new Error("Error");
         }
@@ -66,7 +63,7 @@ const handler = NextAuth({
       const customUser = user;
 
       if (user) {
-        token.id = customUser.id;
+        token.id = Number(customUser.id);
         token.path = customUser.path;
         token.displayName = customUser.displayName;
         token.email = customUser.email;
@@ -88,6 +85,8 @@ const handler = NextAuth({
       return customSession;
     },
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

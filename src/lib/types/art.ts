@@ -23,8 +23,8 @@ type ArtType = {
 };
 
 type Status = {
-  id: (typeof statuses.$inferSelect)["id"];
-  name: (typeof statusTranslations.$inferSelect)["name"];
+  id: (typeof statuses.$inferSelect)["id"] | null;
+  name: (typeof statusTranslations.$inferSelect)["name"] | null;
 };
 
 export type Genre = {

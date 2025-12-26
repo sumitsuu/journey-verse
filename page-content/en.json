@@ -107,6 +107,22 @@
     "notRated": "Not rated by users",
     "ratingTooltip": "Rating is calculated based on user ratings."
   },
+  "AddToLibrary": {
+    "title": "Add to Library",
+    "watchedEpisodes": "Watched Episodes / {max}",
+    "rating": "Rating",
+    "status": "Status",
+    "selectStatus": "Select status",
+    "add": "Add",
+    "adding": "Adding...",
+    "validation": {
+      "episodesMax": "Must be at most {max}"
+    },
+    "messages": {
+      "createdSuccess": "Library item was created successfully",
+      "createError": "An error occurred while creating the library item"
+    }
+  },
   "UserProfile": {
     "editProfile": "Edit Profile",
     "averageRating": "Average Rating",

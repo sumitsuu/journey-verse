@@ -1,7 +1,7 @@
-"use server";
+import "server-only";
 
-import { createUsers } from "../user/create-user";
-import { findUsersByEmail } from "../user/find-user";
+import { createUsers } from "../user/create-user.service";
+import { findUsersByEmail } from "../user/find-user.service";
 
 export async function registerUsers(data: { email: string; password: string; displayName: string }) {
   const existing = await findUsersByEmail(data.email);

@@ -1,9 +1,9 @@
 import Container from "@/src/components/UI/Container";
 import { Locale } from "@/src/lib/i18n/locales";
-import { findArts } from "@/src/lib/services/art/find-arts/find-arts";
+import { findArts } from "@/src/lib/services/art/find-arts/find-arts.service";
 import { FindArtsFiltersSchema } from "@/src/lib/services/art/find-arts/schemas";
-import { findSortOptions } from "@/src/lib/services/art/find-sort-options/find-sort-options";
-import { findTypes } from "@/src/lib/services/type/find-types";
+import { findSortOptions } from "@/src/lib/services/art/find-sort-options/find-sort-options.service";
+import { findTypes } from "@/src/lib/services/type/find-types.service";
 import ArtsView from "../_components/arts-view";
 import { ArtsContextWrapper } from "./_components/arts-context-wrapper";
 

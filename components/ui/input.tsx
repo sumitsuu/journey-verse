@@ -50,15 +50,17 @@ export interface CustomInputProps extends Omit<InputHTMLAttributes<HTMLInputElem
 }
 
 const Input = React.forwardRef<HTMLInputElement, CustomInputProps>(
-  ({ className = { wrapper: "", input: "" }, type, variant, endAdornment, startAdornment, ...props }, ref) => {
+  ({ className = { wrapper: "", input: "" }, type, variant, endAdornment, startAdornment, value, ...props }, ref) => {
+    const controlledValue = value === undefined || value === null ? "" : String(value);
     return (
       <div className={`${cn(inputWrapperVariants({ variant, className: className.wrapper }))}`}>
         {startAdornment}
         <input
+          {...props}
           type={type}
           className={cn(inputVariants({ variant, className: className.input }))}
           ref={ref}
-          {...props}
+          value={controlledValue}
         />
         {endAdornment}
       </div>

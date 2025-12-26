@@ -1,6 +1,6 @@
 "use server";
 
-import { uploadFile } from "../../services/storage/minio-client";
+import { uploadFile } from "../../services/storage/minio-client.service";
 
 export async function uploadFileAction(
   formData: FormData

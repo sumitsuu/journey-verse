@@ -1,5 +1,5 @@
 import { Locale } from "../../lib/i18n/locales";
-import { findArts } from "../../lib/services/art/find-arts/find-arts";
+import { findArts } from "../../lib/services/art/find-arts/find-arts.service";
 import { HomeContextWrapper } from "./_components/home/home-context-wrapper";
 import HomeView from "./_components/home/home-view";
 

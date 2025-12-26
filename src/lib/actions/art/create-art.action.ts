@@ -3,7 +3,7 @@
 import { z } from "zod";
 
 import { DEFAULT_LOCALE } from "../../i18n/locales";
-import { createArts } from "../../services/art/create-art";
+import { createArts } from "../../services/art/create-art.service";
 
 const createArtSchema = z.object({
   locale: z.enum(["en", "ru"]).optional(),

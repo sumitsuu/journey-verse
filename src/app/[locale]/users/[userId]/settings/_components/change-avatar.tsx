@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { Form, FormField, FormLabel } from "@/components/ui/form";
 import { FileInput } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
-import { uploadFileAction } from "@/src/lib/actions/storage/upload-file";
-import { updateUserAction } from "@/src/lib/actions/user/update-user";
+import { uploadFileAction } from "@/src/lib/actions/storage/upload-file.action";
+import { updateUserAction } from "@/src/lib/actions/user/update-user.action";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";

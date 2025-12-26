@@ -1,4 +1,4 @@
-import { getFileUrl } from "@/src/lib/services/storage/minio-client";
+import { getFileUrl } from "@/src/lib/services/storage/minio-client.service";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {

@@ -18,7 +18,7 @@ import { useTranslations } from "next-intl";
 
 import { Input, PasswordInput } from "@/components/ui/input";
 import { Loader } from "@/components/ui/loader";
-import { createUserAction, CreateUserActionOutputSuccess } from "@/src/lib/actions/user/create-user";
+import { createUserAction, CreateUserActionOutputSuccess } from "@/src/lib/actions/user/create-user.action";
 import { useMutation } from "@tanstack/react-query";
 import { AlertCircle } from "lucide-react";
 

@@ -9,7 +9,7 @@ import { MultiSelect } from "@/components/ui/multi-select";
 import { SelectComponent } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { createArtAction } from "@/src/lib/actions/art/create-art";
+import { createArtAction } from "@/src/lib/actions/art/create-art.action";
 import type { Country } from "@/src/lib/types/country";
 import type { Genre } from "@/src/lib/types/genre";
 import type { Status } from "@/src/lib/types/status";

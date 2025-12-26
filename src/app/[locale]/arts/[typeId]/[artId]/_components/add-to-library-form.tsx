@@ -1,24 +1,28 @@
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
-import { Form, FormField, FormLabel } from "@/components/ui/form";
+import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import type { Art } from "@/src/lib/types/art";
+import { Loader } from "@/components/ui/loader";
+import { SelectComponent } from "@/components/ui/select";
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from "@/src/i18n/routing";
+import { createLibraryAction } from "@/src/lib/actions/library/create-library.action";
+import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { useParams } from "next/navigation";
-import { type Dispatch, type SetStateAction } from "react";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { useDetailedViewContext } from "./detailed-view-context-wrapper";
 
 type AddToLibraryFormProps = {
-  maxEpisodes: number;
-  item: Art;
-  handleModal: () => void;
-  setIsInLib: Dispatch<SetStateAction<boolean>>;
+  onOpenChange: () => void;
 };
 
-const AddToLibraryForm = ({ maxEpisodes, item, setIsInLib, handleModal }: AddToLibraryFormProps) => {
-  const ValidationSchema = z.object({
+const createValidationSchema = (maxEpisodes: number, addToLibraryTranslations: ReturnType<typeof useTranslations>) =>
+  z.object({
     episodes: z.coerce
       .number()
       .min(0)
@@ -32,7 +36,7 @@ const AddToLibraryForm = ({ maxEpisodes, item, setIsInLib, handleModal }: AddToL
               maximum: maxEpisodes,
               type: "number",
               inclusive: true,
-              message: `Must be at most ${maxEpisodes}`,
+              message: addToLibraryTranslations("validation.episodesMax", { max: maxEpisodes }),
             });
           }
         }
@@ -42,28 +46,53 @@ const AddToLibraryForm = ({ maxEpisodes, item, setIsInLib, handleModal }: AddToL
     status: z.coerce.number(),
   });
 
-  const form = useForm<z.infer<typeof ValidationSchema>>({
+const AddToLibraryForm = ({ onOpenChange }: AddToLibraryFormProps) => {
+  const addToLibraryTranslations = useTranslations("AddToLibrary");
+  const { art, libraryStatuses } = useDetailedViewContext();
+  const maxEpisodes = art.episodes;
+  const router = useRouter();
+
+  const validationSchema = createValidationSchema(maxEpisodes, addToLibraryTranslations);
+
+  const form = useForm<z.infer<typeof validationSchema>>({
     mode: "onChange",
-    resolver: zodResolver(ValidationSchema),
+    resolver: zodResolver(validationSchema),
+    defaultValues: {
+      episodes: undefined,
+      rating: undefined,
+      status: undefined,
+    },
   });
-  const libraryStatuses = [];
-  const { typeId }: { typeId: string } = useParams();
   const { data: session } = useSession();
   const user = session?.user;
 
-  const onSubmit = async (data: z.infer<typeof ValidationSchema>) => {
-    if (typeId && user?.id) {
-      // addLibraryItem(
-      //     {
-      //         statusId: data.status,
-      //         ratingId: data.rating,
-      //         userId: Number(user.id),
-      //         artId: item.id,
-      //     },
-      //     Number(typeId)
-      // )
-      // setIsInLib(Boolean(response));
-      handleModal();
+  const { mutate: createLibraryMutation, isPending } = useMutation({
+    mutationFn: createLibraryAction,
+    onSuccess: () => {
+      toast({
+        title: addToLibraryTranslations("messages.createdSuccess"),
+        variant: "success",
+      });
+      router.refresh();
+      onOpenChange();
+    },
+    onError: () => {
+      toast({
+        title: addToLibraryTranslations("messages.createError"),
+        variant: "destructive",
+      });
+    },
+  });
+
+  const onSubmit = async (data: z.infer<typeof validationSchema>) => {
+    if (user?.id) {
+      createLibraryMutation({
+        artId: art.id,
+        userId: Number(user.id),
+        statusId: data.status,
+        rating: data.rating,
+        episodes: data.episodes ?? 1,
+      });
     }
   };
 
@@ -75,56 +104,47 @@ const AddToLibraryForm = ({ maxEpisodes, item, setIsInLib, handleModal }: AddToL
           onSubmit(data);
         })}
       >
-        {maxEpisodes > 1 && (
-          <FormField
-            name="episodes"
-            control={form.control}
-            defaultValue={0}
-            render={({ field, fieldState }) => (
-              <>
-                <FormLabel>Watched Episodes</FormLabel>
-                <Input
-                  placeholder={"Watched Episodes"}
-                  value={field.value}
-                  onChange={field.onChange}
-                  variant={fieldState.invalid ? "invalid" : "default"}
-                />
-              </>
-            )}
-          />
-        )}
+        <FormField
+          name="episodes"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              placeholder={addToLibraryTranslations("watchedEpisodes", { max: maxEpisodes })}
+              variant={fieldState.invalid ? "invalid" : "default"}
+              disabled={maxEpisodes === 1}
+            />
+          )}
+        />
 
         <FormField
           name="rating"
           control={form.control}
-          defaultValue={0}
           render={({ field, fieldState }) => (
-            <>
-              <FormLabel>Rating</FormLabel>
-              <Input
-                placeholder={"Rating"}
-                value={field.value}
-                onChange={field.onChange}
-                variant={fieldState.invalid ? "invalid" : "default"}
-              />
-            </>
+            <Input
+              {...field}
+              placeholder={addToLibraryTranslations("rating")}
+              variant={fieldState.invalid ? "invalid" : "default"}
+            />
           )}
         />
-        {/* <FormField
-                    name="status"
-                    control={form.control}
-                    defaultValue={libraryStatuses[0]?.id}
-                    render={({ field: { ref, ...rest }, fieldState }) => (
-                        <SelectComponent
-                            placeholder="Select status"
-                            options={libraryStatuses.map((item) => ({
-                                label: item.name,
-                                value: item.id,
-                            }))}
-                        />
-                    )}
-                /> */}
-        <Button variant={"secondary"}>Add</Button>
+        <FormField
+          name="status"
+          control={form.control}
+          render={({ field }) => (
+            <SelectComponent
+              {...field}
+              placeholder={addToLibraryTranslations("selectStatus")}
+              options={libraryStatuses.map((item) => ({
+                label: item.name,
+                value: item.id.toString(),
+              }))}
+            />
+          )}
+        />
+        <Button variant={"secondary"} type="submit" disabled={isPending}>
+          {isPending ? <Loader /> : addToLibraryTranslations("add")}
+        </Button>
       </form>
     </Form>
   );

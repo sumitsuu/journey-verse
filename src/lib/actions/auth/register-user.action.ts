@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 
-import { registerUsers } from "../../services/auth/register-user";
+import { registerUsers } from "../../services/auth/register-user.service";
 import type { User } from "../../types/user";
 
 const registerUserSchema = z.object({

@@ -7,6 +7,7 @@ export const FindArtsFiltersSchema = z.object({
   rating: z.string().optional(),
   yearStart: z.string().optional(),
   yearEnd: z.string().optional(),
+  artId: z.number().int().positive().optional(),
 });
 
 export const FindArtsInputSchema = z.object({

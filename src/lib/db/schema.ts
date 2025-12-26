@@ -1,6 +1,7 @@
 import { integer, numeric, pgEnum, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const localesEnum = pgEnum("locales", ["en", "ru"]);
+export const statusTypeEnum = pgEnum("status_type", ["library", "art"]);
 
 export const users = pgTable("users", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
@@ -36,6 +37,7 @@ export const genreTranslations = pgTable("genre_translations", {
 
 export const statuses = pgTable("statuses", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  type: statusTypeEnum("type").notNull(),
 });
 
 export const statusTranslations = pgTable("status_translations", {
@@ -85,4 +87,15 @@ export const genreTypes = pgTable("genre_types", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   typeId: integer("type_id").notNull(),
   genreId: integer("genre_id").notNull(),
+});
+
+export const library = pgTable("library", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  userId: integer("user_id").notNull(),
+  artId: integer("art_id").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: false }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: false }).notNull().defaultNow(),
+  statusId: integer("status_id").notNull(),
+  rating: numeric("rating", { precision: 10, scale: 2 }),
+  episodes: integer("episodes").notNull(),
 });
