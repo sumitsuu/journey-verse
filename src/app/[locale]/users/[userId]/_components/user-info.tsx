@@ -37,7 +37,7 @@ export default function UserInfo() {
           alt={session?.user.displayName || ""}
           width={100}
           height={100}
-          unoptimized
+          quality={90}
         />
         <div className={"flex flex-col items-center gap-2"}>
           <p className={"text-4xl"}>{session?.user.displayName}</p>

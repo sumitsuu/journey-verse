@@ -36,7 +36,7 @@ const DetailedView = () => {
                   className={"w-full max-w-[250px] h-[400px]"}
                   width={250}
                   height={400}
-                  unoptimized
+                  quality={90}
                 />
                 <Button
                   onClick={isInLibrary ? handleDeleteFromLibraryModal : handleAddToLibraryModal}

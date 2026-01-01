@@ -1,3 +1,4 @@
+import { findTypes } from "@/src/lib/services/type/find-types/find-types.service";
 import { Locale } from "../../lib/i18n/locales";
 import { findArts } from "../../lib/services/art/find-arts/find-arts.service";
 import { HomeContextWrapper } from "./_components/home/home-context-wrapper";
@@ -10,9 +11,10 @@ async function HomePage({
 }>) {
   const { locale } = await params;
   const arts = await findArts({ locale, filters: {} });
+  const types = await findTypes({ locale });
 
   return (
-    <HomeContextWrapper arts={arts}>
+    <HomeContextWrapper types={types} arts={arts}>
       <div className={"flex justify-center w-full py-9"}>
         <div className={"max-w-[1280px]"}>
           <HomeView />

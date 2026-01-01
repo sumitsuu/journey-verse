@@ -14,11 +14,11 @@ function Card({ item }: Readonly<CardProps>) {
     <Link href={`/arts/${item.type.id}/${item.id}`} className={"opacity-80 hover:opacity-100 duration-300"}>
       <Image
         src={item.previewPath ? getFileUrl(item.previewPath) : PICTURE_PLACEHOLDER}
-        className={"w-[255px] h-[135px] aspect-video object-fit rounded-[12px]"}
+        className={"max-w-[175px] h-[235px] rounded-[12px] aspect-video object-cover"}
         alt=""
-        width={255}
-        height={135}
-        unoptimized
+        width={175}
+        height={235}
+        quality={90}
       />
       <p className={"mt-2 font-medium"}>{item.title}</p>
       <div className={"mt-1 flex gap-4 text-light-purple-1"}>

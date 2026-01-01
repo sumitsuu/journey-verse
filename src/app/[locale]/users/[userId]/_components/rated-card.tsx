@@ -11,7 +11,7 @@ export default function RatedCard() {
         src={getFileUrl("witcher.png")}
         width={175}
         height={235}
-        unoptimized
+        quality={90}
       />
       <div className={"p-4 flex flex-col gap-4 justify-center"}>
         <p className={"lg:text-3xl text-2xl font-bold"}>Witcher</p>

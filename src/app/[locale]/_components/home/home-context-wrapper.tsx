@@ -1,10 +1,12 @@
 "use client";
 
 import type { Art } from "@/src/lib/types/art";
+import type { Type } from "@/src/lib/types/type";
 import { createContext, useContext, type ReactNode } from "react";
 
 interface HomePageContextType {
   arts: Art[];
+  types: Type[];
 }
 
 const HomePageContext = createContext<HomePageContextType | undefined>(undefined);
@@ -12,10 +14,11 @@ const HomePageContext = createContext<HomePageContextType | undefined>(undefined
 interface HomePageProviderProps {
   children: ReactNode;
   arts: Art[];
+  types: Type[];
 }
 
-export function HomeContextWrapper({ children, arts }: Readonly<HomePageProviderProps>) {
-  return <HomePageContext.Provider value={{ arts }}>{children}</HomePageContext.Provider>;
+export function HomeContextWrapper({ children, arts, types }: Readonly<HomePageProviderProps>) {
+  return <HomePageContext.Provider value={{ arts, types }}>{children}</HomePageContext.Provider>;
 }
 
 export function useHomeContext() {

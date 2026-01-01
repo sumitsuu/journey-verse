@@ -3,7 +3,7 @@ import { Locale } from "@/src/lib/i18n/locales";
 import { findArts } from "@/src/lib/services/art/find-arts/find-arts.service";
 import { FindArtsFiltersSchema } from "@/src/lib/services/art/find-arts/schemas";
 import { findSortOptions } from "@/src/lib/services/art/find-sort-options/find-sort-options.service";
-import { findTypes } from "@/src/lib/services/type/find-types.service";
+import { findTypes } from "@/src/lib/services/type/find-types/find-types.service";
 import ArtsView from "../_components/arts-view";
 import { ArtsContextWrapper } from "./_components/arts-context-wrapper";
 
@@ -25,7 +25,7 @@ export default async function ArtsPage({
 
   const arts = await findArts({ locale, filters });
   const sortOptions = await findSortOptions({ locale, typeId: Number(typeId) });
-  const types = await findTypes(locale);
+  const types = await findTypes({ locale });
 
   return (
     <Container className="!px-4">

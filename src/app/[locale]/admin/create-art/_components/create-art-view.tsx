@@ -62,7 +62,7 @@ export const CreateArtView = () => {
 
   const createArtMutation = useMutation({
     mutationFn: async (data: FormData) => {
-      const result = await createArtAction(data);
+      await createArtAction(data);
     },
     onSuccess: () => {
       toast({

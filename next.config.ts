@@ -21,6 +21,9 @@ const nextConfig: NextConfig = {
       {
         pathname: "/images/**",
       },
+      {
+        pathname: "/api/storage/file",
+      },
     ],
   },
 };

@@ -102,7 +102,7 @@ const Nav = () => {
                       alt=""
                       width={40}
                       height={40}
-                      unoptimized
+                      quality={90}
                     />
                   ) : (
                     <div

@@ -16,7 +16,7 @@ const SearchCard = ({ item }: ISearchCard) => {
           alt=""
           width={100}
           height={100}
-          unoptimized
+          quality={90}
         />
       </div>
       <div className={"flex flex-col text-white"}>

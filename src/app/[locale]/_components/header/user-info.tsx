@@ -20,7 +20,7 @@ const UserInfo = ({ setIsSidebarOpen }: { setIsSidebarOpen: Dispatch<SetStateAct
               alt=""
               width={50}
               height={50}
-              unoptimized
+              quality={90}
             />
           ) : (
             <div

@@ -2,13 +2,12 @@ import "server-only";
 
 import { and, eq } from "drizzle-orm";
 
-import { db } from "../../db";
-import * as schema from "../../db/schema";
-import type { Locale } from "../../i18n/locales";
-import { DEFAULT_LOCALE } from "../../i18n/locales";
-import type { Type } from "../../types/type";
+import { db } from "../../../db";
+import * as schema from "../../../db/schema";
+import type { Type } from "../../../types/type";
+import { FindTypesInput } from "./schemas";
 
-export async function findTypes(locale: Locale = DEFAULT_LOCALE): Promise<Type[]> {
+export async function findTypes({ locale }: FindTypesInput): Promise<Type[]> {
   const rows = await db
     .select({
       id: schema.types.id,

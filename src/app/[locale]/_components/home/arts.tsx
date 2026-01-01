@@ -5,20 +5,20 @@ import { useTranslations } from "next-intl";
 
 import Card from "./card";
 
-import type { Art } from "@/src/lib/types/art";
+import { useHomeContext } from "./home-context-wrapper";
 
 type ArtsProps = {
-  arts: Art[];
   title: string;
 };
 
-function Arts({ arts, title }: Readonly<ArtsProps>) {
+function Arts({ title }: Readonly<ArtsProps>) {
   const homeTranslations = useTranslations("HomePage");
+  const { types, arts } = useHomeContext();
   return (
     <div>
       <div className={"flex justify-between items-center"}>
         <h3 className={"font-bold text-[22px] my-[28px]"}>{title}</h3>
-        <Link href={"/arts/1"} className={"opacity-80 hover:opacity-100 transition-opacity duration-300"}>
+        <Link href={`/arts/${types[0].id}`} className={"opacity-80 hover:opacity-100 transition-opacity duration-300"}>
           {homeTranslations("viewAll")}
         </Link>
       </div>

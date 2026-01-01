@@ -6,30 +6,31 @@ import type { Art } from "@/src/lib/types/art";
 import { getFileUrl } from "@/src/lib/utils/file-url";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-
-type FeaturedArtsProps = {
-  arts: Art[];
-};
+import { useHomeContext } from "./home-context-wrapper";
 
 const FeaturedCard = ({ item }: { item: Art }) => {
   return (
     <Link href={`/arts/${item.type.id}/${item.id}`} className={"opacity-80 hover:opacity-100 duration-300"}>
       <Image
         src={item.previewPath ? getFileUrl(item.previewPath) : PICTURE_PLACEHOLDER}
-        className={"max-w-[240px] max-h-[134px] object-cover rounded-[12px]"}
+        className={"max-w-[175px] h-[235px] rounded-[12px] aspect-video object-cover"}
         alt=""
-        width={240}
-        height={134}
-        unoptimized
+        width={175}
+        height={235}
+        quality={90}
       />
-      <p className={"mt-4 font-medium"}>{item.title}</p>
-      <p className={"mt-1 text-light-purple-1"}>{item?.genres?.[0]?.name}</p>
+      <p className={"mt-2 font-medium"}>{item.title}</p>
+      <div className={"mt-1 flex gap-4 text-light-purple-1"}>
+        <span>{new Date(item.releaseDate).getFullYear()}</span>
+        <span>{item.country.name}</span>
+      </div>
     </Link>
   );
 };
 
-function FeaturedArts({ arts }: Readonly<FeaturedArtsProps>) {
+function FeaturedArts() {
   const homeTranslations = useTranslations("HomePage");
+  const { arts } = useHomeContext();
   const tmpArts = new Array(5).fill(arts?.[0]);
   return (
     <div>
