@@ -40,8 +40,8 @@ const DetailedView = () => {
         title: artDetailsTranslations("removedFromLibrarySuccess"),
         variant: "success",
       });
-      handleDeleteFromLibraryDialog();
       router.refresh();
+      handleDeleteFromLibraryDialog();
     },
     onError: () => {
       toast({

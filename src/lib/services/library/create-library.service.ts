@@ -3,6 +3,7 @@ import "server-only";
 import z from "zod";
 import { db } from "../../db";
 import * as schema from "../../db/schema";
+import { recalculateArtRating } from "../art/recalculate-art-rating.service";
 
 export const CreateLibraryInputSchema = z.object({
   artId: z.number().int().positive(),
@@ -32,5 +33,8 @@ export async function createLibrary({
       episodes,
     })
     .returning();
+
+  await recalculateArtRating(artId);
+
   return library;
 }

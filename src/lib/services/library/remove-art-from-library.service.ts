@@ -5,6 +5,7 @@ import z from "zod";
 
 import { db } from "../../db";
 import * as schema from "../../db/schema";
+import { recalculateArtRating } from "../art/recalculate-art-rating.service";
 
 export const RemoveArtFromLibraryInputSchema = z.object({
   userId: z.number().int().positive(),
@@ -14,5 +15,10 @@ export const RemoveArtFromLibraryInputSchema = z.object({
 export type RemoveArtFromLibraryInput = z.infer<typeof RemoveArtFromLibraryInputSchema>;
 
 export async function removeArtFromLibrary({ userId, libraryId }: RemoveArtFromLibraryInput): Promise<void> {
-  await db.delete(schema.library).where(and(eq(schema.library.id, libraryId), eq(schema.library.userId, userId)));
+  const [{ deletedArtId }] = await db
+    .delete(schema.library)
+    .where(and(eq(schema.library.id, libraryId), eq(schema.library.userId, userId)))
+    .returning({ deletedArtId: schema.library.artId });
+
+  await recalculateArtRating(deletedArtId);
 }

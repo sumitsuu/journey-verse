@@ -69,11 +69,11 @@ const AddToLibraryForm = ({ onOpenChange }: AddToLibraryFormProps) => {
   const { mutate: createLibraryMutation, isPending } = useMutation({
     mutationFn: createLibraryAction,
     onSuccess: () => {
+      router.refresh();
       toast({
         title: addToLibraryTranslations("messages.createdSuccess"),
         variant: "success",
       });
-      router.refresh();
       onOpenChange();
     },
     onError: () => {
