@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useUrlSearchParams from "@/hooks/use-url-search-params";
 import { Link } from "@/src/i18n/routing";
-import type { Art } from "@/src/lib/types/art";
 import { RotateCcw, SlidersHorizontal } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
@@ -50,7 +49,7 @@ export default function ArtsView() {
             className={`grid lg:grid-cols-6 md:grid-cols-4 grid-cols-1 gap-4 mt-4 place-items-center ${arts?.length === 0 && "!grid-cols-1 !place-items-start"}`}
           >
             {arts?.length === 0 && <div>{artsTranslations("noArtsFound")}</div>}
-            {arts?.map((art: Art) => <Card key={art.id} item={art} />)}
+            {arts?.map((art) => <Card key={art.id} item={art} />)}
           </div>
         </Tabs>
       </div>

@@ -96,6 +96,10 @@
   "ArtDetails": {
     "addToLibrary": "Добавить в мою библиотеку",
     "removeFromLibrary": "Удалить из моей библиотеки",
+    "deleteFromLibrary": "Удалить из библиотеки",
+    "deleteFromLibraryDescription": "Вы уверены, что хотите удалить этот элемент из вашей библиотеки? Это действие нельзя отменить.",
+    "removedFromLibrarySuccess": "Произведение удалено из библиотеки",
+    "removeFromLibraryError": "Не удалось удалить произведение из библиотеки",
     "releaseYear": "Год выпуска:",
     "genres": "Жанры:",
     "episodes": "Эпизоды:",
@@ -170,5 +174,9 @@
     "apply": "Применить",
     "reset": "Сбросить",
     "clear": "Очистить"
+  },
+  "ConfirmationDialog": {
+    "confirm": "Подтвердить",
+    "cancel": "Отмена"
   }
 }

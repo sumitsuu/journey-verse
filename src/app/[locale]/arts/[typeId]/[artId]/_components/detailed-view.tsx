@@ -1,27 +1,55 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
+import { PICTURE_PLACEHOLDER } from "@/lib/constants";
+import { ConfirmationDialog } from "@/src/app/_components/confirmation-dialog";
 import Container from "@/src/components/UI/Container";
 import parseDates from "@/src/helpers/parse-dates";
-import type { Genre } from "@/src/lib/types/genre";
+import { useRouter } from "@/src/i18n/routing";
+import { removeArtFromLibraryAction } from "@/src/lib/actions/library/remove-art-from-library.action";
+import type { FindArtsOutput } from "@/src/lib/services/art/find-arts.service";
 import { getFileUrl } from "@/src/lib/utils/file-url";
-
-import { PICTURE_PLACEHOLDER } from "@/lib/constants";
+import { useMutation } from "@tanstack/react-query";
 import "moment/locale/ru";
+import { useSession } from "next-auth/react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
-import AddToLibraryModal from "./add-to-library-modal";
+import AddToLibraryDialog from "./add-to-library-dialog/add-to-library-dialog";
 import { useDetailedViewContext } from "./detailed-view-context-wrapper";
 
+type Genre = FindArtsOutput["genres"][number];
+
 const DetailedView = () => {
-  const [isAddToLibraryModalOpen, setIsAddToLibraryModalOpen] = useState(false);
-  const [isDeleteFromLibraryModalOpen, setIsDeleteFromLibraryModalOpen] = useState(false);
-  const handleAddToLibraryModal = () => setIsAddToLibraryModalOpen((prev) => !prev);
-  const handleDeleteFromLibraryModal = () => setIsDeleteFromLibraryModalOpen((prev) => !prev);
+  const [isAddToLibraryDialogOpen, setIsAddToLibraryDialogOpen] = useState(false);
+  const [isDeleteFromLibraryDialogOpen, setIsDeleteFromLibraryDialogOpen] = useState(false);
+  const handleAddToLibraryDialog = () => setIsAddToLibraryDialogOpen((prev) => !prev);
+  const handleDeleteFromLibraryDialog = () => setIsDeleteFromLibraryDialogOpen((prev) => !prev);
   const artDetailsTranslations = useTranslations("ArtDetails");
-  const { art, isInLibrary } = useDetailedViewContext();
+  const { art, library } = useDetailedViewContext();
   const locale = useLocale();
+  const router = useRouter();
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
+
+  const { mutate: removeArtFromLibrary } = useMutation({
+    mutationFn: removeArtFromLibraryAction,
+    onSuccess: () => {
+      toast({
+        title: artDetailsTranslations("removedFromLibrarySuccess"),
+        variant: "success",
+      });
+      handleDeleteFromLibraryDialog();
+      router.refresh();
+    },
+    onError: () => {
+      toast({
+        title: artDetailsTranslations("removeFromLibraryError"),
+        variant: "destructive",
+      });
+    },
+  });
 
   return (
     <>
@@ -39,10 +67,10 @@ const DetailedView = () => {
                   quality={90}
                 />
                 <Button
-                  onClick={isInLibrary ? handleDeleteFromLibraryModal : handleAddToLibraryModal}
+                  onClick={library ? handleDeleteFromLibraryDialog : handleAddToLibraryDialog}
                   className={"w-full mt-3"}
                 >
-                  {isInLibrary ? artDetailsTranslations("removeFromLibrary") : artDetailsTranslations("addToLibrary")}
+                  {library ? artDetailsTranslations("removeFromLibrary") : artDetailsTranslations("addToLibrary")}
                 </Button>
               </div>
 
@@ -95,9 +123,19 @@ const DetailedView = () => {
               </div>
             </div>
 
-            {Boolean(art.episodes) && (
-              <AddToLibraryModal onOpenChange={handleAddToLibraryModal} isDialogOpen={isAddToLibraryModalOpen} />
-            )}
+            <AddToLibraryDialog onOpenChange={handleAddToLibraryDialog} isDialogOpen={isAddToLibraryDialogOpen} />
+            <ConfirmationDialog
+              title={artDetailsTranslations("deleteFromLibrary")}
+              description={artDetailsTranslations("deleteFromLibraryDescription")}
+              onConfirm={() => {
+                if (userId && library) {
+                  removeArtFromLibrary({ userId, libraryId: library.id });
+                }
+              }}
+              onCancel={handleDeleteFromLibraryDialog}
+              isOpen={isDeleteFromLibraryDialogOpen}
+              onOpenChange={handleDeleteFromLibraryDialog}
+            />
           </>
         </Container>
       </div>

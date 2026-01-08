@@ -2,8 +2,7 @@
 
 import { z } from "zod";
 
-import { updateUsers } from "../../services/user/update-user/update-user.service";
-import type { User } from "../../types/user";
+import { UpdateUserOutput, updateUsers } from "../../services/user/update-user.service";
 
 const updateUserSchema = z.object({
   id: z.number().int().positive(),
@@ -15,7 +14,7 @@ const updateUserSchema = z.object({
   newPassword: z.string().min(3, "Password must be at least 3 characters long").optional(),
 });
 
-export async function updateUserAction(data: z.infer<typeof updateUserSchema>): Promise<User> {
+export async function updateUserAction(data: z.infer<typeof updateUserSchema>): Promise<UpdateUserOutput> {
   try {
     const validated = updateUserSchema.parse(data);
 

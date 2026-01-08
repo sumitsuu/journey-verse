@@ -4,12 +4,12 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useTranslations } from "next-intl";
 import AddToLibraryForm from "./add-to-library-form";
 
-type AddToLibraryModalProps = {
+type AddToLibraryDialogProps = {
   onOpenChange: () => void;
   isDialogOpen: boolean;
 };
 
-const AddToLibraryModal = ({ onOpenChange, isDialogOpen }: AddToLibraryModalProps) => {
+const AddToLibraryDialog = ({ onOpenChange, isDialogOpen }: AddToLibraryDialogProps) => {
   const addToLibraryTranslations = useTranslations("AddToLibrary");
 
   return (
@@ -21,4 +21,4 @@ const AddToLibraryModal = ({ onOpenChange, isDialogOpen }: AddToLibraryModalProp
     </Dialog>
   );
 };
-export default AddToLibraryModal;
+export default AddToLibraryDialog;

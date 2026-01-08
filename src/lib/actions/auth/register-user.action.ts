@@ -3,7 +3,7 @@
 import { z } from "zod";
 
 import { registerUsers } from "../../services/auth/register-user.service";
-import type { User } from "../../types/user";
+import type { CreateUserOutput } from "../../services/user/create-user.service";
 
 const registerUserSchema = z.object({
   email: z.string().email(),
@@ -11,17 +11,11 @@ const registerUserSchema = z.object({
   displayName: z.string().min(1),
 });
 
-export async function registerUserAction(
-  data: z.infer<typeof registerUserSchema>
-): Promise<{ success: true; data: User } | { success: false; error: string }> {
+export async function registerUserAction(data: z.infer<typeof registerUserSchema>): Promise<CreateUserOutput> {
   try {
     const validated = registerUserSchema.parse(data);
-    const result = await registerUsers(validated);
-    return { success: true, data: result };
+    return await registerUsers(validated);
   } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Failed to register user",
-    };
+    throw new Error(error instanceof Error ? error.message : "Failed to register user");
   }
 }

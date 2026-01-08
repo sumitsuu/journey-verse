@@ -1,13 +1,13 @@
 import { PICTURE_PLACEHOLDER } from "@/lib/constants";
-import type { Art } from "@/src/lib/types/art";
 
 import { Link } from "@/src/i18n/routing";
+import { FindArtsOutput } from "@/src/lib/services/art/find-arts.service";
 import { getFileUrl } from "@/src/lib/utils/file-url";
 import "moment-timezone"; // TODO: replace with luxon
 import Image from "next/image";
 
 type CardProps = {
-  item: Art;
+  item: FindArtsOutput;
 };
 
 function Card({ item }: Readonly<CardProps>) {

@@ -18,7 +18,8 @@ import { useTranslations } from "next-intl";
 
 import { Input, PasswordInput } from "@/components/ui/input";
 import { Loader } from "@/components/ui/loader";
-import { createUserAction, CreateUserActionOutputSuccess } from "@/src/lib/actions/user/create-user.action";
+import { createUserAction } from "@/src/lib/actions/user/create-user.action";
+import { CreateUserOutput } from "@/src/lib/services/user/create-user.service";
 import { useMutation } from "@tanstack/react-query";
 import { AlertCircle } from "lucide-react";
 
@@ -80,11 +81,11 @@ const SignUpView = () => {
     }
   });
 
-  const createUserMutation = useMutation<CreateUserActionOutputSuccess, unknown, z.infer<typeof SignUpSchema>>({
+  const createUserMutation = useMutation<CreateUserOutput, unknown, z.infer<typeof SignUpSchema>>({
     mutationFn: async (data) => {
       return await createUserAction(data);
     },
-    onSuccess: ({ data }: CreateUserActionOutputSuccess) => {
+    onSuccess: (data: CreateUserOutput) => {
       toast({
         title: authMessagesTranslations("userCreatedSuccess"),
         variant: "success",

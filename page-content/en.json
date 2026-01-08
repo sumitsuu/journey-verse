@@ -96,6 +96,10 @@
   "ArtDetails": {
     "addToLibrary": "Add to my library",
     "removeFromLibrary": "Remove from my library",
+    "deleteFromLibrary": "Delete from Library",
+    "deleteFromLibraryDescription": "Are you sure you want to remove this item from your library? This action cannot be undone.",
+    "removedFromLibrarySuccess": "Art removed from library",
+    "removeFromLibraryError": "Failed to remove art from library",
     "releaseYear": "Release Year:",
     "genres": "Genres:",
     "episodes": "Episodes:",
@@ -170,5 +174,9 @@
     "apply": "Apply",
     "reset": "Reset",
     "clear": "Clear"
+  },
+  "ConfirmationDialog": {
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   }
 }

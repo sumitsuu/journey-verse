@@ -2,12 +2,22 @@ import "server-only";
 
 import { eq } from "drizzle-orm";
 
-import { db } from "../../../db";
-import * as schema from "../../../db/schema";
-import type { User } from "../../../types/user";
-import { UpdateUserInput } from "./schemas";
+import { z } from "zod";
+import { db } from "../../db";
+import * as schema from "../../db/schema";
 
-export async function updateUsers({ id, ...data }: UpdateUserInput): Promise<User> {
+export const UpdateUserSchema = z.object({
+  id: z.number(),
+  email: z.string().email().optional(),
+  displayName: z.string().optional(),
+  avatarPath: z.string().nullable(),
+  favouredTypeId: z.number().nullable(),
+});
+
+export type UpdateUserInput = z.infer<typeof UpdateUserSchema>;
+export type UpdateUserOutput = Omit<typeof schema.users.$inferSelect, "password">;
+
+export async function updateUsers({ id, ...data }: UpdateUserInput): Promise<UpdateUserOutput> {
   const [existing] = await db.select().from(schema.users).where(eq(schema.users.id, id));
 
   if (!existing) {
@@ -25,7 +35,7 @@ export async function updateUsers({ id, ...data }: UpdateUserInput): Promise<Use
     .where(eq(schema.users.id, id))
     .returning();
 
-  const result: User = {
+  const result: UpdateUserOutput = {
     id: updated.id,
     email: updated.email,
     displayName: updated.displayName,

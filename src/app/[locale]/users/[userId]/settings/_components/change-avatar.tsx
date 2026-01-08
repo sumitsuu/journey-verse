@@ -7,6 +7,7 @@ import { toast } from "@/hooks/use-toast";
 import { uploadFileAction } from "@/src/lib/actions/storage/upload-file.action";
 import { updateUserAction } from "@/src/lib/actions/user/update-user.action";
 
+import { useRouter } from "@/src/i18n/routing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -32,6 +33,7 @@ const ChangeAvatar = () => {
     resolver: zodResolver(validationSchema),
     mode: "onSubmit",
   });
+  const router = useRouter();
 
   const updateUserAvatarMutation = useMutation({
     mutationFn: async (data: { id: number; avatar: File }) => {
@@ -41,13 +43,9 @@ const ChangeAvatar = () => {
 
       const uploadResult = await uploadFileAction(formData);
 
-      if (!uploadResult.success) {
-        throw new Error(uploadResult.error);
-      }
-
       return await updateUserAction({
         id: data.id,
-        avatarPath: uploadResult.publicUrl,
+        avatarPath: uploadResult.key,
       });
     },
     onSuccess: async (result) => {
@@ -56,6 +54,8 @@ const ChangeAvatar = () => {
           user: {
             ...session.user,
             image: result.avatarPath || undefined,
+            displayName: result.displayName,
+            email: result.email,
           },
         });
       }
@@ -64,6 +64,7 @@ const ChangeAvatar = () => {
         variant: "success",
       });
       form.reset();
+      router.refresh();
     },
     onError: () => {
       toast({

@@ -14,7 +14,6 @@ import useUrlSearchParams from "@/hooks/use-url-search-params";
 import { RATINGS } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import type { Genre } from "@/src/lib/types/art";
 import { useTranslations } from "next-intl";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -87,7 +86,7 @@ export default function FiltersDialog({ isOpen, setIsOpen }: Readonly<FiltersDia
                 <FormItem>
                   <FormLabel>{artsTranslations("genres")}</FormLabel>
                   <MultiSelect
-                    options={sortOptions?.genres.map((genre: Genre) => ({
+                    options={sortOptions?.genres.map((genre) => ({
                       label: genre.name,
                       value: genre.id.toString(),
                     }))}

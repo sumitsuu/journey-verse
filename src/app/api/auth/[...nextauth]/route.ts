@@ -59,7 +59,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       const customUser = user;
 
       if (user) {
@@ -69,6 +69,13 @@ export const authOptions: NextAuthOptions = {
         token.email = customUser.email;
         token.image = customUser.image;
       }
+
+      if (trigger === "update" && session?.user) {
+        token.displayName = session.user.displayName;
+        token.email = session.user.email;
+        token.image = session.user.image;
+      }
+
       return token;
     },
     async session({ session, token }) {

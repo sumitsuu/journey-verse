@@ -6,9 +6,12 @@ import { db } from "../../db";
 import * as schema from "../../db/schema";
 import type { Locale } from "../../i18n/locales";
 import { DEFAULT_LOCALE } from "../../i18n/locales";
-import type { Country } from "../../types/country";
 
-export async function findCountries(locale: Locale = DEFAULT_LOCALE): Promise<Country[]> {
+export type FindCountriesOutput = typeof schema.countries.$inferSelect & {
+  name: (typeof schema.countryTranslations.$inferSelect)["name"] | null;
+};
+
+export async function findCountries(locale: Locale = DEFAULT_LOCALE): Promise<FindCountriesOutput[]> {
   const rows = await db
     .select({
       id: schema.countries.id,

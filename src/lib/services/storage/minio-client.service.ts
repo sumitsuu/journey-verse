@@ -15,11 +15,12 @@ const s3Client = new S3Client({
 
 const BUCKET_NAME = process.env.MINIO_BUCKET_NAME;
 
-export async function uploadFile(
-  key: string,
-  buffer: Buffer,
-  contentType?: string
-): Promise<{ success: true; key: string } | { success: false; error: string }> {
+export type UploadFileOutput = {
+  key: string;
+  publicUrl: string;
+};
+
+export async function uploadFile(key: string, buffer: Buffer, contentType?: string): Promise<UploadFileOutput> {
   try {
     let detectedContentType = contentType;
     if (!detectedContentType) {
@@ -37,12 +38,9 @@ export async function uploadFile(
 
     await s3Client.send(command);
 
-    return { success: true, key };
+    return { key, publicUrl: `/${key}` };
   } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Failed to upload file",
-    };
+    throw new Error(error instanceof Error ? error.message : "Failed to upload file");
   }
 }
 
@@ -55,7 +53,7 @@ export async function getFileUrl(key: string, expiresIn: number = 3600): Promise
   return await getSignedUrl(s3Client, command, { expiresIn });
 }
 
-export async function deleteFile(key: string): Promise<{ success: true } | { success: false; error: string }> {
+export async function deleteFile(key: string): Promise<void> {
   try {
     const command = new DeleteObjectCommand({
       Bucket: BUCKET_NAME,
@@ -63,12 +61,7 @@ export async function deleteFile(key: string): Promise<{ success: true } | { suc
     });
 
     await s3Client.send(command);
-
-    return { success: true };
   } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Failed to delete file",
-    };
+    throw new Error(error instanceof Error ? error.message : "Failed to delete file");
   }
 }

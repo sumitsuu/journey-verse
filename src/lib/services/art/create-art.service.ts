@@ -5,6 +5,10 @@ import * as schema from "../../db/schema";
 import type { Locale } from "../../i18n/locales";
 import { uploadFile } from "../storage/minio-client.service";
 
+export type CreateArtOutput = {
+  id: number;
+};
+
 export async function createArts(
   locale: Locale,
   previewFile: { buffer: Buffer; originalname: string },
@@ -21,10 +25,6 @@ export async function createArts(
 ) {
   const fileName = `arts/${Date.now()}-${previewFile.originalname}`;
   const uploadResult = await uploadFile(fileName, previewFile.buffer);
-
-  if (!uploadResult.success) {
-    throw new Error(uploadResult.error);
-  }
 
   const [art] = await db
     .insert(schema.arts)

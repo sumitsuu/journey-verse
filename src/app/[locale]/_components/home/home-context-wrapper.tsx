@@ -1,20 +1,20 @@
 "use client";
 
-import type { Art } from "@/src/lib/types/art";
-import type { Type } from "@/src/lib/types/type";
+import type { FindArtsOutput } from "@/src/lib/services/art/find-arts.service";
+import type { FindTypesOutput } from "@/src/lib/services/type/find-types.service";
 import { createContext, useContext, type ReactNode } from "react";
 
 interface HomePageContextType {
-  arts: Art[];
-  types: Type[];
+  arts: FindArtsOutput[];
+  types: FindTypesOutput[];
 }
 
 const HomePageContext = createContext<HomePageContextType | undefined>(undefined);
 
 interface HomePageProviderProps {
   children: ReactNode;
-  arts: Art[];
-  types: Type[];
+  arts: FindArtsOutput[];
+  types: FindTypesOutput[];
 }
 
 export function HomeContextWrapper({ children, arts, types }: Readonly<HomePageProviderProps>) {

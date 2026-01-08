@@ -1,13 +1,50 @@
 import "server-only";
 
 import { and, between, eq, exists, gte, inArray, SQL, sql } from "drizzle-orm";
+import z from "zod";
 
-import { db } from "../../../db";
-import * as schema from "../../../db/schema";
-import type { Art } from "../../../types/art";
-import { FindArtsFilters, FindArtsInput } from "./schemas";
+import { db } from "../../db";
+import * as schema from "../../db/schema";
+import { localesEnum } from "../../db/schema";
 
-export async function findArts({ locale, filters = {} }: FindArtsInput): Promise<Art[]> {
+export const FindArtsFiltersSchema = z.object({
+  typeId: z.number().int().positive().optional(),
+  genres: z.array(z.string()).or(z.string()).optional(),
+  rating: z.string().optional(),
+  yearStart: z.string().optional(),
+  yearEnd: z.string().optional(),
+  artId: z.number().int().positive().optional(),
+});
+
+export const FindArtsInputSchema = z.object({
+  locale: z.enum(localesEnum.enumValues),
+  filters: FindArtsFiltersSchema,
+});
+
+export type FindArtsInput = z.infer<typeof FindArtsInputSchema>;
+export type FindArtsFilters = z.infer<typeof FindArtsFiltersSchema>;
+export type FindArtsOutput = Pick<
+  typeof schema.arts.$inferSelect,
+  "id" | "releaseDate" | "episodes" | "rating" | "previewPath"
+> & {
+  title: (typeof schema.artTranslations.$inferSelect)["title"];
+  description: (typeof schema.artTranslations.$inferSelect)["description"];
+  type: Pick<typeof schema.types.$inferSelect, "id"> & {
+    name: (typeof schema.typeTranslations.$inferSelect)["name"];
+    catalogName: (typeof schema.typeTranslations.$inferSelect)["catalogName"];
+  };
+  country: Pick<typeof schema.countries.$inferSelect, "id"> & {
+    name: (typeof schema.countryTranslations.$inferSelect)["name"];
+  };
+  status: Pick<typeof schema.statuses.$inferSelect, "id"> & {
+    name: (typeof schema.statusTranslations.$inferSelect)["name"];
+  };
+  genres: (Pick<typeof schema.genres.$inferSelect, "id"> & {
+    name: (typeof schema.genreTranslations.$inferSelect)["name"];
+  })[];
+};
+
+export async function findArts({ locale, filters = {} }: FindArtsInput): Promise<FindArtsOutput[]> {
   const condition = buildFilters(filters);
 
   const rows = await db

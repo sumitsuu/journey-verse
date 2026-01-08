@@ -1,12 +1,12 @@
 import { PICTURE_PLACEHOLDER } from "@/lib/constants";
 import { Link } from "@/src/i18n/routing";
-import type { Art } from "@/src/lib/types/art";
+import type { FindArtsOutput } from "@/src/lib/services/art/find-arts.service";
 import { getFileUrl } from "@/src/lib/utils/file-url";
 import "moment-timezone";
 import Image from "next/image";
 
 type CardProps = {
-  item: Art;
+  item: FindArtsOutput;
 };
 
 function Card({ item }: Readonly<CardProps>) {

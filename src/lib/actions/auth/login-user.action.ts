@@ -3,14 +3,14 @@
 import { z } from "zod";
 
 import { loginUsers } from "../../services/auth/login-user.service";
-import type { User } from "../../types/user";
+import type { FindUsersOutput } from "../../services/user/find-users.service";
 
 const loginUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(1),
 });
 
-export async function loginUserAction(data: z.infer<typeof loginUserSchema>): Promise<User> {
+export async function loginUserAction(data: z.infer<typeof loginUserSchema>): Promise<FindUsersOutput> {
   try {
     const validated = loginUserSchema.parse(data);
     return await loginUsers(validated);

@@ -3,7 +3,7 @@
 import { z } from "zod";
 
 import { DEFAULT_LOCALE } from "../../i18n/locales";
-import { createArts } from "../../services/art/create-art.service";
+import { CreateArtOutput, createArts } from "../../services/art/create-art.service";
 
 const createArtSchema = z.object({
   locale: z.enum(["en", "ru"]).optional(),
@@ -23,9 +23,7 @@ const createArtSchema = z.object({
 
 // TODO: refactor this action!!!!!!
 
-export async function createArtAction(
-  formData: FormData
-): Promise<{ success: true; data: { id: number } } | { success: false; error: string }> {
+export async function createArtAction(formData: FormData): Promise<CreateArtOutput> {
   try {
     const locale = formData.get("locale");
     const releaseDate = formData.get("releaseDate") as string;
@@ -62,7 +60,7 @@ export async function createArtAction(
     }
 
     if (!previewFileData) {
-      return { success: false, error: "Preview file is required" };
+      throw new Error("Preview file is required");
     }
 
     const result = await createArts(validated.locale || DEFAULT_LOCALE, previewFileData, {
@@ -76,11 +74,8 @@ export async function createArtAction(
       genres: validated.genres,
     });
 
-    return { success: true, data: { id: result.id } };
+    return { id: result.id };
   } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Failed to create art",
-    };
+    throw new Error(error instanceof Error ? error.message : "Failed to create art");
   }
 }

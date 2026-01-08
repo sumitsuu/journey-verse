@@ -19,7 +19,8 @@ import { getFileUrl } from "@/src/lib/utils/file-url";
 import { Bookmark, Languages } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Nav = () => {
   const { data: session } = useSession();
@@ -95,25 +96,13 @@ const Nav = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <TooltipTrigger>
-                  {sessionUser?.image ? (
-                    <Image
-                      className={"object-cover rounded-[20px]"}
-                      src={getFileUrl(sessionUser.image)}
-                      alt=""
-                      width={40}
-                      height={40}
-                      quality={90}
-                    />
-                  ) : (
-                    <div
-                      className={
-                        "select-none size-[40px] rounded-[20px] text-light-purple-1 bg-black-2 flex items-center justify-center uppercase hover:bg-black-3 duration-300"
-                      }
-                    >
-                      {sessionUser.displayName.split("")[0]}
-                      {sessionUser.displayName.split("")[1]}
-                    </div>
-                  )}
+                  <Avatar>
+                    <AvatarImage src={sessionUser.image ? getFileUrl(sessionUser.image) : ""} />
+                    <AvatarFallback className="bg-black-2">
+                      {sessionUser.displayName.split("")[0].toUpperCase()}
+                      {sessionUser.displayName.split("")[1].toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
                 </TooltipTrigger>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">

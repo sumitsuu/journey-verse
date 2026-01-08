@@ -1,10 +1,10 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/src/i18n/routing";
 import { getFileUrl } from "@/src/lib/utils/file-url";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
-import Image from "next/image";
 import { useParams } from "next/navigation";
 
 const StatContainer = ({ title, subtitle, className }: { title: string; subtitle: string; className?: string }) => {
@@ -31,14 +31,14 @@ export default function UserInfo() {
           "lg:min-w-[400px] md:min-w-[70%] min-h-[95%] flex flex-col items-center justify-center gap-8 border border-white/10 shadow-2xl rounded-[15px] md:py-8 py-4 lg:py-8"
         }
       >
-        <Image
-          className={"object-cover rounded-full"}
-          src={session?.user.image ? getFileUrl(session.user.image) : ""}
-          alt={session?.user.displayName || ""}
-          width={100}
-          height={100}
-          quality={90}
-        />
+        <Avatar className="size-[100px]">
+          <AvatarImage src={session?.user.image ? getFileUrl(session.user.image) : ""} />
+          <AvatarFallback className="bg-black-2">
+            {session?.user.displayName.split("")[0].toUpperCase()}
+            {session?.user.displayName.split("")[1].toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+
         <div className={"flex flex-col items-center gap-2"}>
           <p className={"text-4xl"}>{session?.user.displayName}</p>
           <p className={"text-lg"}>{session?.user.email}</p>

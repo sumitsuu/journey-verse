@@ -10,10 +10,10 @@ import { SelectComponent } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { createArtAction } from "@/src/lib/actions/art/create-art.action";
-import type { Country } from "@/src/lib/types/country";
-import type { Genre } from "@/src/lib/types/genre";
-import type { Status } from "@/src/lib/types/status";
-import type { Type } from "@/src/lib/types/type";
+import type { FindCountriesOutput } from "@/src/lib/services/country/find-countries.service";
+import type { FindGenresOutput } from "@/src/lib/services/genre/find-genres.service";
+import type { FindStatusesOutput } from "@/src/lib/services/status/find-statuses.service";
+import type { FindTypesOutput } from "@/src/lib/services/type/find-types.service";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useMutation } from "@tanstack/react-query";
@@ -39,10 +39,10 @@ const CreateArtSchema = z.object({
 });
 
 export const CreateArtView = () => {
-  const countries: Country[] = []; // TODO: add countries from ssr
-  const types: Type[] = []; // TODO: add types from ssr
-  const statuses: Status[] = []; // TODO: add statuses from ssr
-  const genres: Genre[] = []; // TODO: add genres from ssr
+  const countries: FindCountriesOutput[] = []; // TODO: add countries from ssr
+  const types: FindTypesOutput[] = []; // TODO: add types from ssr
+  const statuses: FindStatusesOutput[] = []; // TODO: add statuses from ssr
+  const genres: FindGenresOutput[] = []; // TODO: add genres from ssr
 
   const form = useForm({
     resolver: zodResolver(CreateArtSchema),
@@ -125,7 +125,7 @@ export const CreateArtView = () => {
             name={"countryId"}
             render={({ field }) => (
               <SelectComponent
-                options={countries.map((item: Country) => ({
+                options={countries.map((item: FindCountriesOutput) => ({
                   label: item.name || "",
                   value: item.id.toString(),
                 }))}
@@ -140,7 +140,7 @@ export const CreateArtView = () => {
             name={"typeId"}
             render={({ field }) => (
               <SelectComponent
-                options={types.map((item: Type) => ({
+                options={types.map((item: FindTypesOutput) => ({
                   label: item.name || "",
                   value: item.id.toString(),
                 }))}
@@ -155,7 +155,7 @@ export const CreateArtView = () => {
             name={"statusId"}
             render={({ field }) => (
               <SelectComponent
-                options={statuses.map((item: Status) => ({
+                options={statuses.map((item: FindStatusesOutput) => ({
                   label: item.name || "",
                   value: item.id.toString(),
                 }))}
@@ -170,7 +170,7 @@ export const CreateArtView = () => {
             name={"genres"}
             render={({ field }) => (
               <MultiSelect
-                options={genres.map((item: Genre) => ({
+                options={genres.map((item: FindGenresOutput) => ({
                   label: item.name || "",
                   value: item.id.toString(),
                 }))}

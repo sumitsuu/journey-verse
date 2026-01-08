@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import type { Type } from "@/src/lib/types/type";
+import type { FindTypesOutput } from "@/src/lib/services/type/find-types.service";
 import { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
 
 import RatedCard from "./rated-card";
@@ -29,7 +29,7 @@ const ChildTabTrigger = ({
 };
 
 export default function UserArtsInfo() {
-  const types: Type[] = []; // TODO: add types from ssr
+  const types: FindTypesOutput[] = []; // TODO: add types from ssr
   const [activeTab, setActiveTab] = useState<string>(String(types[0]?.id));
 
   // TODO: can make a link with search params and remove useEffect
@@ -42,7 +42,7 @@ export default function UserArtsInfo() {
   return (
     <Tabs defaultValue={activeTab} className="w-full lg:mt-6">
       <TabsList className="flex flex-wrap xl:justify-start justify-center gap-4 w-full mb-8 h-max">
-        {types.map((type: Type) => (
+        {types.map((type) => (
           <Fragment key={type.id}>
             <ChildTabTrigger
               activeTab={activeTab}
@@ -53,7 +53,7 @@ export default function UserArtsInfo() {
           </Fragment>
         ))}
       </TabsList>
-      {types.map((type: Type) => (
+      {types.map((type) => (
         <Fragment key={type.id}>
           <TabsContent
             value={String(type.id)}

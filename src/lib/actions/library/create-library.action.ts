@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 
-import { createLibrary } from "../../services/library/create-library/create-library.service";
+import { createLibrary } from "../../services/library/create-library.service";
 
 const createLibrarySchema = z.object({
   artId: z.number().int().positive(),

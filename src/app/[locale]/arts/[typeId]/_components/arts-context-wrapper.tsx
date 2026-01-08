@@ -1,13 +1,13 @@
 "use client";
 
-import type { FindSortOptionsOutput } from "@/src/lib/services/art/find-sort-options/schemas";
-import type { Art } from "@/src/lib/types/art";
-import type { Type } from "@/src/lib/types/type";
+import type { FindArtsOutput } from "@/src/lib/services/art/find-arts.service";
+import type { FindSortOptionsOutput } from "@/src/lib/services/art/find-sort-options.service";
+import type { FindTypesOutput } from "@/src/lib/services/type/find-types.service";
 import { createContext, useContext, type ReactNode } from "react";
 
 interface ArtsContextType {
-  types: Type[];
-  arts: Art[];
+  types: FindTypesOutput[];
+  arts: FindArtsOutput[];
   sortOptions: FindSortOptionsOutput;
 }
 
@@ -15,8 +15,8 @@ const ArtsContext = createContext<ArtsContextType | undefined>(undefined);
 
 interface ArtsProviderProps {
   children: ReactNode;
-  types: Type[];
-  arts: Art[];
+  types: FindTypesOutput[];
+  arts: FindArtsOutput[];
   sortOptions: FindSortOptionsOutput;
 }
 

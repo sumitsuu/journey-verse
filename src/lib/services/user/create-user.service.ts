@@ -4,9 +4,14 @@ import * as argon2 from "argon2";
 
 import { db } from "../../db";
 import * as schema from "../../db/schema";
-import type { User } from "../../types/user";
 
-export async function createUsers(data: { email: string; password: string; displayName: string }): Promise<User> {
+export type CreateUserOutput = Omit<typeof schema.users.$inferSelect, "password">;
+
+export async function createUsers(data: {
+  email: string;
+  password: string;
+  displayName: string;
+}): Promise<CreateUserOutput> {
   const passwordHash = await argon2.hash(data.password);
   const [created] = await db
     .insert(schema.users)
@@ -17,7 +22,7 @@ export async function createUsers(data: { email: string; password: string; displ
     })
     .returning();
 
-  const result: User = {
+  const result: CreateUserOutput = {
     id: created.id,
     email: created.email,
     displayName: created.displayName,

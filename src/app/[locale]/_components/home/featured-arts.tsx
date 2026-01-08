@@ -2,13 +2,13 @@
 
 import { PICTURE_PLACEHOLDER } from "@/lib/constants";
 import { Link } from "@/src/i18n/routing";
-import type { Art } from "@/src/lib/types/art";
+import type { FindArtsOutput } from "@/src/lib/services/art/find-arts.service";
 import { getFileUrl } from "@/src/lib/utils/file-url";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useHomeContext } from "./home-context-wrapper";
 
-const FeaturedCard = ({ item }: { item: Art }) => {
+const FeaturedCard = ({ item }: { item: FindArtsOutput }) => {
   return (
     <Link href={`/arts/${item.type.id}/${item.id}`} className={"opacity-80 hover:opacity-100 duration-300"}>
       <Image

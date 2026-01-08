@@ -5,9 +5,10 @@ import { eq } from "drizzle-orm";
 
 import { db } from "../../db";
 import * as schema from "../../db/schema";
-import type { User } from "../../types/user";
 
-export async function loginUsers(data: { email: string; password: string }): Promise<User> {
+export type LoginUserOutput = Omit<typeof schema.users.$inferSelect, "password">;
+
+export async function loginUsers(data: { email: string; password: string }): Promise<LoginUserOutput> {
   const [user] = await db.select().from(schema.users).where(eq(schema.users.email, data.email));
 
   if (!user) {
@@ -18,7 +19,7 @@ export async function loginUsers(data: { email: string; password: string }): Pro
     throw new Error("Password is incorrect");
   }
 
-  const result: User = {
+  const result: LoginUserOutput = {
     id: user.id,
     email: user.email,
     displayName: user.displayName,

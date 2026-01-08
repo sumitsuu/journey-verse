@@ -1,9 +1,9 @@
-import type { Art } from "@/src/lib/types/art";
+import type { FindArtsOutput } from "@/src/lib/services/art/find-arts.service";
 import { getFileUrl } from "@/src/lib/utils/file-url";
 import Image from "next/image";
 
 interface ISearchCard {
-  item: Art;
+  item: FindArtsOutput;
 }
 
 const SearchCard = ({ item }: ISearchCard) => {

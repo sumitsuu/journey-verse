@@ -6,9 +6,12 @@ import { db } from "../../db";
 import * as schema from "../../db/schema";
 import type { Locale } from "../../i18n/locales";
 import { DEFAULT_LOCALE } from "../../i18n/locales";
-import type { Genre } from "../../types/genre";
 
-export async function findGenres(locale: Locale = DEFAULT_LOCALE): Promise<Genre[]> {
+export type FindGenresOutput = typeof schema.genres.$inferSelect & {
+  name: (typeof schema.genreTranslations.$inferSelect)["name"] | null;
+};
+
+export async function findGenres(locale: Locale = DEFAULT_LOCALE): Promise<FindGenresOutput[]> {
   const rows = await db
     .select({
       id: schema.genres.id,

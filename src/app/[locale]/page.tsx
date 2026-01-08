@@ -1,6 +1,6 @@
-import { findTypes } from "@/src/lib/services/type/find-types/find-types.service";
+import { findTypes } from "@/src/lib/services/type/find-types.service";
 import { Locale } from "../../lib/i18n/locales";
-import { findArts } from "../../lib/services/art/find-arts/find-arts.service";
+import { findArts } from "../../lib/services/art/find-arts.service";
 import { HomeContextWrapper } from "./_components/home/home-context-wrapper";
 import HomeView from "./_components/home/home-view";
 

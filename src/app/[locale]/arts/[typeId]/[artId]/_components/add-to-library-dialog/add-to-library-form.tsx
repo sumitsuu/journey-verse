@@ -15,7 +15,7 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { useDetailedViewContext } from "./detailed-view-context-wrapper";
+import { useDetailedViewContext } from "../detailed-view-context-wrapper";
 
 type AddToLibraryFormProps = {
   onOpenChange: () => void;

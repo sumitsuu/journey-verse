@@ -1,16 +1,14 @@
 "use server";
 
-import { uploadFile } from "../../services/storage/minio-client.service";
+import { uploadFile, UploadFileOutput } from "../../services/storage/minio-client.service";
 
-export async function uploadFileAction(
-  formData: FormData
-): Promise<{ success: true; key: string; publicUrl: string } | { success: false; error: string }> {
+export async function uploadFileAction(formData: FormData): Promise<UploadFileOutput> {
   try {
     const file = formData.get("file");
     const pathPrefix = formData.get("pathPrefix");
 
     if (!file || !(file instanceof File)) {
-      return { success: false, error: "File is required" };
+      throw new Error("File is required");
     }
 
     const arrayBuffer = await file.arrayBuffer();
@@ -19,17 +17,8 @@ export async function uploadFileAction(
 
     const uploadResult = await uploadFile(fileName, buffer, file.type);
 
-    if (!uploadResult.success) {
-      return { success: false, error: uploadResult.error };
-    }
-
-    const publicUrl = `/${uploadResult.key}`;
-
-    return { success: true, key: uploadResult.key, publicUrl };
+    return uploadResult;
   } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Failed to upload file",
-    };
+    throw new Error(error instanceof Error ? error.message : "Failed to upload file");
   }
 }

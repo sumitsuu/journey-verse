@@ -1,7 +1,7 @@
 import { authOptions } from "@/src/app/api/auth/[...nextauth]/route";
 import { Locale } from "@/src/lib/i18n/locales";
-import { findArts } from "@/src/lib/services/art/find-arts/find-arts.service";
-import { checkIsInLibrary } from "@/src/lib/services/library/check-is-in-library/check-is-in-library.service";
+import { findArts } from "@/src/lib/services/art/find-arts.service";
+import { findLibrary } from "@/src/lib/services/library/find-library.service";
 import { findStatuses } from "@/src/lib/services/status/find-statuses.service";
 import { getServerSession } from "next-auth";
 import DetailedView from "./_components/detailed-view";
@@ -12,11 +12,11 @@ async function ArtItemPage({ params }: { params: Promise<{ locale: Locale; typeI
   const { locale, typeId, artId } = awaitedParams;
   const [art] = await findArts({ locale, filters: { typeId: Number(typeId), artId: Number(artId) } });
   const session = await getServerSession(authOptions);
-  const isInLibrary = await checkIsInLibrary({ artId: Number(artId), userId: Number(session?.user?.id) });
+  const library = await findLibrary({ artId: Number(artId), userId: Number(session?.user?.id) });
   const libraryStatuses = await findStatuses({ locale, type: "library" });
 
   return (
-    <DetailedViewContextWrapper art={art} isInLibrary={isInLibrary} libraryStatuses={libraryStatuses}>
+    <DetailedViewContextWrapper art={art} library={library} libraryStatuses={libraryStatuses}>
       <DetailedView />
     </DetailedViewContextWrapper>
   );
