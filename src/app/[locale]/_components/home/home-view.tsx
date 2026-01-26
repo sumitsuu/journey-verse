@@ -1,23 +1,33 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import Arts from "./arts";
-import FeaturedArts from "./featured-arts";
+import useUrlSearchParams from "@/hooks/use-url-search-params";
+import SearchComponent from "../header/search";
+import { Carousel } from "./carousel";
+import { FiltersSidebar } from "./filters-sidebar";
+import { useHomeContext } from "./home-context-wrapper";
+import { MediaGrid } from "./media-grid";
 
-function HomeView() {
-  const homeTranslations = useTranslations("HomePage");
+type HomeViewProps = {
+  searchQuery?: string;
+};
+
+function HomeView({ searchQuery: initialSearchQuery = "" }: HomeViewProps) {
+  const { arts } = useHomeContext();
+  const { updateMultipleUrlSearchParams } = useUrlSearchParams();
+
+  const handleSearchChange = (value: string) => {
+    updateMultipleUrlSearchParams({ search: value || null });
+  };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-4xl font-bold">{homeTranslations("heroTitle")}</h1>
-        <p className={"text-xl drop-shadow-md"}>{homeTranslations("heroDescription")}</p>
-      </div>
-      <FeaturedArts />
-      <Arts title={homeTranslations("trending")} />
-      <div className={"h-[100px] mt-10"}>
-        <p className={"text-2xl font-bold"}>{homeTranslations("recentlyRatedByFriends")}</p>
-        <p className={"text-xl"}>{homeTranslations("comingSoon")}</p>
+    <div className="container mx-auto px-4 py-8">
+      <SearchComponent onSearchChange={handleSearchChange} />
+      <Carousel trendingItems={arts || []} />
+
+      {/* Filters and Grid */}
+      <div className="flex flex-col lg:flex-row gap-8 mt-8">
+        <FiltersSidebar />
+        <MediaGrid items={arts} />
       </div>
     </div>
   );

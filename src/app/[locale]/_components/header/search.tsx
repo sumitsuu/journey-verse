@@ -1,65 +1,50 @@
 "use client";
 
+import debounce from "debounce";
 import { Search } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
-import { Input } from "@/components/ui/input";
-import SearchCard from "./search-card";
-
-const search = async (value: string, setFoundArts: any) => {
-  if (value.length > 0) {
-  }
+type SearchComponentProps = {
+  onSearchChange?: (value: string) => void;
 };
 
-const SearchComponent = () => {
-  const [isFocused, setFocused] = useState(false);
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [foundArts, setFoundArts] = useState([]);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const { data: session } = useSession();
-  const sessionUser = session?.user;
-
-  const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-    await search(event.target.value, setFoundArts);
-  };
-
-  const handleOutsideClick = (event: Event) => {
-    // Check that click was outside wrapperRef element
-    if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
-      setFocused(false);
-    }
-  };
+const SearchComponent = ({ onSearchChange }: SearchComponentProps) => {
+  const searchParams = useSearchParams();
+  const initialSearch = searchParams.get("search") || "";
+  const [searchValue, setSearchValue] = useState<string>(initialSearch);
+  const debouncedOnSearchChangeRef = useRef<ReturnType<typeof debounce> | null>(null);
+  const searchTranslations = useTranslations("Search");
 
   useEffect(() => {
-    document.addEventListener("click", handleOutsideClick);
+    debouncedOnSearchChangeRef.current = debounce((value: string) => {
+      onSearchChange?.(value);
+    }, 300);
 
     return () => {
-      document.removeEventListener("click", handleOutsideClick);
+      debouncedOnSearchChangeRef.current?.clear();
     };
-  }, []);
+  }, [onSearchChange]);
+
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSearchValue(value);
+    debouncedOnSearchChangeRef.current?.(value);
+  };
 
   return (
-    <div ref={wrapperRef} className={`relative w-full text-white flex max-w-[120px] ${sessionUser && "md:mr-[25px]"}`}>
-      <Input
-        onFocus={() => setFocused(true)}
-        onChange={handleSearch}
-        placeholder={"Search"}
-        className={{
-          input: "border-none outline-none max-w-[80px] placeholder:text-light-purple-1",
-          wrapper:
-            "border-none outline-none bg-black-2 text-light-purple-1 text-base h-[40px] w-[120px] duration-300 hover:bg-black-3",
-        }}
-        startAdornment={<Search strokeWidth={3} />}
-      />
-      {isFocused && searchValue && (
-        <div className={"absolute w-full h-max bg-black"}>
-          {foundArts?.map((item: any) => {
-            return <SearchCard key={item.id} item={item} />;
-          })}
-        </div>
-      )}
+    <div className="max-w-2xl mx-auto mb-12">
+      <div className="relative">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+        <input
+          type="text"
+          placeholder={searchTranslations("placeholder")}
+          value={searchValue}
+          onChange={handleSearch}
+          className="w-full pl-12 pr-4 py-4 rounded-2xl bg-card border border-border/40 text-foreground placeholder:text-muted-foreground outline-none focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all shadow-lg shadow-primary/5"
+        />
+      </div>
     </div>
   );
 };

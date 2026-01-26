@@ -6,7 +6,7 @@ import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader } from "@/components/ui/loader";
 import { MultiSelect } from "@/components/ui/multi-select";
-import { SelectComponent } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { createArtAction } from "@/src/lib/actions/art/create-art.action";
@@ -124,45 +124,54 @@ export const CreateArtView = () => {
             control={form.control}
             name={"countryId"}
             render={({ field }) => (
-              <SelectComponent
-                options={countries.map((item: FindCountriesOutput) => ({
-                  label: item.name || "",
-                  value: item.id.toString(),
-                }))}
-                value={field.value?.toString()}
-                onValueChange={field.onChange}
-                placeholder={"Country"}
-              />
+              <Select value={field.value?.toString()} onValueChange={(value) => field.onChange(Number(value))}>
+                <SelectTrigger>
+                  <SelectValue placeholder={"Country"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {countries.map((item: FindCountriesOutput) => (
+                    <SelectItem key={item.id} value={item.id.toString()}>
+                      {item.name || ""}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             )}
           />
           <FormField
             control={form.control}
             name={"typeId"}
             render={({ field }) => (
-              <SelectComponent
-                options={types.map((item: FindTypesOutput) => ({
-                  label: item.name || "",
-                  value: item.id.toString(),
-                }))}
-                value={field.value?.toString()}
-                onValueChange={field.onChange}
-                placeholder={"Type"}
-              />
+              <Select value={field.value?.toString()} onValueChange={(value) => field.onChange(Number(value))}>
+                <SelectTrigger>
+                  <SelectValue placeholder={"Type"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {types.map((item: FindTypesOutput) => (
+                    <SelectItem key={item.id} value={item.id.toString()}>
+                      {item.name || ""}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             )}
           />
           <FormField
             control={form.control}
             name={"statusId"}
             render={({ field }) => (
-              <SelectComponent
-                options={statuses.map((item: FindStatusesOutput) => ({
-                  label: item.name || "",
-                  value: item.id.toString(),
-                }))}
-                value={field.value?.toString()}
-                onValueChange={field.onChange}
-                placeholder={"Status"}
-              />
+              <Select value={field.value?.toString()} onValueChange={(value) => field.onChange(Number(value))}>
+                <SelectTrigger>
+                  <SelectValue placeholder={"Status"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {statuses.map((item: FindStatusesOutput) => (
+                    <SelectItem key={item.id} value={item.id.toString()}>
+                      {item.name || ""}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             )}
           />
           <FormField

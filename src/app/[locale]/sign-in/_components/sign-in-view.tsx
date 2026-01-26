@@ -122,7 +122,7 @@ const SignInView = () => {
             </div>
 
             <div className={"flex flex-col gap-3"}>
-              <Link href="/sign-up" className={"duration-300 hover:text-light-purple-1 w-max"}>
+              <Link href="/sign-up" className={"duration-300 hover:text-muted-foreground w-max"}>
                 {signInTranslations("noAccount")}
               </Link>
               <Button variant={"secondary"} type="submit" disabled={isPending}>
@@ -148,7 +148,7 @@ const SignInView = () => {
         />
       </div>
 
-      <div className={"flex flex-col items-center text-light-purple-1 gap-2 md:mt-10 mt-4"}>
+      <div className={"flex flex-col items-center text-muted-foreground gap-2 md:mt-10 mt-4"}>
         <span>{signInTranslations("continueWith")}</span>
         <div className={"grid md:grid-cols-6 grid-cols-3 gap-4"}>
           <Button>{signInTranslations("providers.google")}</Button>

@@ -1,75 +1,39 @@
-import { cn } from "@/lib/utils";
-import { cva } from "class-variance-authority";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+"use client";
+
 import * as React from "react";
 
+import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+
 import { Button } from "@/components/ui/button";
-import { InputHTMLAttributes, ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
-const inputVariants = cva(
-  `block flex h-9 w-full bg-transparent py-1 text-base transition-colors file:bg-black-2 
-   file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none outline-none disabled:cursor-not-allowed
-   disabled:opacity-50 md:text-sm relative`,
-  {
-    variants: {
-      variant: {
-        default: "",
-        invalid: "",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-);
-
-const inputWrapperVariants = cva(
-  "flex items-center justify-center rounded-[12px] w-full px-4 gap-2 bg-black-2 !text-light-purple-1 hover:bg-black-3 duration-300 input-wrapper border-transparent border-[1px]",
-  {
-    variants: {
-      variant: {
-        default: "",
-        invalid: "border border-[1px] border-destructive",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-);
-
-export interface CustomInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "className"> {
-  endAdornment?: ReactNode;
-  startAdornment?: ReactNode;
-  variant?: "default" | "invalid";
-  className?: {
-    wrapper?: string;
-    input?: string;
-  };
+function Input({
+  className,
+  type,
+  variant,
+  ...props
+}: React.ComponentProps<"input"> & { variant?: "default" | "invalid" }) {
+  return (
+    <input
+      type={type}
+      data-slot="input"
+      aria-invalid={variant === "invalid"}
+      className={cn(
+        "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base bg-input-background transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "focus:outline-none focus-visible:outline-none focus-visible:border-ring focus-visible:ring-0",
+        "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+        className
+      )}
+      {...props}
+    />
+  );
 }
 
-const Input = React.forwardRef<HTMLInputElement, CustomInputProps>(
-  ({ className = { wrapper: "", input: "" }, type, variant, endAdornment, startAdornment, value, ...props }, ref) => {
-    const controlledValue = value === undefined || value === null ? "" : String(value);
-    return (
-      <div className={`${cn(inputWrapperVariants({ variant, className: className.wrapper }))}`}>
-        {startAdornment}
-        <input
-          {...props}
-          type={type}
-          className={cn(inputVariants({ variant, className: className.input }))}
-          ref={ref}
-          value={controlledValue}
-        />
-        {endAdornment}
-      </div>
-    );
-  }
-);
-Input.displayName = "Input";
-
-const PasswordInput = React.forwardRef<HTMLInputElement, CustomInputProps>(({ className, ...props }, ref) => {
+const PasswordInput = React.forwardRef<
+  HTMLInputElement,
+  React.ComponentProps<"input"> & { variant?: "default" | "invalid" }
+>(({ className, variant, ...props }, ref) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const disabled = props.value === "" || props.value === undefined || props.disabled;
 
@@ -77,17 +41,16 @@ const PasswordInput = React.forwardRef<HTMLInputElement, CustomInputProps>(({ cl
     <div className="relative">
       <Input
         type={showPassword ? "text" : "password"}
-        className={{
-          input: cn("hide-password-toggle pr-10", className?.input),
-        }}
+        className={cn("pr-10", className)}
+        variant={variant}
         ref={ref}
         {...props}
       />
       <Button
         type="button"
         variant="ghost"
-        size="compact"
-        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent hover:text-light-purple-1 text-light-purple-1"
+        size="icon"
+        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
         onClick={() => setShowPassword((prev) => !prev)}
         disabled={disabled}
       >
@@ -103,32 +66,42 @@ const PasswordInput = React.forwardRef<HTMLInputElement, CustomInputProps>(({ cl
 });
 PasswordInput.displayName = "PasswordInput";
 
-const FileInput = React.forwardRef<HTMLInputElement, CustomInputProps>(
-  ({ className = { wrapper: "", input: "" }, variant, onChange, ...props }, ref) => {
-    const [fileName, setFileName] = React.useState<string | null>(null);
-    const settingsTranslations = useTranslations("Settings");
+const FileInput = React.forwardRef<
+  HTMLInputElement,
+  React.ComponentProps<"input"> & { variant?: "default" | "invalid" }
+>(({ className, onChange, variant, ...props }, ref) => {
+  const [fileName, setFileName] = React.useState<string | null>(null);
+  const settingsTranslations = useTranslations("Settings");
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.files && event.target.files.length > 0) {
-        setFileName(event.target.files[0].name);
-      } else {
-        setFileName(null);
-      }
-      if (onChange) {
-        onChange(event);
-      }
-    };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFileName(event.target.files[0].name);
+    } else {
+      setFileName(null);
+    }
+    if (onChange) {
+      onChange(event);
+    }
+  };
 
-    return (
-      <div className={`${cn(inputWrapperVariants({ variant, className: className.wrapper }))}`}>
-        <input type="file" ref={ref} {...props} className="hidden" onChange={handleFileChange} id="file-upload" />
-        <label htmlFor="file-upload" className="cursor-pointer px-4 py-2 text-white">
-          {fileName || settingsTranslations("uploadFile")}
-        </label>
-      </div>
-    );
-  }
-);
+  return (
+    <div className="relative">
+      <input type="file" ref={ref} {...props} className="hidden" onChange={handleFileChange} id="file-upload" />
+      <label
+        htmlFor="file-upload"
+        aria-invalid={variant === "invalid"}
+        className={cn(
+          "flex h-9 w-full min-w-0 rounded-md border border-input bg-input-background px-3 py-1 text-base cursor-pointer transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+          variant === "invalid" && "ring-destructive/20 dark:ring-destructive/40 border-destructive",
+          className
+        )}
+      >
+        {fileName || settingsTranslations("uploadFile")}
+      </label>
+    </div>
+  );
+});
 FileInput.displayName = "FileInput";
 
 export { FileInput, Input, PasswordInput };

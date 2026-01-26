@@ -25,7 +25,7 @@ const UserInfo = ({ setIsSidebarOpen }: { setIsSidebarOpen: Dispatch<SetStateAct
           ) : (
             <div
               className={
-                "select-none size-[50px] rounded-[20px] text-light-purple-1 bg-black-2 flex items-center justify-center uppercase"
+                "select-none size-[50px] rounded-[20px] text-muted-foreground bg-card flex items-center justify-center uppercase"
               }
             >
               {sessionUser?.displayName?.split("")[0]}

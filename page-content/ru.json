@@ -10,8 +10,34 @@
     "recentlyRatedByFriends": "Недавно оценено друзьями",
     "comingSoon": "Скоро..."
   },
+  "Carousel": {
+    "trendingNow": "В тренде",
+    "ratings": "оценка"
+  },
   "Header": {
     "brandName": "JourneyVerse"
+  },
+  "Search": {
+    "placeholder": "Поиск фильмов, аниме, сериалов, игр и книг..."
+  },
+  "Filters": {
+    "title": "Фильтры",
+    "mediaType": "Тип медиа",
+    "allTypes": "Все типы",
+    "genre": "Жанр",
+    "allGenres": "Все жанры",
+    "year": "Год",
+    "allYears": "Все годы",
+    "minimumRating": "Минимальный рейтинг",
+    "reset": "Сбросить фильтры"
+  },
+  "MediaGrid": {
+    "result": "Результат",
+    "results": "Результатов",
+    "showFilters": "Показать фильтры",
+    "hideFilters": "Скрыть фильтры",
+    "noResults": "Результаты не найдены",
+    "tryAdjusting": "Попробуйте изменить фильтры или поисковый запрос"
   },
   "Navigation": {
     "signIn": "Войти",

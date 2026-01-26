@@ -10,8 +10,34 @@
     "recentlyRatedByFriends": "Recently rated by friends",
     "comingSoon": "Coming soon..."
   },
+  "Carousel": {
+    "trendingNow": "Trending Now",
+    "ratings": "ratings"
+  },
   "Header": {
     "brandName": "JourneyVerse"
+  },
+  "Search": {
+    "placeholder": "Search movies, anime, TV series, games, and books..."
+  },
+  "Filters": {
+    "title": "Filters",
+    "mediaType": "Media Type",
+    "allTypes": "All Types",
+    "genre": "Genre",
+    "allGenres": "All Genres",
+    "year": "Year",
+    "allYears": "All Years",
+    "minimumRating": "Minimum Rating",
+    "reset": "Reset Filters"
+  },
+  "MediaGrid": {
+    "result": "Result",
+    "results": "Results",
+    "showFilters": "Show Filters",
+    "hideFilters": "Hide Filters",
+    "noResults": "No results found",
+    "tryAdjusting": "Try adjusting your filters or search query"
   },
   "Navigation": {
     "signIn": "Sign In",

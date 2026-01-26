@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormLabel } from "@/components/ui/form";
-import { SelectComponent } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { useTranslations } from "next-intl";
 
@@ -35,15 +35,18 @@ const ChangeDefaultUserType = () => {
           defaultValue={""}
           name="type"
           render={({ field }) => (
-            <SelectComponent
-              options={[{ name: "placeholder", id: 0 }].map((item) => ({
-                label: item.name,
-                value: item.id.toString(),
-              }))}
-              onValueChange={field.onChange}
-              value={field.value}
-              placeholder={settingsTranslations("selectType")}
-            />
+            <Select value={field.value} onValueChange={field.onChange}>
+              <SelectTrigger>
+                <SelectValue placeholder={settingsTranslations("selectType")} />
+              </SelectTrigger>
+              <SelectContent>
+                {[{ name: "placeholder", id: 0 }].map((item) => (
+                  <SelectItem key={item.id} value={item.id.toString()}>
+                    {item.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           )}
         />
         <Button variant={"secondary"} type="submit" disabled={form.formState.isSubmitting}>

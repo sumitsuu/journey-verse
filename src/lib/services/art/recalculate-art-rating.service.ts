@@ -21,4 +21,3 @@ export async function recalculateArtRating(artId: number): Promise<void> {
     rating: averageRating !== null ? averageRating : undefined,
   });
 }
-

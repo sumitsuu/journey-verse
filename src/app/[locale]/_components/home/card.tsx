@@ -22,7 +22,7 @@ function Card({ item }: Readonly<CardProps>) {
         quality={90}
       />
       <p className={"mt-2 font-medium"}>{item.title}</p>
-      <div className={"mt-1 flex gap-4 text-light-purple-1"}>
+      <div className={"mt-1 flex gap-4 text-muted-foreground"}>
         <span>{new Date(item.releaseDate).getFullYear()}</span>
         <span>{item?.genres[0]?.name}</span>
       </div>

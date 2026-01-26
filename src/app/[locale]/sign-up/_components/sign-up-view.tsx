@@ -165,7 +165,7 @@ const SignUpView = () => {
               )}
             />
 
-            <Link href="/sign-in" className={"hover:text-light-purple-1 duration-300"}>
+            <Link href="/sign-in" className={"hover:text-muted-foreground duration-300"}>
               {signUpTranslations("hasAccount")}
             </Link>
             <Button variant={"secondary"} type="submit" disabled={createUserMutation.isPending}>
@@ -188,7 +188,7 @@ const SignUpView = () => {
           alt="Picture of the author"
         />
       </div>
-      <div className={"flex flex-col items-center text-light-purple-1 gap-2 md:mt-10 mt-4"}>
+      <div className={"flex flex-col items-center text-muted-foreground gap-2 md:mt-10 mt-4"}>
         <span>{signUpTranslations("continueWith")}</span>
         <div className={"grid md:grid-cols-6 grid-cols-3 gap-4"}>
           <Button>{signUpTranslations("providers.google")}</Button>

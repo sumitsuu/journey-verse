@@ -1,6 +1,6 @@
 import "server-only";
 
-import { and, between, eq, exists, gte, inArray, SQL, sql } from "drizzle-orm";
+import { and, between, eq, exists, inArray, SQL, sql } from "drizzle-orm";
 import z from "zod";
 
 import { db } from "../../db";
@@ -103,7 +103,7 @@ export async function findArts({ locale, filters = {} }: FindArtsInput): Promise
       schema.statusTranslations,
       and(eq(schema.statusTranslations.statusId, schema.statuses.id), eq(schema.statusTranslations.locale, locale))
     )
-    .where(and(...condition));
+    .where(condition.length > 0 ? and(...condition) : undefined);
 
   return rows;
 }
@@ -129,7 +129,10 @@ const buildFilters = (filters: FindArtsFilters) => {
   }
 
   if (rating) {
-    condition.push(gte(schema.arts.rating, rating.toString()));
+    const ratingValue = typeof rating === "string" ? parseFloat(rating) : Number(rating);
+    if (!isNaN(ratingValue)) {
+      condition.push(sql`${schema.arts.rating}::numeric >= ${ratingValue}::numeric`);
+    }
   }
 
   if (yearStart || yearEnd) {

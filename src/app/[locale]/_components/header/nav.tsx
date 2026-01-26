@@ -98,7 +98,7 @@ const Nav = () => {
                 <TooltipTrigger>
                   <Avatar>
                     <AvatarImage src={sessionUser.image ? getFileUrl(sessionUser.image) : ""} />
-                    <AvatarFallback className="bg-black-2">
+                    <AvatarFallback className="bg-card">
                       {sessionUser.displayName.split("")[0].toUpperCase()}
                       {sessionUser.displayName.split("")[1].toUpperCase()}
                     </AvatarFallback>

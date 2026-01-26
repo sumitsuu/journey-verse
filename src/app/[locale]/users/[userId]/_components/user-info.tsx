@@ -10,7 +10,7 @@ import { useParams } from "next/navigation";
 const StatContainer = ({ title, subtitle, className }: { title: string; subtitle: string; className?: string }) => {
   return (
     <div
-      className={`bg-black-2 rounded-lg flex flex-col justify-center items-center w-full h-24 text-center ${className}`}
+      className={`bg-card rounded-lg flex flex-col justify-center items-center w-full h-24 text-center ${className}`}
     >
       <div className="text-white text-lg font-bold">{title}</div>
       <div className="text-sm text-gray-400">{subtitle}</div>
@@ -33,7 +33,7 @@ export default function UserInfo() {
       >
         <Avatar className="size-[100px]">
           <AvatarImage src={session?.user.image ? getFileUrl(session.user.image) : ""} />
-          <AvatarFallback className="bg-black-2">
+          <AvatarFallback className="bg-card">
             {session?.user.displayName.split("")[0].toUpperCase()}
             {session?.user.displayName.split("")[1].toUpperCase()}
           </AvatarFallback>

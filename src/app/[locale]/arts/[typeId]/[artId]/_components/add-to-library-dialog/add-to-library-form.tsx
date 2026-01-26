@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Loader } from "@/components/ui/loader";
-import { SelectComponent } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "@/src/i18n/routing";
 import { createLibraryAction } from "@/src/lib/actions/library/create-library.action";
@@ -132,14 +132,18 @@ const AddToLibraryForm = ({ onOpenChange }: AddToLibraryFormProps) => {
           name="status"
           control={form.control}
           render={({ field }) => (
-            <SelectComponent
-              {...field}
-              placeholder={addToLibraryTranslations("selectStatus")}
-              options={libraryStatuses.map((item) => ({
-                label: item.name,
-                value: item.id.toString(),
-              }))}
-            />
+            <Select value={field.value?.toString()} onValueChange={(value) => field.onChange(Number(value))}>
+              <SelectTrigger>
+                <SelectValue placeholder={addToLibraryTranslations("selectStatus")} />
+              </SelectTrigger>
+              <SelectContent>
+                {libraryStatuses.map((item) => (
+                  <SelectItem key={item.id} value={item.id.toString()}>
+                    {item.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           )}
         />
         <Button variant={"secondary"} type="submit" disabled={isPending}>
