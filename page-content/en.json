@@ -62,41 +62,71 @@
       "password": "Password",
       "submit": "Sign In",
       "noAccount": "Have no account yet?",
+      "createOne": "Create one",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
       "welcomeMessage": "Welcome back! The journey continues.",
-      "continueWith": "or continue with",
+      "welcomeTitle": "Welcome Back",
+      "welcomeDescription": "The journey begins here.",
+      "continueWith": "Or continue with",
+      "terms": "Terms",
+      "privacyPolicy": "Privacy Policy",
+      "agreeTo": "By signing in, you agree to our",
+      "and": "and",
       "providers": {
         "google": "Google",
         "yandex": "Yandex",
         "github": "GitHub",
         "facebook": "Facebook",
         "twitter": "Twitter",
-        "steam": "Steam"
+        "steam": "Steam",
+        "discord": "Discord",
+        "apple": "Apple"
       }
     },
     "signUp": {
       "title": "Sign Up",
+      "createAccount": "Create Account",
       "email": "Email",
       "name": "Name",
       "password": "Password",
+      "confirmPassword": "Confirm password",
       "repeatPassword": "Repeat password",
       "submit": "Sign Up",
       "hasAccount": "Already have an account?",
-      "inspirationQuote": "The journey of a thousand miles begins with a single step.",
-      "continueWith": "or continue with",
+      "signIn": "Sign in",
+      "welcomeTitle": "Join Our Community",
+      "welcomeDescription": "The journey of a thousand miles begins with a single step.",
+      "continueWith": "Or sign up with",
+      "terms": "Terms of Service",
+      "privacyPolicy": "Privacy Policy",
+      "agreeTo": "I agree to the",
+      "and": "and",
+      "passwordRequirements": {
+        "minLength": "At least 8 characters",
+        "containsNumber": "Contains a number",
+        "containsUppercase": "Contains uppercase letter"
+      },
       "providers": {
         "google": "Google",
         "yandex": "Yandex",
         "github": "GitHub",
         "facebook": "Facebook",
         "twitter": "Twitter",
-        "steam": "Steam"
+        "steam": "Steam",
+        "discord": "Discord",
+        "apple": "Apple"
       }
     },
     "validation": {
       "passwordMinLength": "Password must be at least 3 characters long",
+      "passwordMinLength8": "Password must be at least 8 characters",
+      "passwordContainsNumber": "Password must contain a number",
+      "passwordContainsUppercase": "Password must contain an uppercase letter",
       "fieldRequired": "This field is required",
       "emailInvalid": "Invalid email address. Example: test@gmail.com",
-      "passwordsMustMatch": "Passwords must match"
+      "passwordsMustMatch": "Passwords must match",
+      "agreeToTerms": "You must agree to the terms and privacy policy"
     },
     "messages": {
       "userCreatedSuccess": "User created successfully",

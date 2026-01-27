@@ -62,41 +62,70 @@
       "password": "Пароль",
       "submit": "Войти",
       "noAccount": "Еще нет аккаунта?",
-      "welcomeMessage": "Добро пожаловать обратно! Путешествие продолжается.",
-      "continueWith": "или продолжить с",
+      "createOne": "Создать",
+      "rememberMe": "Запомнить меня",
+      "forgotPassword": "Забыли пароль?",
+      "welcomeTitle": "Добро пожаловать",
+      "welcomeDescription": "Путешествие продолжается.",
+      "continueWith": "Или продолжить с",
+      "terms": "Условия",
+      "privacyPolicy": "Политика конфиденциальности",
+      "agreeTo": "Входя в систему, вы соглашаетесь с нашими",
+      "and": "и",
       "providers": {
         "google": "Google",
         "yandex": "Яндекс",
         "github": "GitHub",
         "facebook": "Facebook",
         "twitter": "Twitter",
-        "steam": "Steam"
+        "steam": "Steam",
+        "discord": "Discord",
+        "apple": "Apple"
       }
     },
     "signUp": {
       "title": "Регистрация",
+      "createAccount": "Создать аккаунт",
       "email": "Электронная почта",
       "name": "Имя",
       "password": "Пароль",
+      "confirmPassword": "Подтвердите пароль",
       "repeatPassword": "Повторите пароль",
       "submit": "Зарегистрироваться",
       "hasAccount": "Уже есть аккаунт?",
-      "inspirationQuote": "Путь в тысячу миль начинается с одного шага.",
-      "continueWith": "или продолжить с",
+      "signIn": "Войти",
+      "welcomeTitle": "Присоединяйтесь к нашему сообществу",
+      "welcomeDescription": "Путь в тысячу миль начинается с одного шага.",
+      "continueWith": "Или зарегистрируйтесь через",
+      "terms": "Условия использования",
+      "privacyPolicy": "Политика конфиденциальности",
+      "agreeTo": "Я согласен с",
+      "and": "и",
+      "passwordRequirements": {
+        "minLength": "Не менее 8 символов",
+        "containsNumber": "Содержит цифру",
+        "containsUppercase": "Содержит заглавную букву"
+      },
       "providers": {
         "google": "Google",
         "yandex": "Яндекс",
         "github": "GitHub",
         "facebook": "Facebook",
         "twitter": "Twitter",
-        "steam": "Steam"
+        "steam": "Steam",
+        "discord": "Discord",
+        "apple": "Apple"
       }
     },
     "validation": {
       "passwordMinLength": "Пароль должен содержать не менее 3 символов",
+      "passwordMinLength8": "Пароль должен содержать не менее 8 символов",
+      "passwordContainsNumber": "Пароль должен содержать цифру",
+      "passwordContainsUppercase": "Пароль должен содержать заглавную букву",
       "fieldRequired": "Это поле обязательно для заполнения",
       "emailInvalid": "Неверный адрес электронной почты. Пример: test@gmail.com",
-      "passwordsMustMatch": "Пароли должны совпадать"
+      "passwordsMustMatch": "Пароли должны совпадать",
+      "agreeToTerms": "Вы должны согласиться с условиями и политикой конфиденциальности"
     },
     "messages": {
       "userCreatedSuccess": "Пользователь успешно создан",
