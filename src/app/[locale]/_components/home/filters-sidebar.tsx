@@ -1,10 +1,10 @@
 "use client";
 
-import * as React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ComponentType } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
 import useUrlSearchParams from "@/hooks/use-url-search-params";
 import debounce from "debounce";
 import { Book, Film, Filter, Gamepad2, Sparkles, Tv } from "lucide-react";
@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
 
 import { useHomeContext } from "./home-context-wrapper";
 
-const mediaTypeIcons: Record<string, React.ComponentType<{ className?: string }> | null> = {
+const mediaTypeIcons: Record<string, ComponentType<{ className?: string }> | null> = {
   movie: Film,
   anime: Sparkles,
   tv: Tv,
@@ -42,7 +42,6 @@ export const FiltersSidebar = () => {
 
   useEffect(() => {
     debouncedSetMinRatingRef.current = debounce((ratingValue: number) => {
-      console.log("ratingValue", ratingValue);
       updateMultipleUrlSearchParams({ rating: ratingValue > 0 ? ratingValue.toString() : null });
     }, 300);
 
@@ -63,8 +62,9 @@ export const FiltersSidebar = () => {
     updateMultipleUrlSearchParams({ year: year === "all" ? null : year });
   };
 
-  const handleRatingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseFloat(e.target.value);
+  const handleRatingChange = (values: number[]) => {
+    const [value = 0] = values;
+
     setLocalRating(value);
     debouncedSetMinRatingRef.current?.(value);
   };
@@ -157,15 +157,7 @@ export const FiltersSidebar = () => {
             <label className="text-sm text-muted-foreground mb-3 block">
               {filtersTranslations("minimumRating")}: {localRating.toFixed(1)}
             </label>
-            <input
-              type="range"
-              min="0"
-              max="10"
-              step="1"
-              value={localRating}
-              onChange={handleRatingChange}
-              className="w-full"
-            />
+            <Slider value={[localRating]} max={10} step={1} onValueChange={handleRatingChange} />
             <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">
               <span>0</span>
               <span>10</span>
