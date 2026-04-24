@@ -7,11 +7,7 @@ import { FiltersSidebar } from "./filters-sidebar";
 import { useHomeContext } from "./home-context-wrapper";
 import { MediaGrid } from "./media-grid";
 
-type HomeViewProps = {
-  searchQuery?: string;
-};
-
-const HomeView = ({ searchQuery: initialSearchQuery = "" }: HomeViewProps) => {
+const HomeView = () => {
   const { arts } = useHomeContext();
   const { updateMultipleUrlSearchParams } = useUrlSearchParams();
 

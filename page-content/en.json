@@ -18,7 +18,12 @@
     "brandName": "JourneyVerse"
   },
   "Search": {
-    "placeholder": "Search movies, anime, TV series, games, and books..."
+    "placeholder": "Search movies, anime, TV series, games, and books...",
+    "startTyping": "Start typing to search the catalog",
+    "searching": "Searching...",
+    "noResults": "No matches found",
+    "clear": "Clear search",
+    "close": "Close search"
   },
   "Filters": {
     "title": "Filters",

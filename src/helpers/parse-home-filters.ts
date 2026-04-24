@@ -36,5 +36,10 @@ export function parseHomeFilters(searchParams: HomeSearchParams, types: FindType
     filters.yearEnd = year.toString();
   }
 
+  const search = searchParams.search?.trim();
+  if (search) {
+    filters.search = search;
+  }
+
   return filters;
 }

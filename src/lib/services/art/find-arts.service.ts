@@ -1,6 +1,6 @@
 import "server-only";
 
-import { and, between, eq, exists, inArray, SQL, sql } from "drizzle-orm";
+import { and, between, eq, exists, ilike, inArray, SQL, sql } from "drizzle-orm";
 import z from "zod";
 
 import { db } from "../../db";
@@ -14,11 +14,13 @@ export const FindArtsFiltersSchema = z.object({
   yearStart: z.string().optional(),
   yearEnd: z.string().optional(),
   artId: z.number().int().positive().optional(),
+  search: z.string().optional(),
 });
 
 export const FindArtsInputSchema = z.object({
   locale: z.enum(localesEnum.enumValues),
   filters: FindArtsFiltersSchema,
+  limit: z.number().int().positive().max(50).optional(),
 });
 
 export type FindArtsInput = z.infer<typeof FindArtsInputSchema>;
@@ -44,10 +46,10 @@ export type FindArtsOutput = Pick<
   })[];
 };
 
-export async function findArts({ locale, filters = {} }: FindArtsInput): Promise<FindArtsOutput[]> {
+export async function findArts({ locale, filters = {}, limit }: FindArtsInput): Promise<FindArtsOutput[]> {
   const condition = buildFilters(filters);
 
-  const rows = await db
+  const query = db
     .select({
       id: schema.arts.id,
       releaseDate: schema.arts.releaseDate,
@@ -105,12 +107,14 @@ export async function findArts({ locale, filters = {} }: FindArtsInput): Promise
     )
     .where(condition.length > 0 ? and(...condition) : undefined);
 
+  const rows = limit ? await query.limit(limit) : await query;
+
   return rows;
 }
 
 const buildFilters = (filters: FindArtsFilters) => {
   const condition: SQL[] = [];
-  const { typeId, genres, rating, yearStart, yearEnd, artId } = filters;
+  const { typeId, genres, rating, yearStart, yearEnd, artId, search } = filters;
 
   if (typeId) {
     condition.push(eq(schema.arts.typeId, typeId));
@@ -141,6 +145,11 @@ const buildFilters = (filters: FindArtsFilters) => {
 
   if (artId) {
     condition.push(eq(schema.arts.id, artId));
+  }
+
+  const searchValue = search?.trim();
+  if (searchValue) {
+    condition.push(ilike(schema.artTranslations.title, `%${searchValue}%`));
   }
 
   return condition;

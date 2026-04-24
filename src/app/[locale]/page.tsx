@@ -29,7 +29,7 @@ const HomePage = async ({
 
   return (
     <HomeContextWrapper types={types} arts={arts} genres={genres} sortOptions={sortOptions}>
-      <HomeView searchQuery={awaitedSearchParams.search || ""} />
+      <HomeView />
     </HomeContextWrapper>
   );
 };
