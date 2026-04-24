@@ -11,6 +11,7 @@ import z from "zod";
 import { Form, FormField } from "@/components/ui/form";
 import { Input, PasswordInput } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 import { AuthSide } from "@/src/app/[locale]/_components/auth/auth-side";
 import { Link, useRouter } from "@/src/i18n/routing";
@@ -209,16 +210,18 @@ const SignUpView = () => {
                           {passwordRequirements.map((req, index) => (
                             <div key={index} className="flex items-center gap-2">
                               <div
-                                className={`w-4 h-4 rounded-full flex items-center justify-center transition-all ${
+                                className={cn(
+                                  "w-4 h-4 rounded-full flex items-center justify-center transition-all",
                                   req.met ? "bg-green-500" : "bg-muted"
-                                }`}
+                                )}
                               >
                                 {req.met && <Check className="w-3 h-3 text-white" />}
                               </div>
                               <span
-                                className={`text-xs transition-colors ${
+                                className={cn(
+                                  "text-xs transition-colors",
                                   req.met ? "text-green-500" : "text-muted-foreground"
-                                }`}
+                                )}
                               >
                                 {req.text}
                               </span>
@@ -272,9 +275,10 @@ const SignUpView = () => {
                           type="checkbox"
                           checked={field.value}
                           onChange={(e) => field.onChange(e.target.checked)}
-                          className={`mt-0.5 w-4 h-4 rounded border ${
+                          className={cn(
+                            "mt-0.5 w-4 h-4 rounded border bg-muted/50 text-primary focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer",
                             fieldState.invalid ? "border-red-500" : "border-border/40"
-                          } bg-muted/50 text-primary focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer`}
+                          )}
                         />
                         <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
                           {signUpTranslations("agreeTo")}{" "}

@@ -11,7 +11,7 @@ type HomeViewProps = {
   searchQuery?: string;
 };
 
-function HomeView({ searchQuery: initialSearchQuery = "" }: HomeViewProps) {
+const HomeView = ({ searchQuery: initialSearchQuery = "" }: HomeViewProps) => {
   const { arts } = useHomeContext();
   const { updateMultipleUrlSearchParams } = useUrlSearchParams();
 
@@ -31,6 +31,6 @@ function HomeView({ searchQuery: initialSearchQuery = "" }: HomeViewProps) {
       </div>
     </div>
   );
-}
+};
 
 export default HomeView;

@@ -1,5 +1,7 @@
 import { CreateArtView } from "./_components/create-art-view";
 
-export default function CreateArtPage() {
+const CreateArtPage = () => {
   return <CreateArtView />;
-}
+};
+
+export default CreateArtPage;

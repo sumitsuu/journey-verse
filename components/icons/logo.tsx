@@ -1,6 +1,8 @@
+import { cn } from "@/lib/utils";
+
 export const Logo = ({ className = "w-[200px] h-[50px] fill-white" }: { className?: string }) => {
   return (
-    <svg className={`group ${className}`} viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+    <svg className={cn("group", className)} viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
       <circle cx="25" cy="25" r="6" stroke="white" strokeWidth="2" fill="none" className={"duration-300"} />
       <ellipse
         cx="25"

@@ -13,7 +13,7 @@ type DatePickerProps = {
   onChange: (value: Date | undefined) => void;
 };
 
-export function DatePicker({ placeholder, value, onChange }: DatePickerProps) {
+export const DatePicker = ({ placeholder, value, onChange }: DatePickerProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -27,4 +27,4 @@ export function DatePicker({ placeholder, value, onChange }: DatePickerProps) {
       </PopoverContent>
     </Popover>
   );
-}
+};

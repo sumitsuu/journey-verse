@@ -16,13 +16,13 @@ type AutocompleteProps<T extends string | number> = {
   values: T[];
 };
 
-export function Autocomplete<T extends string | number>({
+export const Autocomplete = <T extends string | number>({
   placeholder,
   options,
   multiple = false,
   onChange,
   values,
-}: AutocompleteProps<T>) {
+}: AutocompleteProps<T>) => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -77,4 +77,4 @@ export function Autocomplete<T extends string | number>({
       </PopoverContent>
     </Popover>
   );
-}
+};

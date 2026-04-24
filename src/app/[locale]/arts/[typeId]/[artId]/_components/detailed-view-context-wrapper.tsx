@@ -21,16 +21,16 @@ interface DetailedViewProviderProps {
   libraryStatuses: FindStatusesOutput[];
 }
 
-export function DetailedViewContextWrapper({
+export const DetailedViewContextWrapper = ({
   children,
   art,
   library,
   libraryStatuses,
-}: Readonly<DetailedViewProviderProps>) {
+}: Readonly<DetailedViewProviderProps>) => {
   return (
     <DetailedViewContext.Provider value={{ art, library, libraryStatuses }}>{children}</DetailedViewContext.Provider>
   );
-}
+};
 
 export function useDetailedViewContext() {
   const context = useContext(DetailedViewContext);

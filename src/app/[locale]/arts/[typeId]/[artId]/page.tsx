@@ -4,10 +4,10 @@ import { findArts } from "@/src/lib/services/art/find-arts.service";
 import { findLibrary } from "@/src/lib/services/library/find-library.service";
 import { findStatuses } from "@/src/lib/services/status/find-statuses.service";
 import { getServerSession } from "next-auth";
-import DetailedView from "./_components/detailed-view";
+import { DetailedView } from "./_components/detailed-view";
 import { DetailedViewContextWrapper } from "./_components/detailed-view-context-wrapper";
 
-async function ArtItemPage({ params }: { params: Promise<{ locale: Locale; typeId: string; artId: string }> }) {
+const ArtItemPage = async ({ params }: { params: Promise<{ locale: Locale; typeId: string; artId: string }> }) => {
   const awaitedParams = await params;
   const { locale, typeId, artId } = awaitedParams;
   const [art] = await findArts({ locale, filters: { typeId: Number(typeId), artId: Number(artId) } });
@@ -20,5 +20,5 @@ async function ArtItemPage({ params }: { params: Promise<{ locale: Locale; typeI
       <DetailedView />
     </DetailedViewContextWrapper>
   );
-}
+};
 export default ArtItemPage;

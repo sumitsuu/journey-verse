@@ -9,7 +9,7 @@ type MediaGridProps = {
   items: FindArtsOutput[];
 };
 
-export function MediaGrid({ items }: MediaGridProps) {
+export const MediaGrid = ({ items }: MediaGridProps) => {
   const gridTranslations = useTranslations("MediaGrid");
 
   return (
@@ -37,4 +37,4 @@ export function MediaGrid({ items }: MediaGridProps) {
       )}
     </div>
   );
-}
+};

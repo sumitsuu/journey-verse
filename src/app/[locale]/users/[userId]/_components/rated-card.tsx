@@ -2,7 +2,7 @@ import { Star } from "@/components/icons/star";
 import { getFileUrl } from "@/src/lib/utils/file-url";
 import Image from "next/image";
 
-export default function RatedCard() {
+const RatedCard = () => {
   return (
     <div className={"h-full flex lg:gap-4 w-max border border-white/10 xl:p-6 lg:p-0 p-4 rounded-[20px] shadow-2xl"}>
       <Image
@@ -28,4 +28,6 @@ export default function RatedCard() {
       </div>
     </div>
   );
-}
+};
+
+export default RatedCard;

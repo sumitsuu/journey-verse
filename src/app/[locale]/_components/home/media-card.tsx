@@ -20,7 +20,7 @@ type MediaCardProps = {
   index: number;
 };
 
-export function MediaCard({ item, index }: MediaCardProps) {
+export const MediaCard = ({ item, index }: MediaCardProps) => {
   const typeKey = item.type.catalogName.toLowerCase() as keyof typeof mediaTypeIcons;
   const Icon = mediaTypeIcons[typeKey] || Film;
 
@@ -72,4 +72,4 @@ export function MediaCard({ item, index }: MediaCardProps) {
       </Link>
     </motion.div>
   );
-}
+};

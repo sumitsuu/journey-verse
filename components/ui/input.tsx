@@ -8,12 +8,12 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-function Input({
+const Input = ({
   className,
   type,
   variant,
   ...props
-}: React.ComponentProps<"input"> & { variant?: "default" | "invalid" }) {
+}: React.ComponentProps<"input"> & { variant?: "default" | "invalid" }) => {
   return (
     <input
       type={type}
@@ -28,7 +28,7 @@ function Input({
       {...props}
     />
   );
-}
+};
 
 const PasswordInput = React.forwardRef<
   HTMLInputElement,

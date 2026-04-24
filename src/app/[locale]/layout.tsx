@@ -12,13 +12,13 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export default async function LocaleLayout({
+const LocaleLayout = async ({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
-}>) {
+}>) => {
   const { locale } = await params;
 
   if (!routing.locales.includes(locale as "en" | "ru")) {
@@ -44,4 +44,6 @@ export default async function LocaleLayout({
       </body>
     </html>
   );
-}
+};
+
+export default LocaleLayout;

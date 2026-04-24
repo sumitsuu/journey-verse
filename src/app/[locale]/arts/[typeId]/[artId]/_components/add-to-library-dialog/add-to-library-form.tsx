@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Loader } from "@/components/ui/loader";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 import { useRouter } from "@/src/i18n/routing";
 import { createLibraryAction } from "@/src/lib/actions/library/create-library.action";
 import { useMutation } from "@tanstack/react-query";
@@ -99,7 +100,7 @@ const AddToLibraryForm = ({ onOpenChange }: AddToLibraryFormProps) => {
   return (
     <Form {...form}>
       <form
-        className={`w-full h-full flex flex-col gap-4 ${maxEpisodes > 1 && "justify-center"}`}
+        className={cn("w-full h-full flex flex-col gap-4", maxEpisodes > 1 && "justify-center")}
         onSubmit={form.handleSubmit((data) => {
           onSubmit(data);
         })}

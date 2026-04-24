@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 
 type AuthSideProps = {
@@ -11,7 +12,7 @@ const backgroundImages = [
   "https://images.unsplash.com/photo-1567027757540-7b572280fa22?w=800&h=1000&fit=crop",
 ];
 
-export function AuthSide({ title, description }: AuthSideProps) {
+export const AuthSide = ({ title, description }: AuthSideProps) => {
   return (
     <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
       <div className="absolute inset-0 grid grid-cols-2 gap-2 p-4">
@@ -21,7 +22,7 @@ export function AuthSide({ title, description }: AuthSideProps) {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.2, duration: 0.6 }}
-            className={`relative rounded-2xl overflow-hidden ${index === 0 ? "col-span-2 row-span-2" : ""}`}
+            className={cn("relative rounded-2xl overflow-hidden", index === 0 && "col-span-2 row-span-2")}
           >
             <img src={img} alt="" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-secondary/40 mix-blend-overlay" />
@@ -48,4 +49,4 @@ export function AuthSide({ title, description }: AuthSideProps) {
       <div className="absolute inset-0 opacity-[0.015] mix-blend-overlay pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
     </div>
   );
-}
+};

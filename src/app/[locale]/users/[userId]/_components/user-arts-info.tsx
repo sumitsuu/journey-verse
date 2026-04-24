@@ -1,34 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/utils";
+import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import type { FindTypesOutput } from "@/src/lib/services/type/find-types.service";
-import { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
+import { ChildTabTrigger } from "./child-tab-trigger";
 import RatedCard from "./rated-card";
-
-const ChildTabTrigger = ({
-  value,
-  text,
-  activeTab,
-  setActiveTab,
-}: {
-  value: string;
-  text: string;
-  activeTab: string;
-  setActiveTab: Dispatch<SetStateAction<string>>;
-}) => {
-  const className = cn(
-    `!border-b-transparent max-w-[100px] rounded-md opacity-50 ${activeTab === value && "opacity-100"}`
-  );
-
-  return (
-    <TabsTrigger value={value} onClick={() => setActiveTab(value)} asChild>
-      <Button className={className}>{text}</Button>
-    </TabsTrigger>
-  );
-};
-
-export default function UserArtsInfo() {
+const UserArtsInfo = () => {
   const types: FindTypesOutput[] = []; // TODO: add types from ssr
   const [activeTab, setActiveTab] = useState<string>(String(types[0]?.id));
 
@@ -72,4 +48,6 @@ export default function UserArtsInfo() {
       ))}
     </Tabs>
   );
-}
+};
+
+export default UserArtsInfo;

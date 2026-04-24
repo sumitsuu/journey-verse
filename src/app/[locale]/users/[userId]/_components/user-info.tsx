@@ -6,19 +6,9 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
 import { useParams } from "next/navigation";
+import { StatContainer } from "./stat-container";
 
-const StatContainer = ({ title, subtitle, className }: { title: string; subtitle: string; className?: string }) => {
-  return (
-    <div
-      className={`bg-card rounded-lg flex flex-col justify-center items-center w-full h-24 text-center ${className}`}
-    >
-      <div className="text-white text-lg font-bold">{title}</div>
-      <div className="text-sm text-gray-400">{subtitle}</div>
-    </div>
-  );
-};
-
-export default function UserInfo() {
+const UserInfo = () => {
   const { data: session } = useSession();
   const { userId } = useParams();
   const isSameUser = Number(session?.user?.id) === Number(userId);
@@ -61,4 +51,6 @@ export default function UserInfo() {
       </div>
     </div>
   );
-}
+};
+
+export default UserInfo;

@@ -11,7 +11,7 @@ type ArtsProps = {
   title: string;
 };
 
-function Arts({ title }: Readonly<ArtsProps>) {
+const Arts = ({ title }: Readonly<ArtsProps>) => {
   const homeTranslations = useTranslations("HomePage");
   const { types, arts } = useHomeContext();
   return (
@@ -27,6 +27,6 @@ function Arts({ title }: Readonly<ArtsProps>) {
       </div>
     </div>
   );
-}
+};
 
 export default Arts;

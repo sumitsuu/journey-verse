@@ -65,7 +65,9 @@ export const arts = pgTable("arts", {
   episodes: integer("episodes").notNull(),
   countryId: integer("country_id").notNull(),
   typeId: integer("type_id").notNull(),
-  statusId: integer("status_id").notNull(),
+  statusId: integer("status_id")
+    .notNull()
+    .references(() => statuses.id),
   rating: numeric("rating", { precision: 10, scale: 2 }),
 });
 

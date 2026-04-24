@@ -1,145 +1,98 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
-import { PICTURE_PLACEHOLDER } from "@/lib/constants";
-import { ConfirmationDialog } from "@/src/app/_components/confirmation-dialog";
-import Container from "@/src/components/UI/Container";
-import parseDates from "@/src/helpers/parse-dates";
-import { useRouter } from "@/src/i18n/routing";
-import { removeArtFromLibraryAction } from "@/src/lib/actions/library/remove-art-from-library.action";
-import type { FindArtsOutput } from "@/src/lib/services/art/find-arts.service";
-import { getFileUrl } from "@/src/lib/utils/file-url";
+import { Link } from "@/src/i18n/routing";
+import { upsertLibraryStatusAction } from "@/src/lib/actions/library/upsert-library-status.action";
 import { useMutation } from "@tanstack/react-query";
-import "moment/locale/ru";
 import { useSession } from "next-auth/react";
-import { useLocale, useTranslations } from "next-intl";
-import Image from "next/image";
-import { useState } from "react";
-import AddToLibraryDialog from "./add-to-library-dialog/add-to-library-dialog";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+
 import { useDetailedViewContext } from "./detailed-view-context-wrapper";
+import { DetailsContent } from "./details-content";
+import { GalleryLightbox } from "./gallery-lightbox";
+import { HeroSection } from "./hero-section";
+import { ReviewModal } from "./review-modal";
+import { StickyActionBar } from "./sticky-action-bar";
 
-type Genre = FindArtsOutput["genres"][number];
-
-const DetailedView = () => {
-  const [isAddToLibraryDialogOpen, setIsAddToLibraryDialogOpen] = useState(false);
-  const [isDeleteFromLibraryDialogOpen, setIsDeleteFromLibraryDialogOpen] = useState(false);
-  const handleAddToLibraryDialog = () => setIsAddToLibraryDialogOpen((prev) => !prev);
-  const handleDeleteFromLibraryDialog = () => setIsDeleteFromLibraryDialogOpen((prev) => !prev);
+export const DetailedView = () => {
   const artDetailsTranslations = useTranslations("ArtDetails");
-  const { art, library } = useDetailedViewContext();
-  const locale = useLocale();
-  const router = useRouter();
+  const { art, library, libraryStatuses } = useDetailedViewContext();
   const { data: session } = useSession();
-  const userId = session?.user?.id;
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [selectedLibraryStatusId, setSelectedLibraryStatusId] = useState<number | null>(library?.statusId ?? null);
+  const [showLibraryDropdown, setShowLibraryDropdown] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const { mutate: removeArtFromLibrary } = useMutation({
-    mutationFn: removeArtFromLibraryAction,
-    onSuccess: () => {
-      toast({
-        title: artDetailsTranslations("removedFromLibrarySuccess"),
-        variant: "success",
-      });
-      router.refresh();
-      handleDeleteFromLibraryDialog();
-    },
-    onError: () => {
-      toast({
-        title: artDetailsTranslations("removeFromLibraryError"),
-        variant: "destructive",
-      });
-    },
+  const { mutate: upsertLibraryStatusMutation } = useMutation({
+    mutationFn: upsertLibraryStatusAction,
   });
 
-  return (
-    <>
-      <div className="relative h-full grow">
-        <Container className={"isolate z-[10000]"}>
-          <>
-            <div className={"flex lg:pt-10 flex-col md:flex-row pt-5"}>
-              <div className={"flex flex-col items-center md:block md:mr-5 mr-0"}>
-                <Image
-                  src={art.previewPath ? getFileUrl(art.previewPath) : PICTURE_PLACEHOLDER}
-                  alt=""
-                  className={"w-full max-w-[250px] h-[400px]"}
-                  width={250}
-                  height={400}
-                  quality={90}
-                />
-                <Button
-                  onClick={library ? handleDeleteFromLibraryDialog : handleAddToLibraryDialog}
-                  className={"w-full mt-3"}
-                >
-                  {library ? artDetailsTranslations("removeFromLibrary") : artDetailsTranslations("addToLibrary")}
-                </Button>
-              </div>
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 500);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-              <div className={"w-full max-w-[1200px] md:p-4 md:pt-0 pb-5"}>
-                <h1 className={"mb-1 md:mt-0 mt-5 text-2xl font-bold"}>{art.title}</h1>
-                <p>
-                  <span>{art.description}</span>
-                </p>
+  useEffect(() => {
+    setSelectedLibraryStatusId(library?.statusId ?? null);
+  }, [library?.statusId]);
 
-                <div className={"flex mt-6 gap-8"}>
-                  <div>
-                    <p>
-                      <span>{artDetailsTranslations("releaseYear")} </span>
-                    </p>
-                    {!!art.genres?.length && (
-                      <p>
-                        <span>{artDetailsTranslations("genres")}</span>
-                      </p>
-                    )}
-                    {art.episodes && art.episodes >= 1 && (
-                      <p>
-                        <span>{artDetailsTranslations("episodes")}</span>
-                      </p>
-                    )}
-                    <p>
-                      <span>{artDetailsTranslations("rating")}</span>
-                    </p>
-                    {art.status.name && (
-                      <p>
-                        <span>{artDetailsTranslations("status")}</span>
-                      </p>
-                    )}
-                    {art.country.name && (
-                      <p>
-                        <span>{artDetailsTranslations("country")}</span>
-                      </p>
-                    )}
-                  </div>
+  const handleLibraryStatusChange = (statusId: number) => {
+    setSelectedLibraryStatusId(statusId);
+    const userId = Number(session?.user?.id);
 
-                  <div>
-                    <p>{parseDates(art.releaseDate, locale)}</p>
-                    {!!art.genres?.length && <p>{art.genres.map((item: Genre) => item.name).join(", ")}</p>}
-                    {art.episodes && art.episodes >= 1 && <p>{art.episodes}</p>}
-                    <p>{art.rating !== null ? `${art.rating} ` : artDetailsTranslations("notRated")}</p>
-                    {art.status.name && <p>{art.status.name}</p>}
-                    {art.country.name && <p>{art.country.name}</p>}
-                  </div>
-                </div>
-                {/*<ArtsItemFrames id={item.id} />*/}
-              </div>
-            </div>
+    if (!userId || !libraryStatuses.some((item) => item.id === statusId)) {
+      return;
+    }
 
-            <AddToLibraryDialog onOpenChange={handleAddToLibraryDialog} isDialogOpen={isAddToLibraryDialogOpen} />
-            <ConfirmationDialog
-              title={artDetailsTranslations("deleteFromLibrary")}
-              description={artDetailsTranslations("deleteFromLibraryDescription")}
-              onConfirm={() => {
-                if (userId && library) {
-                  removeArtFromLibrary({ userId, libraryId: library.id });
-                }
-              }}
-              onCancel={handleDeleteFromLibraryDialog}
-              isOpen={isDeleteFromLibraryDialogOpen}
-              onOpenChange={handleDeleteFromLibraryDialog}
-            />
-          </>
-        </Container>
+    upsertLibraryStatusMutation({
+      artId: art.id,
+      userId,
+      statusId,
+    });
+  };
+
+  if (!art) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-2">{artDetailsTranslations("notFoundTitle")}</h1>
+          <Link href="/" className="text-primary hover:underline">
+            {artDetailsTranslations("notFoundBack")}
+          </Link>
+        </div>
       </div>
-    </>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <HeroSection
+        selectedLibraryStatusId={selectedLibraryStatusId}
+        onLibraryStatusChange={handleLibraryStatusChange}
+        isFavorite={isFavorite}
+        setIsFavorite={setIsFavorite}
+        showLibraryDropdown={showLibraryDropdown}
+        setShowLibraryDropdown={setShowLibraryDropdown}
+      />
+      <StickyActionBar
+        isVisible={isSticky}
+        isFavorite={isFavorite}
+        setIsFavorite={setIsFavorite}
+        onOpenReviewModal={() => setShowReviewModal(true)}
+      />
+      <DetailsContent
+        selectedLibraryStatusId={selectedLibraryStatusId}
+        onLibraryStatusChange={handleLibraryStatusChange}
+        onOpenReviewModal={() => setShowReviewModal(true)}
+        setSelectedImage={setSelectedImage}
+      />
+      <ReviewModal isOpen={showReviewModal} onClose={() => setShowReviewModal(false)} />
+      <GalleryLightbox selectedImage={selectedImage} onClose={() => setSelectedImage(null)} />
+    </div>
   );
 };
-export default DetailedView;

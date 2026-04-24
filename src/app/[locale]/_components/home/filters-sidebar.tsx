@@ -23,7 +23,7 @@ const mediaTypeIcons: Record<string, React.ComponentType<{ className?: string }>
   manhua: Book,
 };
 
-export function FiltersSidebar() {
+export const FiltersSidebar = () => {
   const filtersTranslations = useTranslations("Filters");
   const { searchParams, updateMultipleUrlSearchParams, clearUrlSearchParams } = useUrlSearchParams();
   const { sortOptions, types } = useHomeContext();
@@ -180,4 +180,4 @@ export function FiltersSidebar() {
       </div>
     </aside>
   );
-}
+};

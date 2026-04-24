@@ -10,7 +10,7 @@ type CardProps = {
   item: FindArtsOutput;
 };
 
-function Card({ item }: Readonly<CardProps>) {
+const Card = ({ item }: Readonly<CardProps>) => {
   return (
     <Link href={`/arts/${item.type.id}/${item.id}`} className={"opacity-80 hover:opacity-100 duration-300"}>
       <Image
@@ -28,6 +28,6 @@ function Card({ item }: Readonly<CardProps>) {
       </div>
     </Link>
   );
-}
+};
 
 export default Card;

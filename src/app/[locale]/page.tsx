@@ -7,13 +7,13 @@ import { findArts, FindArtsFiltersSchema } from "../../lib/services/art/find-art
 import { HomeContextWrapper } from "./_components/home/home-context-wrapper";
 import HomeView from "./_components/home/home-view";
 
-async function HomePage({
+const HomePage = async ({
   params,
   searchParams,
 }: Readonly<{
   params: Promise<{ locale: Locale }>;
   searchParams: Promise<{ type?: string; genre?: string; year?: string; rating?: string; search?: string }>;
-}>) {
+}>) => {
   const { locale } = await params;
   const awaitedSearchParams = await searchParams;
   const types = await findTypes({ locale });
@@ -32,6 +32,6 @@ async function HomePage({
       <HomeView searchQuery={awaitedSearchParams.search || ""} />
     </HomeContextWrapper>
   );
-}
+};
 
 export default HomePage;

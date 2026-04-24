@@ -23,9 +23,9 @@ interface HomePageProviderProps {
   sortOptions: FindSortOptionsOutput;
 }
 
-export function HomeContextWrapper({ children, arts, types, genres, sortOptions }: Readonly<HomePageProviderProps>) {
+export const HomeContextWrapper = ({ children, arts, types, genres, sortOptions }: Readonly<HomePageProviderProps>) => {
   return <HomePageContext.Provider value={{ arts, types, genres, sortOptions }}>{children}</HomePageContext.Provider>;
-}
+};
 
 export function useHomeContext() {
   const context = useContext(HomePageContext);
