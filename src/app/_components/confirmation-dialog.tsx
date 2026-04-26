@@ -8,16 +8,14 @@ type ConfirmationDialogProps = {
   title: string;
   description: string;
   onConfirm: () => void;
-  onCancel: () => void;
   isOpen: boolean;
-  onOpenChange: () => void;
+  onOpenChange: (open: boolean) => void;
 };
 
 export const ConfirmationDialog = ({
   title,
   description,
   onConfirm,
-  onCancel,
   isOpen,
   onOpenChange,
 }: ConfirmationDialogProps) => {
@@ -29,10 +27,10 @@ export const ConfirmationDialog = ({
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>{description}</DialogDescription>
         <DialogFooter>
-          <Button type="button" onClick={onCancel}>
+          <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
             {confirmationTranslations("cancel")}
           </Button>
-          <Button type="submit" onClick={onConfirm}>
+          <Button type="button" onClick={onConfirm}>
             {confirmationTranslations("confirm")}
           </Button>
         </DialogFooter>

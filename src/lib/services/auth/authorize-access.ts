@@ -8,21 +8,22 @@ export async function authorizeAccess({ userId }: { userId: number }): Promise<v
     throw new Error("Unauthorized");
   }
 
-  if (session.user.id !== userId && !(await hasRole(session.user.id, "admin"))) {
+  const sessionUserId = Number(session.user.id);
+  if (sessionUserId !== userId && !(await hasRole(sessionUserId, "admin"))) {
     throw new Error("Unauthorized");
   }
 }
 
 export async function authorizeAdmin(): Promise<void> {
   const session = await getServerSession(authOptions);
-  if (!session || !(await hasRole(session.user.id, "admin"))) {
+  if (!session || !(await hasRole(Number(session.user.id), "admin"))) {
     throw new Error("Unauthorized");
   }
 }
 
 export async function requireAdminSession() {
   const session = await getServerSession(authOptions);
-  if (!session || !(await hasRole(session.user.id, "admin"))) {
+  if (!session || !(await hasRole(Number(session.user.id), "admin"))) {
     throw new Error("Unauthorized");
   }
   return session;

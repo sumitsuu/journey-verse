@@ -13,7 +13,7 @@ const removeArtFromLibrarySchema = z.object({
 export async function removeArtFromLibraryAction(data: z.infer<typeof removeArtFromLibrarySchema>): Promise<void> {
   try {
     const validated = removeArtFromLibrarySchema.parse(data);
-    await authorizeAccess({ userId: data.userId });
+    await authorizeAccess({ userId: validated.userId });
 
     await removeArtFromLibrary({
       userId: validated.userId,

@@ -9,7 +9,7 @@ import { PICTURE_PLACEHOLDER } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Link } from "@/src/i18n/routing";
 import { getFileUrl } from "@/src/lib/utils/file-url";
-import { Bookmark, Check, ChevronDown, Play, Plus, Star, X } from "lucide-react";
+import { Bookmark, Check, ChevronDown, Play, Plus, Star, Trash2, X } from "lucide-react";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -20,6 +20,7 @@ import { ShareActionButton } from "./share-action-button";
 type HeroSectionProps = {
   selectedLibraryStatusId: number | null;
   onLibraryStatusChange: (statusId: number) => void;
+  onRequestRemoveFromLibrary: () => void;
   isFavorite: boolean;
   setIsFavorite: (value: boolean) => void;
   setShowLibraryDropdown: (value: boolean) => void;
@@ -29,12 +30,13 @@ type HeroSectionProps = {
 export const HeroSection = ({
   selectedLibraryStatusId,
   onLibraryStatusChange,
+  onRequestRemoveFromLibrary,
   isFavorite,
   setIsFavorite,
   showLibraryDropdown,
   setShowLibraryDropdown,
 }: HeroSectionProps) => {
-  const { art, libraryStatuses } = useDetailedViewContext();
+  const { art, library, libraryStatuses } = useDetailedViewContext();
   const commonTranslations = useTranslations("Common");
   const artDetailsTranslations = useTranslations("ArtDetails");
   const statusIcons = [Play, Check, Bookmark, X] as const;
@@ -174,6 +176,19 @@ export const HeroSection = ({
                   })}
                 </DropdownMenuContent>
               </DropdownMenu>
+
+              {library ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="xl"
+                  className="rounded-xl border-white/25 bg-black/30 text-white backdrop-blur-md hover:bg-white/10"
+                  onClick={onRequestRemoveFromLibrary}
+                >
+                  <Trash2 className="size-5" />
+                  {artDetailsTranslations("deleteFromLibrary")}
+                </Button>
+              ) : null}
 
               <FavoriteActionButton
                 isFavorite={isFavorite}

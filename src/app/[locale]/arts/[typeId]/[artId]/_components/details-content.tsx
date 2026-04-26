@@ -20,26 +20,13 @@ const galleryImages = [
   "https://images.unsplash.com/photo-1628089700970-0012c5718efc?w=600&h=400&fit=crop",
 ];
 
-const ratingBreakdown = [
-  { stars: 10, percentage: 10, count: 1000 },
-  { stars: 9, percentage: 10, count: 1000 },
-  { stars: 8, percentage: 10, count: 1000 },
-  { stars: 7, percentage: 10, count: 1000 },
-  { stars: 6, percentage: 10, count: 1000 },
-  { stars: 5, percentage: 10, count: 1000 },
-  { stars: 4, percentage: 10, count: 1000 },
-  { stars: 3, percentage: 10, count: 1000 },
-  { stars: 2, percentage: 10, count: 1000 },
-  { stars: 1, percentage: 10, count: 1000 },
-];
-
 export const DetailsContent = ({
   selectedLibraryStatusId,
   onLibraryStatusChange,
   onOpenReviewModal,
   setSelectedImage,
 }: DetailsContentProps) => {
-  const { art, library, libraryStatuses } = useDetailedViewContext();
+  const { art, library, libraryStatuses, ratingDistribution } = useDetailedViewContext();
   const artDetailsTranslations = useTranslations("ArtDetails");
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [showSortDropdown, setShowSortDropdown] = useState(false);
@@ -272,7 +259,7 @@ export const DetailsContent = ({
             >
               <h3 className="text-xl font-bold mb-6">{artDetailsTranslations("ratingDistribution")}</h3>
               <div className="space-y-4">
-                {ratingBreakdown.map((item) => (
+                {ratingDistribution.map((item) => (
                   <div key={item.stars}>
                     <div className="flex items-center gap-3 mb-2">
                       <div className="flex items-center gap-1 w-14">
@@ -290,7 +277,7 @@ export const DetailsContent = ({
                           className="h-full bg-gradient-to-r from-primary to-secondary rounded-full"
                         />
                       </div>
-                      <span className="text-sm text-muted-foreground w-12 text-right">{item.count}</span>
+                      <span className="text-sm text-muted-foreground w-12 text-right tabular-nums">{item.count}</span>
                     </div>
                   </div>
                 ))}

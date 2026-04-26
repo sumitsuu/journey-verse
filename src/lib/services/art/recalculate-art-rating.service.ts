@@ -14,10 +14,14 @@ export async function recalculateArtRating(artId: number): Promise<void> {
     .from(schema.library)
     .where(and(eq(schema.library.artId, artId), isNotNull(schema.library.rating)));
 
-  const averageRating = result?.avgRating ? Number(result.avgRating) : null;
+  const rawAvg = result?.avgRating;
+  const averageRating =
+    rawAvg !== null && rawAvg !== undefined && String(rawAvg) !== "" ? Number(rawAvg) : null;
+  const ratingToStore =
+    averageRating !== null && Number.isFinite(averageRating) ? averageRating : null;
 
   await updateArt({
     artId,
-    rating: averageRating !== null ? averageRating : undefined,
+    rating: ratingToStore,
   });
 }

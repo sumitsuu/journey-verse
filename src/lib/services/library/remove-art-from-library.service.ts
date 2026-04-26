@@ -15,10 +15,15 @@ export const RemoveArtFromLibraryInputSchema = z.object({
 export type RemoveArtFromLibraryInput = z.infer<typeof RemoveArtFromLibraryInputSchema>;
 
 export async function removeArtFromLibrary({ userId, libraryId }: RemoveArtFromLibraryInput): Promise<void> {
-  const [{ deletedArtId }] = await db
+  const deleted = await db
     .delete(schema.library)
     .where(and(eq(schema.library.id, libraryId), eq(schema.library.userId, userId)))
     .returning({ deletedArtId: schema.library.artId });
 
-  await recalculateArtRating(deletedArtId);
+  const row = deleted[0];
+  if (!row) {
+    throw new Error("Library entry not found");
+  }
+
+  await recalculateArtRating(row.deletedArtId);
 }

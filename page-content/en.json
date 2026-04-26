@@ -223,6 +223,8 @@
   },
   "AddToLibrary": {
     "title": "Add to Library",
+    "editTitle": "Edit library entry",
+    "save": "Save",
     "watchedEpisodes": "Watched Episodes / {max}",
     "rating": "Rating",
     "status": "Status",
@@ -234,7 +236,9 @@
     },
     "messages": {
       "createdSuccess": "Library item was created successfully",
-      "createError": "An error occurred while creating the library item"
+      "createError": "An error occurred while creating the library item",
+      "updatedSuccess": "Library entry updated",
+      "updateError": "Could not update library entry"
     }
   },
   "UserProfile": {
