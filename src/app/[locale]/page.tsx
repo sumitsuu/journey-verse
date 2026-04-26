@@ -1,7 +1,10 @@
+import { authOptions } from "@/src/app/api/auth/[...nextauth]/route";
 import { parseHomeFilters } from "@/src/helpers/parse-home-filters";
 import { findSortOptions } from "@/src/lib/services/art/find-sort-options.service";
 import { findGenres } from "@/src/lib/services/genre/find-genres.service";
 import { findTypes } from "@/src/lib/services/type/find-types.service";
+import { hasRole } from "@/src/lib/services/user/find-user-roles.service";
+import { getServerSession } from "next-auth";
 import { Locale } from "../../lib/i18n/locales";
 import { findArts, FindArtsFiltersSchema } from "../../lib/services/art/find-arts.service";
 import { HomeContextWrapper } from "./_components/home/home-context-wrapper";
@@ -18,6 +21,8 @@ const HomePage = async ({
   const awaitedSearchParams = await searchParams;
   const types = await findTypes({ locale });
   const genres = await findGenres(locale);
+  const session = await getServerSession(authOptions);
+  const isAdmin = session ? await hasRole(session.user.id, "admin") : false;
 
   const filters = parseHomeFilters(awaitedSearchParams, types);
   const parsedFilters = FindArtsFiltersSchema.parse(filters);
@@ -28,7 +33,7 @@ const HomePage = async ({
   const arts = await findArts({ locale, filters: parsedFilters });
 
   return (
-    <HomeContextWrapper types={types} arts={arts} genres={genres} sortOptions={sortOptions}>
+    <HomeContextWrapper types={types} arts={arts} genres={genres} sortOptions={sortOptions} isAdmin={isAdmin}>
       <HomeView />
     </HomeContextWrapper>
   );

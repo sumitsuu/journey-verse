@@ -3,6 +3,7 @@
 import { FindArtsOutput } from "@/src/lib/services/art/find-arts.service";
 import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useHomeContext } from "./home-context-wrapper";
 import { MediaCard } from "./media-card";
 
 type MediaGridProps = {
@@ -11,6 +12,7 @@ type MediaGridProps = {
 
 export const MediaGrid = ({ items }: MediaGridProps) => {
   const gridTranslations = useTranslations("MediaGrid");
+  const { isAdmin } = useHomeContext();
 
   return (
     <div className="flex-1">
@@ -22,7 +24,7 @@ export const MediaGrid = ({ items }: MediaGridProps) => {
 
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
         {items.map((item, index) => (
-          <MediaCard key={item.id} item={item} index={index} />
+          <MediaCard key={item.id} item={item} index={index} isAdmin={isAdmin} />
         ))}
       </div>
 

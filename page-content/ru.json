@@ -261,6 +261,14 @@
     "selectType": "Тип"
   },
   "Admin": {
+    "catalog": {
+      "delete": "Удалить арт",
+      "cancel": "Отмена",
+      "deleteDialogTitle": "Удалить арт",
+      "deleteConfirm": "Удалить «{title}» из каталога?",
+      "deleteSuccess": "Арт успешно удален",
+      "deleteError": "Произошла ошибка при удалении арта"
+    },
     "createArt": {
       "badge": "Админ-студия",
       "title": "Создать новый арт",

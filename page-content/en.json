@@ -262,6 +262,14 @@
     "selectType": "Type"
   },
   "Admin": {
+    "catalog": {
+      "delete": "Delete art",
+      "cancel": "Cancel",
+      "deleteDialogTitle": "Delete art",
+      "deleteConfirm": "Delete \"{title}\" from the catalog?",
+      "deleteSuccess": "Art was deleted successfully",
+      "deleteError": "An error occurred while deleting the art"
+    },
     "createArt": {
       "badge": "Admin Studio",
       "title": "Create new art",

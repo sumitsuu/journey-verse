@@ -11,6 +11,7 @@ interface HomePageContextType {
   types: FindTypesOutput[];
   genres: FindGenresOutput[];
   sortOptions: FindSortOptionsOutput;
+  isAdmin: boolean;
 }
 
 const HomePageContext = createContext<HomePageContextType | undefined>(undefined);
@@ -21,10 +22,22 @@ interface HomePageProviderProps {
   types: FindTypesOutput[];
   genres: FindGenresOutput[];
   sortOptions: FindSortOptionsOutput;
+  isAdmin: boolean;
 }
 
-export const HomeContextWrapper = ({ children, arts, types, genres, sortOptions }: Readonly<HomePageProviderProps>) => {
-  return <HomePageContext.Provider value={{ arts, types, genres, sortOptions }}>{children}</HomePageContext.Provider>;
+export const HomeContextWrapper = ({
+  children,
+  arts,
+  types,
+  genres,
+  sortOptions,
+  isAdmin,
+}: Readonly<HomePageProviderProps>) => {
+  return (
+    <HomePageContext.Provider value={{ arts, types, genres, sortOptions, isAdmin }}>
+      {children}
+    </HomePageContext.Provider>
+  );
 };
 
 export function useHomeContext() {
