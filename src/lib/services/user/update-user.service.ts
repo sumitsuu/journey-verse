@@ -49,3 +49,56 @@ export async function updateUsers({ id, ...data }: UpdateUserInput): Promise<Upd
 
   return result;
 }
+
+export async function patchUser(
+  id: number,
+  data: Partial<Pick<UpdateUserInput, "email" | "displayName" | "avatarPath" | "favouredTypeId">>
+): Promise<UpdateUserOutput> {
+  const [existing] = await db.select().from(schema.users).where(eq(schema.users.id, id));
+
+  if (!existing) {
+    throw new Error("User not found");
+  }
+
+  const patch: Partial<typeof schema.users.$inferInsert> = {};
+  if (data.email !== undefined) {
+    patch.email = data.email;
+  }
+  if (data.displayName !== undefined) {
+    patch.displayName = data.displayName;
+  }
+  if (data.avatarPath !== undefined) {
+    patch.avatarPath = data.avatarPath;
+  }
+  if (data.favouredTypeId !== undefined) {
+    patch.favouredTypeId = data.favouredTypeId;
+  }
+
+  if (Object.keys(patch).length === 0) {
+    return {
+      id: existing.id,
+      email: existing.email,
+      displayName: existing.displayName,
+      avatarPath: existing.avatarPath,
+      favouredTypeId: existing.favouredTypeId,
+      roles: await findUserRoles(existing.id),
+    };
+  }
+
+  const [updated] = await db
+    .update(schema.users)
+    .set(patch)
+    .where(eq(schema.users.id, id))
+    .returning({
+      id: schema.users.id,
+      email: schema.users.email,
+      displayName: schema.users.displayName,
+      avatarPath: schema.users.avatarPath,
+      favouredTypeId: schema.users.favouredTypeId,
+    });
+
+  return {
+    ...updated,
+    roles: await findUserRoles(updated.id),
+  };
+}

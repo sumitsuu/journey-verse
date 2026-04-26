@@ -58,7 +58,11 @@
     "noBookmarks": "You have no saved bookmarks yet.",
     "noNotifications": "You have no notifications yet.",
     "language": "Language",
-    "switchLanguage": "Switch language"
+    "switchLanguage": "Switch language",
+    "admin": "Admin",
+    "adminOverview": "Overview",
+    "adminCreateArt": "Create catalog art",
+    "adminUsers": "User management"
   },
   "Auth": {
     "signIn": {
@@ -364,6 +368,55 @@
       "messages": {
         "createdSuccess": "Art was created successfully",
         "createError": "An error occurred while creating the art"
+      }
+    },
+    "layout": {
+      "kicker": "Restricted area",
+      "title": "Administrator workspace",
+      "backToSite": "Back to site"
+    },
+    "home": {
+      "heading": "Administration",
+      "subheading": "Pick a workspace to manage catalog content and member accounts.",
+      "createArt": {
+        "title": "Create catalog art",
+        "description": "Publish new titles with localized copy, artwork, and release metadata."
+      },
+      "userManagement": {
+        "title": "User management",
+        "description": "Inspect accounts, adjust profiles, and grant or revoke roles."
+      }
+    },
+    "userManagement": {
+      "title": "User management",
+      "description": "Search the member directory, open a profile, and sync roles in one place.",
+      "searchPlaceholder": "Search by email or display name",
+      "search": "Search",
+      "columns": {
+        "user": "User",
+        "email": "Email",
+        "roles": "Roles",
+        "actions": "Actions"
+      },
+      "manage": "Manage",
+      "empty": "No users match this search.",
+      "pagination": {
+        "summary": "Showing {from}–{to} of {total}",
+        "prev": "Previous page",
+        "next": "Next page"
+      },
+      "sheet": {
+        "title": "Edit user",
+        "description": "Update profile and roles for {name}.",
+        "email": "Email",
+        "displayName": "Display name",
+        "roles": "Roles",
+        "cancel": "Cancel",
+        "save": "Save changes"
+      },
+      "messages": {
+        "saveSuccess": "User updated successfully",
+        "saveError": "Could not save changes"
       }
     }
   },

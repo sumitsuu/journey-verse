@@ -29,15 +29,22 @@ export const Carousel = ({ trendingItems }: CarouselProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
+              className="flex-[0_0_100%] md:flex-[0_0_calc((100%-1.5rem)/2)] lg:flex-[0_0_calc((100%-3rem)/3)]"
             >
               <Link href={`/arts/${item.type.id}/${item.id}`}>
                 <div className="group relative rounded-2xl overflow-hidden bg-card border border-border/40 hover:border-primary/40 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/20">
-                  <div className="aspect-[16/9] relative overflow-hidden">
+                  <div className="aspect-[16/9] relative overflow-hidden bg-background">
+                    <img
+                      src={item.previewPath ? getFileUrl(item.previewPath) : PICTURE_PLACEHOLDER}
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 h-full w-full scale-110 object-cover opacity-45 blur-xl transition-transform duration-700 ease-out group-hover:scale-125"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/30 to-background/70" />
                     <img
                       src={item.previewPath ? getFileUrl(item.previewPath) : PICTURE_PLACEHOLDER}
                       alt={item.title}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                      className="relative mx-auto h-full w-full object-contain object-center p-3 transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
 

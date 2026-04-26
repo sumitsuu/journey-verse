@@ -19,3 +19,11 @@ export async function authorizeAdmin(): Promise<void> {
     throw new Error("Unauthorized");
   }
 }
+
+export async function requireAdminSession() {
+  const session = await getServerSession(authOptions);
+  if (!session || !(await hasRole(session.user.id, "admin"))) {
+    throw new Error("Unauthorized");
+  }
+  return session;
+}

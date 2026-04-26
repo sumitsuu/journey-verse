@@ -7,7 +7,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -118,12 +122,25 @@ const Nav = () => {
                   <Link href={`/users/${sessionUser?.id}/settings`}>{navTranslations("settings")}</Link>
                 </DropdownMenuItem>
                 {sessionUser.roles.includes("admin") && (
-                  <DropdownMenuItem className={"cursor-pointer"} asChild>
-                    <Link href={"/admin/create-art"} className={"flex items-center gap-2"}>
-                      <ShieldPlus className={"size-4"} />
-                      Admin
-                    </Link>
-                  </DropdownMenuItem>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger className="cursor-pointer gap-2">
+                      <ShieldPlus className="size-4" />
+                      {navTranslations("admin")}
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        <DropdownMenuItem className="cursor-pointer" asChild>
+                          <Link href="/admin">{navTranslations("adminOverview")}</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer" asChild>
+                          <Link href="/admin/create-art">{navTranslations("adminCreateArt")}</Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer" asChild>
+                          <Link href="/admin/user-management">{navTranslations("adminUsers")}</Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
                 )}
                 <DropdownMenuGroup className={"md:hidden"}>
                   <DropdownMenuItem className={"cursor-pointer"} asChild>
