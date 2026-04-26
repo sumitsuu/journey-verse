@@ -39,7 +39,12 @@ export async function createArts(
     .returning();
 
   if (data.genres?.length) {
-    // TODO: Handle genres if needed
+    await db.insert(schema.artGenres).values(
+      data.genres.map((genreId) => ({
+        artId: art.id,
+        genreId,
+      }))
+    );
   }
 
   await db.insert(schema.artTranslations).values({

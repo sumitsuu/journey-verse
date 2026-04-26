@@ -260,6 +260,104 @@
     "typeUpdatedSuccess": "Тип успешно обновлен.",
     "selectType": "Тип"
   },
+  "Admin": {
+    "createArt": {
+      "badge": "Админ-студия",
+      "title": "Создать новый арт",
+      "description": "Добавьте запись каталога с локализованным названием, метаданными для поиска, постером и датой релиза.",
+      "footerNote": "Готовые записи сразу появляются в поиске и на страницах каталога после создания.",
+      "actions": {
+        "create": "Создать арт"
+      },
+      "sections": {
+        "identity": {
+          "title": "Основное",
+          "description": "Название и описание для текущей локали."
+        },
+        "catalog": {
+          "title": "Метаданные каталога",
+          "description": "Данные для фильтров, поиска и страниц деталей JourneyVerse."
+        },
+        "artwork": {
+          "title": "Постер",
+          "description": "Загрузите четкую обложку. Она станет главным изображением в каталоге."
+        },
+        "release": {
+          "title": "Релиз",
+          "description": "Укажите каноническую дату выхода для фильтров каталога."
+        },
+        "snapshot": {
+          "title": "Сводка",
+          "description": "Быстрая проверка перед публикацией в каталог."
+        }
+      },
+      "fields": {
+        "title": {
+          "label": "Название",
+          "placeholder": "например, Violet Evergarden"
+        },
+        "description": {
+          "label": "Описание",
+          "placeholder": "Краткий синопсис, настроение, завязка и ключевые детали..."
+        },
+        "mediaType": {
+          "label": "Тип медиа",
+          "placeholder": "Тип"
+        },
+        "status": {
+          "label": "Статус",
+          "placeholder": "Статус"
+        },
+        "country": {
+          "label": "Страна",
+          "placeholder": "Страна"
+        },
+        "episodes": {
+          "label": "Эпизоды",
+          "placeholder": "12"
+        },
+        "genres": {
+          "label": "Жанры",
+          "placeholder": "Выберите жанры"
+        },
+        "previewImage": {
+          "label": "Изображение"
+        },
+        "releaseDate": {
+          "label": "Дата релиза",
+          "placeholder": "Дата"
+        }
+      },
+      "upload": {
+        "title": "Перетащите обложку сюда",
+        "description": "JPEG или PNG, лучше вертикальный формат"
+      },
+      "snapshot": {
+        "title": "Название",
+        "untitled": "Без названия",
+        "description": "Описание",
+        "characters": "{count} симв.",
+        "genres": "Жанры",
+        "selectedGenres": "Выбрано: {count}",
+        "locale": "Локаль"
+      },
+      "validation": {
+        "titleRequired": "Введите название.",
+        "descriptionRequired": "Введите описание.",
+        "mediaTypeRequired": "Выберите тип медиа.",
+        "statusRequired": "Выберите статус.",
+        "countryRequired": "Выберите страну.",
+        "episodesRequired": "Укажите минимум 1 эпизод.",
+        "genresRequired": "Выберите хотя бы один жанр.",
+        "releaseDateRequired": "Выберите дату релиза.",
+        "previewImage": "Разрешены только изображения JPEG/PNG."
+      },
+      "messages": {
+        "createdSuccess": "Арт успешно создан",
+        "createError": "Произошла ошибка при создании арта"
+      }
+    }
+  },
   "Common": {
     "error": "Ошибка",
     "loading": "Загрузка...",

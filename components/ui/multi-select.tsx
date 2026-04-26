@@ -33,6 +33,14 @@ const multiSelectVariants = cva("m-1 transition ease-in-out delay-150 duration-3
   },
 });
 
+type MultiSelectSize = "sm" | "md" | "lg";
+
+const multiSelectSizeClasses: Record<MultiSelectSize, string> = {
+  sm: "min-h-8",
+  md: "min-h-10",
+  lg: "min-h-11",
+};
+
 /**
  * Props for MultiSelect component
  */
@@ -66,6 +74,8 @@ interface MultiSelectProps
    * Optional, defaults to "Select options".
    */
   placeholder?: string;
+
+  size?: MultiSelectSize;
 
   /**
    * Animation duration in seconds for the visual effects (e.g., bouncing badges).
@@ -106,6 +116,7 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
       onValueChange,
       variant,
       defaultValue = [],
+      size = "md",
       placeholder = "Select options",
       animation = 0,
       maxCount = 3,
@@ -172,7 +183,8 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
             {...props}
             onClick={handleTogglePopover}
             className={cn(
-              "flex w-full p-1 rounded-[12px] min-h-10 h-auto items-center justify-between hover:bg-black-3 [&_svg]:pointer-events-auto bg-black-2",
+              "flex w-full p-1 rounded-[12px] h-auto items-center justify-between hover:bg-black-3 [&_svg]:pointer-events-auto bg-black-2",
+              multiSelectSizeClasses[size],
               className
             )}
           >

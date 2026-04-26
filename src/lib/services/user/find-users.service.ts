@@ -5,6 +5,7 @@ import { and, eq, SQL } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "../../db";
 import * as schema from "../../db/schema";
+import { findUserRoles, type UserRoleName } from "./find-user-roles.service";
 
 const FindUsersInputSchema = z.object({
   filters: z.object({
@@ -13,7 +14,9 @@ const FindUsersInputSchema = z.object({
 });
 
 export type FindUsersInput = z.infer<typeof FindUsersInputSchema>;
-export type FindUsersOutput = Omit<typeof schema.users.$inferSelect, "password">;
+export type FindUsersOutput = Omit<typeof schema.users.$inferSelect, "password"> & {
+  roles: UserRoleName[];
+};
 
 export async function findUsers({ filters }: FindUsersInput): Promise<FindUsersOutput[]> {
   const whereClause = buildFindUsersFilters(filters);
@@ -29,7 +32,12 @@ export async function findUsers({ filters }: FindUsersInput): Promise<FindUsersO
     .from(schema.users)
     .where(and(...whereClause));
 
-  return users;
+  return await Promise.all(
+    users.map(async (user) => ({
+      ...user,
+      roles: await findUserRoles(user.id),
+    }))
+  );
 }
 
 const buildFindUsersFilters = (filters: FindUsersInput["filters"]): SQL[] => {

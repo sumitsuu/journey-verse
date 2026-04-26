@@ -11,7 +11,7 @@ const Calendar = ({ className, classNames, showOutsideDays = true, ...props }: C
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn("p-3", className)}
+      className={cn("rounded-md bg-popover p-3", className)}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
@@ -20,7 +20,7 @@ const Calendar = ({ className, classNames, showOutsideDays = true, ...props }: C
         nav: "space-x-1 flex items-center",
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
-          "h-7 w-7 bg-black-2 p-0 opacity-50 hover:opacity-100 text-white"
+          "h-7 w-7 border-primary/20 bg-background/80 p-0 text-white opacity-70 hover:opacity-100"
         ),
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
@@ -29,7 +29,7 @@ const Calendar = ({ className, classNames, showOutsideDays = true, ...props }: C
         head_cell: "text-light-purple-1 rounded-md w-8 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
         cell: cn(
-          "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-black-2 [&:has([aria-selected].day-outside)]:bg-black-2 [&:has([aria-selected].day-range-end)]:rounded-r-md",
+          "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-background/80 [&:has([aria-selected].day-outside)]:bg-background/80 [&:has([aria-selected].day-range-end)]:rounded-r-md",
           props.mode === "range"
             ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
             : "[&:has([aria-selected])]:rounded-md"
@@ -44,9 +44,9 @@ const Calendar = ({ className, classNames, showOutsideDays = true, ...props }: C
           "bg-primary text-white hover:bg-light-purple-1 hover:text-white focus:bg-primary focus:text-white",
         day_today: "bg-light-purple-1 text-white",
         day_outside:
-          "day-outside !text-light-purple-1 hover:!text-primary aria-selected:bg-black-2 aria-selected:text-white",
+          "day-outside !text-light-purple-1 hover:!text-primary aria-selected:bg-background/80 aria-selected:text-white",
         day_disabled: "text-muted-foreground opacity-50",
-        day_range_middle: "aria-selected:bg-black-2 aria-selected:text-white",
+        day_range_middle: "aria-selected:bg-background/80 aria-selected:text-white",
         day_hidden: "invisible",
         ...classNames,
       }}

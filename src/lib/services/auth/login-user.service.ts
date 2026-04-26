@@ -5,8 +5,11 @@ import { eq } from "drizzle-orm";
 
 import { db } from "../../db";
 import * as schema from "../../db/schema";
+import { findUserRoles, type UserRoleName } from "../user/find-user-roles.service";
 
-export type LoginUserOutput = Omit<typeof schema.users.$inferSelect, "password">;
+export type LoginUserOutput = Omit<typeof schema.users.$inferSelect, "password"> & {
+  roles: UserRoleName[];
+};
 
 export async function loginUsers(data: { email: string; password: string }): Promise<LoginUserOutput> {
   const [user] = await db.select().from(schema.users).where(eq(schema.users.email, data.email));
@@ -25,6 +28,7 @@ export async function loginUsers(data: { email: string; password: string }): Pro
     displayName: user.displayName,
     avatarPath: user.avatarPath,
     favouredTypeId: user.favouredTypeId,
+    roles: await findUserRoles(user.id),
   };
 
   return result;

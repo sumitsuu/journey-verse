@@ -8,6 +8,7 @@ declare module "next-auth" {
     email: string;
     displayName: string;
     path: string;
+    roles: string[];
     image?: string;
   }
 
@@ -22,6 +23,7 @@ declare module "next-auth/jwt" {
     path: string;
     displayName: string;
     email: string;
+    roles: string[];
     image?: string;
   }
 }
@@ -50,6 +52,7 @@ export const authOptions: NextAuthOptions = {
             email: result.email,
             displayName: result.displayName,
             path: `/users/${result.id}`,
+            roles: result.roles,
             image: result.avatarPath ?? undefined,
           };
         } catch {
@@ -67,12 +70,14 @@ export const authOptions: NextAuthOptions = {
         token.path = customUser.path;
         token.displayName = customUser.displayName;
         token.email = customUser.email;
+        token.roles = customUser.roles;
         token.image = customUser.image;
       }
 
       if (trigger === "update" && session?.user) {
         token.displayName = session.user.displayName;
         token.email = session.user.email;
+        token.roles = session.user.roles;
         token.image = session.user.image;
       }
 
@@ -87,6 +92,7 @@ export const authOptions: NextAuthOptions = {
         image: customToken.image,
         displayName: customToken.displayName,
         email: customToken.email,
+        roles: customToken.roles ?? [],
         path: customToken.path,
       };
       return customSession;

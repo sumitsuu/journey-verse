@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "../../db";
 import * as schema from "../../db/schema";
+import { findUserRoles, type UserRoleName } from "./find-user-roles.service";
 
 export const UpdateUserSchema = z.object({
   id: z.number(),
@@ -15,7 +16,9 @@ export const UpdateUserSchema = z.object({
 });
 
 export type UpdateUserInput = z.infer<typeof UpdateUserSchema>;
-export type UpdateUserOutput = Omit<typeof schema.users.$inferSelect, "password">;
+export type UpdateUserOutput = Omit<typeof schema.users.$inferSelect, "password"> & {
+  roles: UserRoleName[];
+};
 
 export async function updateUsers({ id, ...data }: UpdateUserInput): Promise<UpdateUserOutput> {
   const [existing] = await db.select().from(schema.users).where(eq(schema.users.id, id));
@@ -41,6 +44,7 @@ export async function updateUsers({ id, ...data }: UpdateUserInput): Promise<Upd
     displayName: updated.displayName,
     avatarPath: updated.avatarPath,
     favouredTypeId: updated.favouredTypeId,
+    roles: await findUserRoles(updated.id),
   };
 
   return result;

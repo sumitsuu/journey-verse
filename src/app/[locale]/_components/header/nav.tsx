@@ -16,7 +16,7 @@ import { DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
 import { Link, routing, usePathname } from "@/src/i18n/routing";
 import { Locale } from "@/src/lib/i18n/locales";
 import { getFileUrl } from "@/src/lib/utils/file-url";
-import { Bookmark, Languages } from "lucide-react";
+import { Bookmark, Languages, ShieldPlus } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
@@ -117,6 +117,14 @@ const Nav = () => {
                 <DropdownMenuItem className={"cursor-pointer"} asChild>
                   <Link href={`/users/${sessionUser?.id}/settings`}>{navTranslations("settings")}</Link>
                 </DropdownMenuItem>
+                {sessionUser.roles.includes("admin") && (
+                  <DropdownMenuItem className={"cursor-pointer"} asChild>
+                    <Link href={"/admin/create-art"} className={"flex items-center gap-2"}>
+                      <ShieldPlus className={"size-4"} />
+                      Admin
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuGroup className={"md:hidden"}>
                   <DropdownMenuItem className={"cursor-pointer"} asChild>
                     <Link href={`/users/${sessionUser?.id}/notifications`}>{navTranslations("notifications")}</Link>

@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { DEFAULT_LOCALE } from "../../i18n/locales";
 import { CreateArtOutput, createArts } from "../../services/art/create-art.service";
+import { authorizeAdmin } from "../../services/auth/authorize-access";
 
 const createArtSchema = z.object({
   locale: z.enum(["en", "ru"]).optional(),
@@ -25,6 +26,8 @@ const createArtSchema = z.object({
 
 export async function createArtAction(formData: FormData): Promise<CreateArtOutput> {
   try {
+    await authorizeAdmin();
+
     const locale = formData.get("locale");
     const releaseDate = formData.get("releaseDate") as string;
     const countryId = formData.get("countryId") as string;

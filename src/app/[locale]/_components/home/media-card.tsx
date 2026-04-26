@@ -25,9 +25,14 @@ export const MediaCard = ({ item, index }: MediaCardProps) => {
   const Icon = mediaTypeIcons[typeKey] || Film;
 
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.05 }}>
-      <Link href={`/arts/${item.type.id}/${item.id}`}>
-        <div className="group relative rounded-xl overflow-hidden bg-card border border-border/40 hover:border-primary/40 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1">
+    <motion.div
+      className="h-full"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05 }}
+    >
+      <Link className="block h-full" href={`/arts/${item.type.id}/${item.id}`}>
+        <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border/40 bg-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10">
           {/* Cover Image */}
           <div className="aspect-[2/3] relative overflow-hidden bg-muted">
             <img
@@ -53,7 +58,7 @@ export const MediaCard = ({ item, index }: MediaCardProps) => {
           </div>
 
           {/* Info */}
-          <div className="p-4">
+          <div className="flex min-h-[104px] flex-1 flex-col p-4">
             <h3 className="font-semibold text-foreground mb-1 line-clamp-1 group-hover:text-primary transition-colors">
               {item.title}
             </h3>
@@ -62,11 +67,9 @@ export const MediaCard = ({ item, index }: MediaCardProps) => {
               <span>•</span>
               <span>{item.genres[0]?.name || item.country.name}</span>
             </div>
-            {item.rating && (
-              <div className="mt-2 flex items-center gap-1 text-xs text-muted-foreground">
-                <span>{Number(item.rating).toFixed(1)}</span>
-              </div>
-            )}
+            <div className="mt-2 flex h-4 items-center gap-1 text-xs text-muted-foreground">
+              {item.rating && <span>{Number(item.rating).toFixed(1)}</span>}
+            </div>
           </div>
         </div>
       </Link>

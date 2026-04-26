@@ -261,6 +261,104 @@
     "typeUpdatedSuccess": "Type updated successfully.",
     "selectType": "Type"
   },
+  "Admin": {
+    "createArt": {
+      "badge": "Admin Studio",
+      "title": "Create new art",
+      "description": "Add a catalog entry with localized title, discovery metadata, poster artwork and release details.",
+      "footerNote": "Ready entries appear immediately in search and catalog pages after creation.",
+      "actions": {
+        "create": "Create art"
+      },
+      "sections": {
+        "identity": {
+          "title": "Identity",
+          "description": "Name and describe how this art should appear in the current locale."
+        },
+        "catalog": {
+          "title": "Catalog metadata",
+          "description": "Keep browsing, filters and detail pages consistent with the rest of JourneyVerse."
+        },
+        "artwork": {
+          "title": "Artwork",
+          "description": "Upload a clear poster or cover. It will become the primary catalog image."
+        },
+        "release": {
+          "title": "Release",
+          "description": "Set the canonical release date used across catalog filters."
+        },
+        "snapshot": {
+          "title": "Snapshot",
+          "description": "Quick sanity check before publishing to the catalog."
+        }
+      },
+      "fields": {
+        "title": {
+          "label": "Title",
+          "placeholder": "e.g. Violet Evergarden"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Short synopsis, tone, hook, and key details..."
+        },
+        "mediaType": {
+          "label": "Media type",
+          "placeholder": "Type"
+        },
+        "status": {
+          "label": "Status",
+          "placeholder": "Status"
+        },
+        "country": {
+          "label": "Country",
+          "placeholder": "Country"
+        },
+        "episodes": {
+          "label": "Episodes",
+          "placeholder": "12"
+        },
+        "genres": {
+          "label": "Genres",
+          "placeholder": "Select genres"
+        },
+        "previewImage": {
+          "label": "Preview image"
+        },
+        "releaseDate": {
+          "label": "Release date",
+          "placeholder": "Date"
+        }
+      },
+      "upload": {
+        "title": "Drop cover here",
+        "description": "JPEG or PNG, vertical preferred"
+      },
+      "snapshot": {
+        "title": "Title",
+        "untitled": "Untitled",
+        "description": "Description",
+        "characters": "{count} characters",
+        "genres": "Genres",
+        "selectedGenres": "{count} selected",
+        "locale": "Locale"
+      },
+      "validation": {
+        "titleRequired": "Enter a title.",
+        "descriptionRequired": "Enter a description.",
+        "mediaTypeRequired": "Select a media type.",
+        "statusRequired": "Select a status.",
+        "countryRequired": "Select a country.",
+        "episodesRequired": "Enter at least 1 episode.",
+        "genresRequired": "Select at least one genre.",
+        "releaseDateRequired": "Select a release date.",
+        "previewImage": "Only JPEG/PNG images allowed."
+      },
+      "messages": {
+        "createdSuccess": "Art was created successfully",
+        "createError": "An error occurred while creating the art"
+      }
+    }
+  },
   "Common": {
     "error": "Error",
     "loading": "Loading...",

@@ -12,6 +12,17 @@ export const users = pgTable("users", {
   favouredTypeId: integer("favoured_type_id"),
 });
 
+export const roles = pgTable("roles", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar("name", { length: 255 }).notNull(),
+});
+
+export const userRoles = pgTable("user_roles", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  userId: integer("user_id").notNull(),
+  roleId: integer("role_id").notNull(),
+});
+
 export const types = pgTable("types", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
 });
