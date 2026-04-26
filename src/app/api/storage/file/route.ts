@@ -19,10 +19,20 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Failed to fetch image" }, { status: imageResponse.status });
     }
 
-    const imageBuffer = await imageResponse.arrayBuffer();
     const contentType = imageResponse.headers.get("content-type") || "image/jpeg";
+    const body = imageResponse.body;
 
-    return new NextResponse(imageBuffer, {
+    if (!body) {
+      const imageBuffer = await imageResponse.arrayBuffer();
+      return new NextResponse(imageBuffer, {
+        headers: {
+          "Content-Type": contentType,
+          "Cache-Control": "public, max-age=31536000, immutable",
+        },
+      });
+    }
+
+    return new NextResponse(body, {
       headers: {
         "Content-Type": contentType,
         "Cache-Control": "public, max-age=31536000, immutable",

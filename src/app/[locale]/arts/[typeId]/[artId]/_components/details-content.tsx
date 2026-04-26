@@ -61,9 +61,10 @@ export const DetailsContent = ({
   }));
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
+    <div className="relative w-full bg-[rgb(5_5_9)]">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -318,6 +319,7 @@ export const DetailsContent = ({
             </motion.div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

@@ -32,8 +32,10 @@ export const StickyActionBar = ({ isVisible, isFavorite, setIsFavorite, onOpenRe
               <Image
                 src={art.previewPath ? getFileUrl(art.previewPath) : PICTURE_PLACEHOLDER}
                 alt={art.title}
-                width={100}
-                height={100}
+                width={48}
+                height={48}
+                sizes="48px"
+                quality={85}
                 className="w-12 h-12 rounded-lg object-cover"
               />
               <div>

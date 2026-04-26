@@ -48,16 +48,24 @@ export const HeroSection = ({
 
   return (
     <div className="relative h-[85vh]">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 overflow-hidden">
         <Image
           src={art.previewPath ? getFileUrl(art.previewPath) : PICTURE_PLACEHOLDER}
-          alt={art.title}
-          width={100}
-          height={100}
-          className="w-full h-full object-cover"
+          alt=""
+          fill
+          sizes="100vw"
+          quality={85}
+          priority
+          className="origin-top scale-105 object-cover object-top blur-xl"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/90 to-background/40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(to top, rgb(var(--background)) 0%, rgb(var(--background)) 4%, rgb(var(--background) / 0.98) 14%, rgb(var(--background) / 0.88) 28%, rgb(var(--background) / 0.68) 42%, rgb(var(--background) / 0.42) 56%, rgb(var(--background) / 0.2) 72%, rgb(var(--background) / 0.08) 86%, transparent 100%)",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/55 to-transparent" />
         <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
       </div>
 
@@ -76,13 +84,14 @@ export const HeroSection = ({
             transition={{ delay: 0.2 }}
             className="flex-shrink-0"
           >
-            <div className="w-64 h-96 rounded-2xl overflow-hidden shadow-2xl shadow-primary/20 border-4 border-white/10">
+            <div className="relative w-64 h-96 rounded-2xl overflow-hidden shadow-2xl shadow-primary/20 border-4 border-white/10">
               <Image
                 src={art.previewPath ? getFileUrl(art.previewPath) : PICTURE_PLACEHOLDER}
                 alt={art.title}
-                width={100}
-                height={100}
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, 256px"
+                quality={92}
+                className="object-cover"
               />
             </div>
           </motion.div>

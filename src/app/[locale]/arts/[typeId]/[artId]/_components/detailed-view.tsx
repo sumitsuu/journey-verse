@@ -79,6 +79,10 @@ export const DetailedView = () => {
         showLibraryDropdown={showLibraryDropdown}
         setShowLibraryDropdown={setShowLibraryDropdown}
       />
+      <div
+        aria-hidden
+        className="h-14 w-full bg-gradient-to-b from-background via-[rgb(5_5_9)]/45 to-[rgb(5_5_9)] sm:h-20"
+      />
       <StickyActionBar
         isVisible={isSticky}
         isFavorite={isFavorite}

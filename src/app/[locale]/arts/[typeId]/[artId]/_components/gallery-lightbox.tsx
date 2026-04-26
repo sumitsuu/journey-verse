@@ -39,9 +39,11 @@ export const GalleryLightbox = ({ selectedImage, onClose }: GalleryLightboxProps
               <Image
                 src={selectedImage}
                 alt={artDetailsTranslations("galleryAlt")}
-                width={100}
-                height={100}
-                className="w-full h-auto rounded-2xl shadow-2xl"
+                width={1400}
+                height={2100}
+                sizes="(max-width: 1280px) 90vw, 1152px"
+                quality={92}
+                className="w-full h-auto max-h-[85vh] object-contain rounded-2xl shadow-2xl"
               />
             </motion.div>
           </div>
