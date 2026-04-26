@@ -39,9 +39,8 @@ export const DetailsContent = ({
   onOpenReviewModal,
   setSelectedImage,
 }: DetailsContentProps) => {
-  const { art, libraryStatuses } = useDetailedViewContext();
+  const { art, library, libraryStatuses } = useDetailedViewContext();
   const artDetailsTranslations = useTranslations("ArtDetails");
-  const [userRating] = useState(0);
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [showSortDropdown, setShowSortDropdown] = useState(false);
 
@@ -59,6 +58,15 @@ export const DetailsContent = ({
     label: status.name,
     icon: statusIcons[index] ?? Star,
   }));
+
+  const inLibrary = Boolean(library) || selectedLibraryStatusId !== null;
+  const personalRatingRaw = library?.rating;
+  const personalRating =
+    personalRatingRaw !== null && personalRatingRaw !== undefined && String(personalRatingRaw).length > 0
+      ? Number(personalRatingRaw)
+      : null;
+  const personalRatingDisplay =
+    personalRating !== null && !Number.isNaN(personalRating) ? personalRating.toFixed(1) : null;
 
   return (
     <div className="relative w-full bg-[rgb(5_5_9)]">
@@ -234,24 +242,25 @@ export const DetailsContent = ({
               transition={{ delay: 0.4 }}
               className="rounded-2xl bg-card/50 backdrop-blur-sm border border-border/40 p-6 shadow-lg"
             >
-              <div className="flex items-center justify-center gap-4">
-                <h3 className="text-xl font-bold">{artDetailsTranslations("yourRating")}</h3>
-                <div className="flex items-center">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1 px-4 py-2 rounded-xl bg-yellow-500/20 border border-yellow-500/40 backdrop-blur-md">
-                      <Star className="w-6 h-6 text-yellow-400 fill-yellow-400" />
-                      <span className="text-2xl font-bold text-white">{Number(art.rating).toFixed(1) ?? 0}</span>
-                    </div>
+              <h3 className="text-xl font-bold mb-4 text-center">{artDetailsTranslations("yourRating")}</h3>
+              {!inLibrary ? (
+                <p className="text-center text-sm text-muted-foreground leading-relaxed">
+                  {artDetailsTranslations("yourRatingNeedLibrary")}
+                </p>
+              ) : personalRatingDisplay === null ? (
+                <p className="text-center text-sm text-muted-foreground leading-relaxed">
+                  {artDetailsTranslations("yourRatingUnset")}
+                </p>
+              ) : (
+                <div className="flex flex-col items-center gap-2">
+                  <div className="flex items-center gap-1 px-4 py-2 rounded-xl bg-yellow-500/20 border border-yellow-500/40 backdrop-blur-md">
+                    <Star className="w-6 h-6 text-yellow-400 fill-yellow-400" />
+                    <span className="text-2xl font-bold text-white">{personalRatingDisplay}</span>
                   </div>
-                </div>
-              </div>
-              {userRating > 0 && (
-                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-                  <p className="text-2xl font-bold mb-2">{userRating}.0 / 5.0</p>
                   <p className="text-sm text-muted-foreground">
-                    {artDetailsTranslations("youRated", { rating: userRating })}
+                    {artDetailsTranslations("youRated", { rating: personalRatingDisplay })}
                   </p>
-                </motion.div>
+                </div>
               )}
             </motion.div>
 

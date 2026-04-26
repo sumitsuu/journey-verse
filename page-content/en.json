@@ -195,6 +195,8 @@
     "noReviewsTitle": "No reviews yet",
     "noReviewsDescription": "Be the first to review this!",
     "yourRating": "Your Rating",
+    "yourRatingNeedLibrary": "Add this title to your library to record your personal score.",
+    "yourRatingUnset": "No personal score yet.",
     "yourReview": "Your Review",
     "youRated": "You rated this {rating}",
     "ratingDistribution": "Rating Distribution",

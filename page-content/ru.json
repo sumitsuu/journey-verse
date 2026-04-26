@@ -194,6 +194,8 @@
     "noReviewsTitle": "Пока нет отзывов",
     "noReviewsDescription": "Станьте первым, кто оставит отзыв!",
     "yourRating": "Ваша оценка",
+    "yourRatingNeedLibrary": "Добавьте в библиотеку, чтобы зафиксировать свою оценку.",
+    "yourRatingUnset": "Личная оценка ещё не выставлена.",
     "yourReview": "Ваш отзыв",
     "youRated": "Вы поставили {rating}",
     "ratingDistribution": "Распределение оценок",
